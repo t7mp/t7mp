@@ -31,7 +31,6 @@ class MyArtifactResolver {
 		this.local = local;
 	}
 	
-	
 	public Artifact resolve(String groupId, String artifactId, String version, String type, String scope) throws MojoExecutionException{
 		Artifact artifact = factory.createDependencyArtifact(groupId, artifactId, VersionRange.createFromVersion(version), type, null, Artifact.SCOPE_COMPILE);
 		try {
@@ -51,7 +50,4 @@ class MyArtifactResolver {
 	public Artifact resolveWar(String groupId, String artifactId, String version) throws MojoExecutionException {
 		return resolve(groupId, artifactId, version, "war", Artifact.SCOPE_COMPILE);
 	}
-	
-	
-
 }
