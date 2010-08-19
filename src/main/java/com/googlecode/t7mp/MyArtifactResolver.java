@@ -5,7 +5,8 @@ import java.util.List;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
+import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -33,8 +34,13 @@ class MyArtifactResolver {
 	
 	public Artifact resolve(String groupId, String artifactId, String version, String type, String scope) throws MojoExecutionException{
 		Artifact artifact = factory.createDependencyArtifact(groupId, artifactId, VersionRange.createFromVersion(version), type, null, Artifact.SCOPE_COMPILE);
-		ArtifactResolutionRequest resolutionRequest = new ArtifactResolutionRequest().setArtifact(artifact).setLocalRepository(local).setRemoteRepositories(remoteRepositories);
-		resolver.resolve(resolutionRequest);
+		try {
+			resolver.resolve(artifact,remoteRepositories, local);
+		} catch (ArtifactResolutionException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		} catch (ArtifactNotFoundException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 		return artifact;
 	}
 	
