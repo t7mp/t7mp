@@ -3,9 +3,6 @@ package com.googlecode.t7mp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 import org.apache.catalina.startup.Bootstrap;
 import org.apache.commons.io.FileUtils;
@@ -28,6 +25,12 @@ public class RunMojo extends AbstractRunMojo {
 	 * 
 	 */
 	private boolean fork;
+	
+	/**
+	 * 
+	 * @parameter expression="${t7.tomcat.version}" default-value="7.0-SNAPSHOT"
+	 */
+	private String tomcatVersion;
 	
 	/**
 	 * 
@@ -78,7 +81,7 @@ public class RunMojo extends AbstractRunMojo {
 		
 		MyArtifactResolver myArtifactResolver = new MyArtifactResolver(resolver, factory, local, remoteRepos);
 		ArtifactDispatcher libDispatcher = new ArtifactDispatcher(myArtifactResolver, catalinaBase);
-		libDispatcher.resolveArtifacts(getTomcatArtifacts()).copyTo("lib");
+		libDispatcher.resolveArtifacts(TomcatJarArtifactHelper.getTomcatArtifacts(this.tomcatVersion)).copyTo("lib");
 		libDispatcher.clear();
 		libDispatcher.resolveArtifacts(libs).copyTo("lib");
 		libDispatcher.clear();
@@ -121,35 +124,6 @@ public class RunMojo extends AbstractRunMojo {
 		}
 	}
 	
-	private List<JarArtifact> getTomcatArtifacts() throws MojoExecutionException{
-		List<JarArtifact> tomcatArtifactList = new ArrayList<JarArtifact>();
-		Properties tomcatLibs = new Properties();
-		try {
-			tomcatLibs.load(getClass().getResourceAsStream("artifacts.properties"));
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-		for(Map.Entry<Object, Object> entry : tomcatLibs.entrySet()){
-			String groupId = entry.getKey().toString().substring(0, entry.getKey().toString().lastIndexOf("."));
-			String artifactId = entry.getValue().toString();
-			String version = null;
-			if(artifactId.startsWith("tomcat-")){
-				version = "7.0-SNAPSHOT";
-			}else{
-				String[] split = artifactId.split(":");
-				version = split[1];
-				artifactId = split[0];
-			}
-			JarArtifact jarArtifact = new JarArtifact();
-			jarArtifact.setGroupId(groupId);
-			jarArtifact.setArtifactId(artifactId);
-			jarArtifact.setVersion(version);
-			tomcatArtifactList.add(jarArtifact);
-		}
-		return tomcatArtifactList;
-	}
-
-
 
 	class ShutdownHook extends Thread {
 		@Override
