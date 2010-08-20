@@ -73,7 +73,7 @@ class ArtifactDispatcher {
 	
 	private String createTargetFileName(AbstractArtifact abstractArtifact){
 		if(abstractArtifact.getClass().isAssignableFrom(WebappArtifact.class)){
-			return abstractArtifact.getArtifactId() + "." + abstractArtifact.getType();
+			return ((WebappArtifact)abstractArtifact).getContextPath() + "." + abstractArtifact.getType();
 		}
 		return abstractArtifact.getArtifactId() + "-" + abstractArtifact.getVersion() + "." + abstractArtifact.getType();
 	}
