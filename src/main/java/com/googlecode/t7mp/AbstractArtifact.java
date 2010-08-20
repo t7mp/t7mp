@@ -95,9 +95,7 @@ public abstract class AbstractArtifact {
 		this.version = version;
 	}
 
-	public String getType() {
-		return type;
-	}
+	abstract String getType();
 
 	public void setType(String type) {
 		this.type = type;

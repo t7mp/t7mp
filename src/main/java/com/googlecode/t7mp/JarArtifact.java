@@ -19,6 +19,7 @@ package com.googlecode.t7mp;
  * under the License.
  */
 
+import org.apache.maven.artifact.Artifact;
 
 /**
  * 
@@ -28,12 +29,17 @@ package com.googlecode.t7mp;
  *
  */
 public class JarArtifact extends AbstractArtifact {
+	
+	public JarArtifact(){
+		super();
+	}
+	
+	public JarArtifact(Artifact artifact){
+		super(artifact);
+	}
 
 	@Override
 	public String getType() {
 		return "jar";
 	}
-	
-	
-
 }

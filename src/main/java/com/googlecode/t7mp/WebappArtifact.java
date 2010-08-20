@@ -1,5 +1,7 @@
 package com.googlecode.t7mp;
 
+import org.apache.maven.artifact.Artifact;
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -27,6 +29,14 @@ package com.googlecode.t7mp;
 public class WebappArtifact extends AbstractArtifact {
 	
 	private String contextPath;
+	
+	public WebappArtifact(){
+		super();
+	}
+	
+	public WebappArtifact(Artifact artifact){
+		super(artifact);
+	}
 
 	@Override
 	public String getType() {
@@ -36,6 +46,9 @@ public class WebappArtifact extends AbstractArtifact {
 	public String getContextPath() {
 		if(contextPath == null || contextPath.equals("")){
 			return artifactId;
+		}
+		if(contextPath.startsWith("/")){
+			return contextPath.substring(1);
 		}
 		return contextPath;
 	}

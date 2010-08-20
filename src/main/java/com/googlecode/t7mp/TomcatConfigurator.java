@@ -54,9 +54,9 @@ public class TomcatConfigurator {
 	}
 	
 	private void createTomcatDirectory(String name) throws MojoExecutionException{
-		File webappsDirectory = new File(catalinaBaseDir, name);
-		if(!webappsDirectory.exists() && !webappsDirectory.mkdir()){
-			throw new MojoExecutionException("could not create '" + name + "' on " + webappsDirectory.getAbsolutePath());
+		File directory = new File(catalinaBaseDir, name);
+		if(!directory.exists() && !directory.mkdir()){
+			throw new MojoExecutionException("could not create '" + name + "' on " + directory.getAbsolutePath());
 		}
 	}
 	
