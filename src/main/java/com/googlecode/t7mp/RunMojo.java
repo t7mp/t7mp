@@ -92,8 +92,8 @@ public class RunMojo extends AbstractRunMojo {
 	
 	
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		checkTomcatVersion();
-		getLog().info("Starting Tomcat ...");
+		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
+		
 		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBase);
 		configurator.createTomcatDirectories()
 					.copyDefaultConfig()
@@ -113,25 +113,13 @@ public class RunMojo extends AbstractRunMojo {
 		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
 		bootstrap = new Bootstrap();
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
+		getLog().info("Starting Tomcat ...");
 		try {
 			bootstrap.init();
 			bootstrap.setAwait((!fork));
 			bootstrap.start();
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}
-
-	private void checkTomcatVersion() throws MojoExecutionException {
-		if(!this.tomcatVersion.startsWith("7.")){
-			getLog().info("");
-			getLog().info("");
-			getLog().error("==== MAVEN-T7-PLUGIN ====");
-			getLog().error("This plugin supports only Version 7 of Tomcat. You configured: " + this.tomcatVersion + ". Cancel the Build.");
-			getLog().error("=========================");
-			getLog().info("");
-			getLog().info("");
-			throw new MojoExecutionException("This plugin supports only Version 7 of Tomcat. You configured " + this.tomcatVersion);
 		}
 	}
 
