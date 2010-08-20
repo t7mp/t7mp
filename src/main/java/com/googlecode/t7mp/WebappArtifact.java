@@ -34,6 +34,9 @@ public class WebappArtifact extends AbstractArtifact {
 	}
 
 	public String getContextPath() {
+		if(contextPath == null || contextPath.equals("")){
+			return artifactId;
+		}
 		return contextPath;
 	}
 
