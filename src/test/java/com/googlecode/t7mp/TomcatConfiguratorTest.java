@@ -2,6 +2,7 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.junit.After;
 import org.junit.Before;
@@ -75,5 +77,45 @@ public class TomcatConfiguratorTest {
 		Collections.sort(fileNames);
 		Assert.assertEquals(expectedFileNames, fileNames);
 	}
-
+	
+	@Test(expected=MojoExecutionException.class)
+	public void testDirectoryNotExistAndCouldNotCreated() throws MojoExecutionException{
+		File catalinaBaseDir = new File("/catalinaBase");
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir);
+		configurator.createTomcatDirectories();
+	}
+	
+	@Test(expected=MojoExecutionException.class)
+	public void testDirectoryNotExistAndCouldNotCreatedForConfigfiles() throws MojoExecutionException, IOException{
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir);
+		configurator.createTomcatDirectories();
+		FileUtils.deleteDirectory(catalinaBaseDir);
+		configurator.copyDefaultConfig();
+	}
+	
+	@Test(expected=MojoExecutionException.class)
+	public void testUserConfigDirDoesNotExist() throws MojoExecutionException{
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir);
+		configurator.copyUserConfigs(new File("/"));
+	}
+	
+	@Test(expected=MojoExecutionException.class)
+	public void testUserConfigDirIsNotADirectory() throws MojoExecutionException, IOException{
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir);
+		configurator.copyUserConfigs(File.createTempFile("test_", "tmp"));
+	}
+	
+	@Test
+	public void testNoUserconfigDirConfigured() throws MojoExecutionException{
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir);
+		configurator.copyUserConfigs(null);
+	}
+	
+	@Test(expected=MojoExecutionException.class)
+	public void testDirectoryDoesNotExistAndNotCreated() throws MojoExecutionException{
+		TomcatConfigurator configurator = new TomcatConfigurator(new File("/klaus"));
+		configurator.createTomcatDirectory("test");
+		
+		
+	}
 }

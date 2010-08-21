@@ -1,7 +1,9 @@
 package com.googlecode.t7mp;
 
+import org.apache.maven.artifact.Artifact;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class WebappArtifactTest {
 	
@@ -60,6 +62,25 @@ public class WebappArtifactTest {
 		artifact.setArtifactId(ArtifactConstants.ARTIFACTID);
 		artifact.setContextPath("");
 		Assert.assertEquals(ArtifactConstants.ARTIFACTID, artifact.getContextPath());
+	}
+	
+	@Test
+	public void testArtifactConstructor(){
+		Artifact artifact = Mockito.mock(Artifact.class);
+		Mockito.when(artifact.getArtifactId()).thenReturn(ArtifactConstants.ARTIFACTID);
+		Mockito.when(artifact.getGroupId()).thenReturn(ArtifactConstants.GROUPID);
+		Mockito.when(artifact.getVersion()).thenReturn(ArtifactConstants.VERSION);
+		Mockito.when(artifact.getClassifier()).thenReturn(ArtifactConstants.CLASSIFIER);
+		Mockito.when(artifact.getType()).thenReturn(ArtifactConstants.JAR_TYPE);
+		WebappArtifact webappArtifact = new WebappArtifact(artifact);
+		
+		Assert.assertEquals(ArtifactConstants.GROUPID, webappArtifact.getGroupId());
+		Assert.assertEquals(ArtifactConstants.ARTIFACTID, webappArtifact.getArtifactId());
+		Assert.assertEquals(ArtifactConstants.WAR_TYPE, webappArtifact.getType());
+		Assert.assertEquals(ArtifactConstants.CLASSIFIER, webappArtifact.getClassifier());
+		Assert.assertEquals(ArtifactConstants.ARTIFACTID, webappArtifact.getContextPath());
+		Assert.assertNotNull(webappArtifact.getArtifact());
+		Assert.assertEquals(artifact,webappArtifact.getArtifact());
 	}
 
 }
