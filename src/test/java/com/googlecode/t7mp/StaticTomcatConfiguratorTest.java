@@ -41,9 +41,10 @@ public class StaticTomcatConfiguratorTest {
 	}
 	
 	@Test(expected=MojoExecutionException.class)
-	public void testMockIOUtil() throws IOException, MojoExecutionException{
+	public void testMockIOUtil() throws Exception{
 		PowerMockito.mockStatic(IOUtils.class);
-		Mockito.when(IOUtils.copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class))).thenThrow(new IOException());
+		PowerMockito.when(IOUtils.class, "copy", Mockito.any(InputStream.class), Mockito.any(OutputStream.class)).thenThrow(new IOException("Mock exception"));
+//		Mockito.when(IOUtils.copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class))).thenThrow(new IOException());
 		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir);
 		configurator.createTomcatDirectories();
 		configurator.copyDefaultConfig();
