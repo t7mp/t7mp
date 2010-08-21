@@ -53,7 +53,7 @@ public class TomcatConfigurator {
 		return this;
 	}
 	
-	private void createTomcatDirectory(String name) throws MojoExecutionException{
+	protected void createTomcatDirectory(String name) throws MojoExecutionException{
 		File directory = new File(catalinaBaseDir, name);
 		if(!directory.exists() && !directory.mkdir()){
 			throw new MojoExecutionException("could not create '" + name + "' on " + directory.getAbsolutePath());
@@ -71,7 +71,7 @@ public class TomcatConfigurator {
 		return this;
 	}
 	
-	private void copyConfigResource(String name) throws MojoExecutionException{
+	protected void copyConfigResource(String name) throws MojoExecutionException{
 		try {
 			IOUtil.copy(getClass().getResourceAsStream("conf/" + name), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + name)));
 		} catch (FileNotFoundException e) {
@@ -81,8 +81,14 @@ public class TomcatConfigurator {
 		}
 	}
 	
-	public TomcatConfigurator copyUserConfigs(File userConfigDir) throws MojoExecutionException {
-		if(userConfigDir.exists() && userConfigDir.isDirectory()){
+	public void copyUserConfigs(File userConfigDir) throws MojoExecutionException {
+		if(userConfigDir == null){
+			return;
+		}
+		if(!userConfigDir.exists() || !userConfigDir.isDirectory()) { 
+			throw new MojoExecutionException("The configured Directory for configuration files does not exist. " + userConfigDir.getAbsolutePath());
+		}
+		if(userConfigDir.exists() && userConfigDir.isDirectory()) {
 			File[] files = userConfigDir.listFiles(new FilesOnlyFileFilter());
 			for(File configFile : files){
 				try {
@@ -94,7 +100,6 @@ public class TomcatConfigurator {
 				}
 			}
 		}
-		return this;
 	}
 
 }

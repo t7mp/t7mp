@@ -29,13 +29,11 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 final class TomcatJarArtifactHelper {
 	
-	private TomcatJarArtifactHelper(){
-		// 
-	}
+	protected Properties tomcatLibs = new Properties();
 	
-	static List<JarArtifact> getTomcatArtifacts(String tomcatVersion) throws MojoExecutionException{
+	List<JarArtifact> getTomcatArtifacts(String tomcatVersion) throws MojoExecutionException{
 		List<JarArtifact> tomcatArtifactList = new ArrayList<JarArtifact>();
-		Properties tomcatLibs = new Properties();
+//		Properties tomcatLibs = new Properties();
 		try {
 			tomcatLibs.load(TomcatJarArtifactHelper.class.getResourceAsStream("artifacts.properties"));
 		} catch (IOException e) {

@@ -101,7 +101,7 @@ public class RunMojo extends AbstractRunMojo {
 		
 		MyArtifactResolver myArtifactResolver = new MyArtifactResolver(resolver, factory, local, remoteRepos);
 		ArtifactDispatcher libDispatcher = new ArtifactDispatcher(myArtifactResolver, catalinaBase);
-		libDispatcher.resolveArtifacts(TomcatJarArtifactHelper.getTomcatArtifacts(this.tomcatVersion)).copyTo("lib");
+		libDispatcher.resolveArtifacts(new TomcatJarArtifactHelper().getTomcatArtifacts(this.tomcatVersion)).copyTo("lib");
 		libDispatcher.clear();
 		libDispatcher.resolveArtifacts(libs).copyTo("lib");
 		libDispatcher.clear();

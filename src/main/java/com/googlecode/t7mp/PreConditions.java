@@ -28,9 +28,9 @@ class PreConditions {
 		if(!tomcatVersion.startsWith("7.")){
 			log.info("");
 			log.info("");
-			log.error("==== MAVEN-T7-PLUGIN ====");
+			log.error("======================= MAVEN-T7-PLUGIN ==================");
 			log.error("This plugin supports only Version 7 of Tomcat. You configured: " + tomcatVersion + ". Cancel the Build.");
-			log.error("=========================");
+			log.error("===========================================================");
 			log.info("");
 			log.info("");
 			throw new MojoExecutionException("This plugin supports only Version 7 of Tomcat. You configured " + tomcatVersion);
