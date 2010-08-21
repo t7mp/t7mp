@@ -37,6 +37,7 @@
   	<maven.version>2.2.1</maven.version>
   	<tomcat.version>7.0-SNAPSHOT</tomcat.version>
   	<plexus.version>1.5.4</plexus.version>
+  	<powermock.version>1.4</powermock.version>
   </properties>
 
 	<build>
@@ -152,19 +153,35 @@
   		<version>1.8.5</version>
   		<scope>test</scope>
   	</dependency>
+  	   <dependency>
+      <groupId>org.powermock.modules</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+   </dependency>
+   <dependency>
+      <groupId>org.powermock.api</groupId>
+      <artifactId>powermock-api-mockito</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+   </dependency>
   </dependencies>
-  
-  <repositories>
-  	<repository>
-  		<id>apache-snapshots</id>
-  		<url>http://people.apache.org/repo/m2-snapshot-repository</url>
-  		<releases>
-  			<enabled>false</enabled>
-  		</releases>
-  		<snapshots>
-  			<enabled>true</enabled>
-  			<checksumPolicy>IGNORE</checksumPolicy>
-  		</snapshots>
-  	</repository>
-  </repositories>
+
+	<repositories>
+		<repository>
+			<id>apache-snapshots</id>
+			<url>http://people.apache.org/repo/m2-snapshot-repository</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<checksumPolicy>IGNORE</checksumPolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>powermock-repo</id>
+			<url>http://powermock.googlecode.com/svn/repo/</url>
+		</repository>
+	</repositories>
 </project>
