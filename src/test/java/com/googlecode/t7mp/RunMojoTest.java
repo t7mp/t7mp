@@ -3,6 +3,7 @@ package com.googlecode.t7mp;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
@@ -32,9 +33,9 @@ public class RunMojoTest {
 	}
 	
 	@After
-	public void tearDown(){
-		boolean deleted = catalinaBaseDir.delete();
-		if(!deleted){
+	public void tearDown() throws IOException{
+		FileUtils.deleteDirectory(catalinaBaseDir);
+		if(catalinaBaseDir.exists()){
 			System.err.println("Could not delete directory " + catalinaBaseDir.getAbsolutePath());
 		}
 	}

@@ -7,6 +7,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.junit.After;
@@ -31,9 +32,9 @@ public class ArtifactDispatcherTest {
 	}
 	
 	@After
-	public void tearDown(){
-		boolean deleted = catalinaBaseDir.delete();
-		if(!deleted){
+	public void tearDown() throws IOException{
+		FileUtils.deleteDirectory(catalinaBaseDir);
+		if(catalinaBaseDir.exists()){
 			System.err.println("Could not delete directory " + catalinaBaseDir.getAbsolutePath());
 		}
 	}

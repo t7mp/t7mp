@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
@@ -36,9 +37,9 @@ public class StaticTomcatConfiguratorTest {
 	}
 	
 	@After
-	public void tearDown(){
-		boolean deleted = catalinaBaseDir.delete();
-		if(!deleted){
+	public void tearDown() throws IOException{
+		FileUtils.deleteDirectory(catalinaBaseDir);
+		if(catalinaBaseDir.exists()){
 			System.err.println("Could not delete directory " + catalinaBaseDir.getAbsolutePath());
 		}
 	}

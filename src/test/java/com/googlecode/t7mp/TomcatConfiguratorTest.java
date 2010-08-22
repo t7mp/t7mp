@@ -36,9 +36,9 @@ public class TomcatConfiguratorTest {
 	}
 	
 	@After
-	public void tearDown(){
-		boolean deleted = catalinaBaseDir.delete();
-		if(!deleted){
+	public void tearDown() throws IOException{
+		FileUtils.deleteDirectory(catalinaBaseDir);
+		if(catalinaBaseDir.exists()){
 			System.err.println("Could not delete directory " + catalinaBaseDir.getAbsolutePath());
 		}
 	}
