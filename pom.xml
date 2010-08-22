@@ -7,7 +7,7 @@
   </parent>
   <groupId>com.googlecode.t7mp</groupId>
   <artifactId>maven-t7-plugin</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.9.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>maven-t7-plugin</name>
   <description>Tomcat 7 Maven Plugin</description>
