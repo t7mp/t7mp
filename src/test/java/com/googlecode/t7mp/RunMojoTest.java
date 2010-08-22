@@ -10,9 +10,11 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+@Ignore
 public class RunMojoTest {
 	
 	private ArtifactResolver resolver = Mockito.mock(ArtifactResolver.class);

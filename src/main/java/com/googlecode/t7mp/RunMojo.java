@@ -61,7 +61,7 @@ public class RunMojo extends AbstractRunMojo {
 	
 	/**
 	 * 
-	 * @parameter expression="${basedir}/src/main/tomcatconf"
+	 * @parameter expression="${t7.tomcat.confdir}" default-value="${basedir}/src/main/tomcat/conf"
 	 * 
 	 */
 	protected File userConfigDir;
@@ -94,7 +94,7 @@ public class RunMojo extends AbstractRunMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 		
-		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBase);
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBase, getLog());
 		configurator.createTomcatDirectories()
 					.copyDefaultConfig()
 					.copyUserConfigs(userConfigDir);

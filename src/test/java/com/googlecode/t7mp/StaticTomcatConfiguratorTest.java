@@ -7,6 +7,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,6 +25,8 @@ public class StaticTomcatConfiguratorTest {
 	
 	private File catalinaBaseDir;
 	private static int counter = 1;
+	
+	private Log log = Mockito.mock(Log.class);
 	
 	@Before
 	public void setUp(){
@@ -45,7 +48,7 @@ public class StaticTomcatConfiguratorTest {
 		PowerMockito.mockStatic(IOUtils.class);
 		PowerMockito.when(IOUtils.class, "copy", Mockito.any(InputStream.class), Mockito.any(OutputStream.class)).thenThrow(new IOException("Mock exception"));
 //		Mockito.when(IOUtils.copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class))).thenThrow(new IOException());
-		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir);
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir, log);
 		configurator.createTomcatDirectories();
 		configurator.copyDefaultConfig();
 		PowerMockito.verifyStatic(Mockito.times(0));

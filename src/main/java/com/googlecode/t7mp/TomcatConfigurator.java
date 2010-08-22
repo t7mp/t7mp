@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.IOUtil;
 
 /**
@@ -35,9 +36,11 @@ import org.codehaus.plexus.util.IOUtil;
 public class TomcatConfigurator {
 	
 	private final File catalinaBaseDir;
+	private final Log log;
 	
-	public TomcatConfigurator(File catalinaBaseDir){
+	public TomcatConfigurator(File catalinaBaseDir, Log log){
 		this.catalinaBaseDir = catalinaBaseDir;
+		this.log = log;
 	}
 	
 	public TomcatConfigurator createTomcatDirectories() throws MojoExecutionException {
@@ -86,7 +89,8 @@ public class TomcatConfigurator {
 			return;
 		}
 		if(!userConfigDir.exists() || !userConfigDir.isDirectory()) { 
-			throw new MojoExecutionException("The configured Directory for configuration files does not exist. " + userConfigDir.getAbsolutePath());
+			log.warn("The configured Directory for configuration files does not exist. " + userConfigDir.getAbsolutePath());
+			log.warn("Ignoring user configuration.");
 		}
 		if(userConfigDir.exists() && userConfigDir.isDirectory()) {
 			File[] files = userConfigDir.listFiles(new FilesOnlyFileFilter());
