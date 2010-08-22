@@ -43,13 +43,13 @@ public class RunMojo extends AbstractRunMojo {
 	 * @required
 	 * 
 	 */
-	private boolean fork;
+	protected boolean fork;
 	
 	/**
 	 * 
 	 * @parameter expression="${t7.tomcat.version}" default-value="7.0-SNAPSHOT"
 	 */
-	private String tomcatVersion;
+	protected String tomcatVersion;
 	
 	/**
 	 * 
@@ -57,14 +57,14 @@ public class RunMojo extends AbstractRunMojo {
 	 * @readonly // at the moment
 	 * 
 	 */
-	private File catalinaBase;
+	protected File catalinaBase;
 	
 	/**
 	 * 
 	 * @parameter expression="${basedir}/src/main/tomcatconf"
 	 * 
 	 */
-	private File userConfigDir;
+	protected File userConfigDir;
 	
     /**
      * 
@@ -72,23 +72,23 @@ public class RunMojo extends AbstractRunMojo {
      * @readonly
      * 
      */
-    private File webappOutputDirectory;
+    protected File webappOutputDirectory;
     
     /**
      * 
      * @parameter
      */
-    private ArrayList<WebappArtifact> webapps = new ArrayList<WebappArtifact>();
+    protected ArrayList<WebappArtifact> webapps = new ArrayList<WebappArtifact>();
     
     /**
      * 
      * @parameter
      */
-    private ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
+    protected ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
     
     
     
-    private Bootstrap bootstrap;
+    protected Bootstrap bootstrap;
 	
 	
 	public void execute() throws MojoExecutionException, MojoFailureException {
