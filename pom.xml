@@ -28,6 +28,18 @@
   	<developerConnection>scm:svn:https://t7mp.googlecode.com/svn/trunk/</developerConnection>
   </scm>
   
+  <developers>
+  	<developer>
+  		<id>joerg.bellmann</id>
+  		<name>Joerg Bellmann</name>
+  		<roles>
+  			<role>Owner</role>
+  			<role>Developer</role>
+  		</roles>
+  		<timezone>+1</timezone>
+  	</developer>
+  </developers>
+  
   <prerequisites>
   	<maven>2.2</maven>
   </prerequisites>
