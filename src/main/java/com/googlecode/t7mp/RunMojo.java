@@ -62,6 +62,7 @@ public class RunMojo extends AbstractRunMojo {
 	/**
 	 * 
 	 * @parameter expression="${t7.tomcat.confdir}" default-value="${basedir}/src/main/tomcat/conf"
+	 * @optional
 	 * 
 	 */
 	protected File userConfigDir;

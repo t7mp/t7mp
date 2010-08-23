@@ -86,6 +86,7 @@ public class TomcatConfigurator {
 	
 	public void copyUserConfigs(File userConfigDir) throws MojoExecutionException {
 		if(userConfigDir == null){
+			log.info("No directory for userConfigFiles configured.");
 			return;
 		}
 		if(!userConfigDir.exists() || !userConfigDir.isDirectory()) { 
