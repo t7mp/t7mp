@@ -25,7 +25,7 @@
   <scm>
   	<url>http://t7mp.googlecode.com/svn/trunk/</url>
   	<connection>scm:svn:http://t7mp.googlecode.com/svn/trunk/</connection>
-  	<developerConnection>scm:svn:http://t7mp.googlecode.com/svn/trunk/</developerConnection>
+  	<developerConnection>scm:svn:http://joerg.bellmann@t7mp.googlecode.com/svn/trunk/</developerConnection>
   </scm>
   
   <prerequisites>
