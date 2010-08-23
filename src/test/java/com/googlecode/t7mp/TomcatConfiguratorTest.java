@@ -121,7 +121,5 @@ public class TomcatConfiguratorTest {
 	public void testDirectoryDoesNotExistAndNotCreated() throws MojoExecutionException{
 		TomcatConfigurator configurator = new TomcatConfigurator(new File("/klaus"), log);
 		configurator.createTomcatDirectory("test");
-		
-		
 	}
 }
