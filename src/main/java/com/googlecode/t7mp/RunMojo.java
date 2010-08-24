@@ -39,11 +39,11 @@ public class RunMojo extends AbstractRunMojo {
 	
 	/**
 	 * 
-	 * @parameter expression="${t7.fork}" default-value="false"
+	 * @parameter expression="${t7.tomcat.setAwait}" default-value="true"
 	 * @required
 	 * 
 	 */
-	protected boolean fork;
+	protected boolean setAwait;
 	
 	/**
 	 * 
@@ -113,12 +113,19 @@ public class RunMojo extends AbstractRunMojo {
 		System.setProperty("catalina.home", catalinaBase.getAbsolutePath());
 		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
 		bootstrap = new Bootstrap();
-		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 		getLog().info("Starting Tomcat ...");
 		try {
 			bootstrap.init();
-			bootstrap.setAwait((!fork));
-			bootstrap.start();
+			if(setAwait){
+				Runtime.getRuntime().addShutdownHook(new InternalShutdownHook());
+				bootstrap.setAwait(setAwait);
+				bootstrap.start();
+			}else{
+				bootstrap.start();
+				GlobalTomcatHolder.bootstrap = bootstrap;
+				Runtime.getRuntime().addShutdownHook(new GlobalTomcatShutdownHook(getLog()));
+				getLog().info("Tomcat started");
+			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
@@ -136,7 +143,7 @@ public class RunMojo extends AbstractRunMojo {
 	}
 	
 	private void shutdown() throws MojoExecutionException{
-		getLog().info("Stopping Tomcat ...");
+		getLog().info("Shutting down tomcat ...");
 		if(this.bootstrap != null){
 			try {
 				bootstrap.stop();
@@ -147,7 +154,8 @@ public class RunMojo extends AbstractRunMojo {
 	}
 	
 
-	class ShutdownHook extends Thread {
+	class InternalShutdownHook extends Thread {
+		
 		@Override
 		public void run() {
 			try {
