@@ -28,6 +28,11 @@
   	<developerConnection>scm:svn:https://t7mp.googlecode.com/svn/trunk/</developerConnection>
   </scm>
   
+  <issueManagement>
+    <system>Google Code Issue Tracking</system>
+    <url>http://code.google.com/p/t7mp/issues/list</url>
+  </issueManagement>
+  
   <developers>
   	<developer>
   		<id>joerg.bellmann</id>
