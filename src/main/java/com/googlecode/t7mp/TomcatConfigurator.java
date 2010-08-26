@@ -25,9 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
-import org.codehaus.plexus.util.IOUtil;
 
 /**
  * Helper to build the tomcat directory structure and use default config files.
@@ -37,33 +35,15 @@ public class TomcatConfigurator {
 	
 	private final File catalinaBaseDir;
 	private final Log log;
+	private final SetupUtil setupUtil;
 	
-	public TomcatConfigurator(File catalinaBaseDir, Log log){
+	public TomcatConfigurator(File catalinaBaseDir, Log log, SetupUtil setupUtil){
 		this.catalinaBaseDir = catalinaBaseDir;
 		this.log = log;
+		this.setupUtil = setupUtil;
 	}
 	
-	public TomcatConfigurator createTomcatDirectories() throws MojoExecutionException {
-		if(!catalinaBaseDir.exists() && !catalinaBaseDir.mkdir()){
-			throw new MojoExecutionException("could not create 'catalina.base' on " + catalinaBaseDir.getAbsolutePath());
-		}
-		createTomcatDirectory("conf");
-		createTomcatDirectory("webapps");
-		createTomcatDirectory("lib");
-		createTomcatDirectory("temp");
-		createTomcatDirectory("work");
-		createTomcatDirectory("logs");
-		return this;
-	}
-	
-	protected void createTomcatDirectory(String name) throws MojoExecutionException{
-		File directory = new File(catalinaBaseDir, name);
-		if(!directory.exists() && !directory.mkdir()){
-			throw new MojoExecutionException("could not create '" + name + "' on " + directory.getAbsolutePath());
-		}
-	}
-	
-	public TomcatConfigurator copyDefaultConfig() throws MojoExecutionException {
+	public TomcatConfigurator copyDefaultConfig() {
 		copyConfigResource("catalina.policy");
 		copyConfigResource("catalina.properties");
 		copyConfigResource("context.xml");
@@ -74,17 +54,18 @@ public class TomcatConfigurator {
 		return this;
 	}
 	
-	protected void copyConfigResource(String name) throws MojoExecutionException{
+	protected void copyConfigResource(String name) {
 		try {
-			IOUtil.copy(getClass().getResourceAsStream("conf/" + name), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + name)));
+//			IOUtil.copy(getClass().getResourceAsStream("conf/" + name), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + name)));
+			this.setupUtil.copy(getClass().getResourceAsStream("conf/" + name), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + name)));
 		} catch (FileNotFoundException e) {
-			throw new MojoExecutionException(e.getMessage(),e);
+			throw new TomcatSetupException(e.getMessage(),e);
 		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(),e);
+			throw new TomcatSetupException(e.getMessage(),e);
 		}
 	}
 	
-	public void copyUserConfigs(File userConfigDir) throws MojoExecutionException {
+	public void copyUserConfigs(File userConfigDir) {
 		if(userConfigDir == null){
 			log.info("No directory for userConfigFiles configured.");
 			return;
@@ -97,11 +78,12 @@ public class TomcatConfigurator {
 			File[] files = userConfigDir.listFiles(new FilesOnlyFileFilter());
 			for(File configFile : files){
 				try {
-					IOUtil.copy(new FileInputStream(configFile), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + configFile.getName())));
+//					IOUtil.copy(new FileInputStream(configFile), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + configFile.getName())));
+					this.setupUtil.copy(new FileInputStream(configFile), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + configFile.getName())));
 				} catch (FileNotFoundException e) {
-					throw new MojoExecutionException(e.getMessage(), e);
+					throw new TomcatSetupException(e.getMessage(), e);
 				} catch (IOException e) {
-					throw new MojoExecutionException(e.getMessage(), e);
+					throw new TomcatSetupException(e.getMessage(), e);
 				}
 			}
 		}

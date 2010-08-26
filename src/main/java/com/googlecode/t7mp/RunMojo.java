@@ -95,10 +95,10 @@ public class RunMojo extends AbstractRunMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 		
-		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBase, getLog());
-		configurator.createTomcatDirectories()
-					.copyDefaultConfig()
-					.copyUserConfigs(userConfigDir);
+		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBase, getLog(), null);
+//		configurator.createTomcatDirectories()
+//					.copyDefaultConfig()
+//					.copyUserConfigs(userConfigDir);
 		
 		MyArtifactResolver myArtifactResolver = new MyArtifactResolver(resolver, factory, local, remoteRepos);
 		ArtifactDispatcher libDispatcher = new ArtifactDispatcher(myArtifactResolver, catalinaBase);

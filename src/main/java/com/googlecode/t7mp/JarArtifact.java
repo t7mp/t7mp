@@ -42,4 +42,9 @@ public class JarArtifact extends AbstractArtifact {
 	public String getType() {
 		return "jar";
 	}
+	
+	@Override
+	public String toString(){
+		return "JarArtifact[" + getGroupId() + ":" + getArtifactId() + ":"  + getVersion() + "]";
+	}
 }
