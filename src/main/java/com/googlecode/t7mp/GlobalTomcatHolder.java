@@ -7,6 +7,10 @@ import org.apache.catalina.startup.Bootstrap;
  */
 public final class GlobalTomcatHolder {
 	
+	private GlobalTomcatHolder(){
+		throw new RuntimeException("Dont call this private Constructor");
+	}
+	
 	public static Bootstrap bootstrap;
 
 }
