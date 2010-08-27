@@ -31,19 +31,19 @@ import org.apache.maven.plugin.logging.Log;
  * Helper to build the tomcat directory structure and use default config files.
  * 
  */
-public class TomcatConfigurator {
+public class TomcatConfigFilesSetup {
 	
 	private final File catalinaBaseDir;
 	private final Log log;
 	private final SetupUtil setupUtil;
 	
-	public TomcatConfigurator(File catalinaBaseDir, Log log, SetupUtil setupUtil){
+	public TomcatConfigFilesSetup(File catalinaBaseDir, Log log, SetupUtil setupUtil){
 		this.catalinaBaseDir = catalinaBaseDir;
 		this.log = log;
 		this.setupUtil = setupUtil;
 	}
 	
-	public TomcatConfigurator copyDefaultConfig() {
+	public TomcatConfigFilesSetup copyDefaultConfig() {
 		copyConfigResource("catalina.policy");
 		copyConfigResource("catalina.properties");
 		copyConfigResource("context.xml");

@@ -95,7 +95,7 @@ public class RunMojo extends AbstractRunMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 		
-		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBase, getLog(), null);
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBase, getLog(), null);
 //		configurator.createTomcatDirectories()
 //					.copyDefaultConfig()
 //					.copyUserConfigs(userConfigDir);
