@@ -36,7 +36,7 @@ import org.codehaus.plexus.util.IOUtil;
  * Resolves artifacts from configuration-section and copy them to a specified directory.
  * 
  */
-class ArtifactDispatcher {
+class TomcatArtifactDispatcher {
 	
 	protected MyArtifactResolver myArtifactResolver;
 	
@@ -44,12 +44,12 @@ class ArtifactDispatcher {
 	
 	protected File catalinaBaseDir;
 	
-	ArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir){
+	TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir){
 		this.myArtifactResolver = myArtifactResolver;
 		this.catalinaBaseDir = catalinaBaseDir;
 	}
 	
-	ArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts) throws MojoExecutionException{
+	TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts) throws MojoExecutionException{
 		for(AbstractArtifact abstractArtifact : artifacts){
 			Artifact artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
 			abstractArtifact.setArtifact(artifact);
