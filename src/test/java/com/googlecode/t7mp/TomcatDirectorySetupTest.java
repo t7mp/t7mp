@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TomcatDirectoryLayoutCreatorTest {
+public class TomcatDirectorySetupTest {
 	
 	private File baseDir = null;
 	
@@ -56,5 +56,24 @@ public class TomcatDirectoryLayoutCreatorTest {
 		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"));
 		creator.createTomcatDirectory("test");
 	}
+	
+//	@Test
+//	public void testConfigurator() throws MojoExecutionException{
+//		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir, log, setupUtil);
+//		configurator.createTomcatDirectories();
+//		File[] createdDirectories = catalinaBaseDir.listFiles(new FileFilter(){
+//			@Override
+//			public boolean accept(File file) {
+//				return file.isDirectory();
+//			}
+//		});
+//		List<String> directoryNames = new ArrayList<String>();
+//		for(File directory : createdDirectories) {
+//			directoryNames.add(directory.getName());
+//		}
+//		Collections.sort(expectedDirectoryNames);
+//		Collections.sort(directoryNames);
+//		Assert.assertEquals(expectedDirectoryNames, directoryNames);
+//	}
 
 }
