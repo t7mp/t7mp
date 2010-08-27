@@ -19,6 +19,9 @@ package com.googlecode.t7mp;
  * under the License.
  */
 
+import java.io.File;
+import java.util.ArrayList;
+
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
@@ -31,7 +34,7 @@ import org.codehaus.plexus.archiver.manager.ArchiverManager;
  * Maven components. Maybe used in subclasses.
  *
  */
-public abstract class AbstractRunMojo extends AbstractMojo {
+public abstract class AbstractT7Mojo extends AbstractMojo {
 	
     /**
      * Used to look up Artifacts in the remote repository.
@@ -63,7 +66,7 @@ public abstract class AbstractRunMojo extends AbstractMojo {
      * @readonly
      * @required
      */
-    protected org.apache.maven.artifact.repository.ArtifactRepository local;
+    protected ArtifactRepository local;
 
     /**
      * List of Remote Repositories used by the resolver
@@ -80,5 +83,56 @@ public abstract class AbstractRunMojo extends AbstractMojo {
      * @component
      */
     protected ArchiverManager archiverManager;
+    
+	
+	/**
+	 * 
+	 * @parameter expression="${t7.tomcat.setAwait}" default-value="true"
+	 * @required
+	 * 
+	 */
+	protected boolean setAwait;
+	
+	/**
+	 * 
+	 * @parameter expression="${t7.tomcat.version}" default-value="7.0-SNAPSHOT"
+	 */
+	protected String tomcatVersion;
+	
+	/**
+	 * 
+	 * @parameter default-value="${project.build.directory}/tomcat"
+	 * @readonly // at the moment
+	 * 
+	 */
+	protected File catalinaBase;
+	
+	/**
+	 * 
+	 * @parameter expression="${t7.tomcat.confdir}" default-value="${basedir}/src/main/tomcat/conf"
+	 * @optional
+	 * 
+	 */
+	protected File userConfigDir;
+	
+    /**
+     * 
+     * @parameter default-value="${project.build.directory}/${project.build.finalName}"
+     * @readonly
+     * 
+     */
+    protected File webappOutputDirectory;
+    
+    /**
+     * 
+     * @parameter
+     */
+    protected ArrayList<WebappArtifact> webapps = new ArrayList<WebappArtifact>();
+    
+    /**
+     * 
+     * @parameter
+     */
+    protected ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
 
 }
