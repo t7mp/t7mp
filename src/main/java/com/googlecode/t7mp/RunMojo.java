@@ -38,21 +38,6 @@ public class RunMojo extends AbstractT7Mojo {
 		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 		
 		new TomcatSetup().withMojo(this).setUp();
-//		
-//		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBase, getLog(), null);
-////		configurator.createTomcatDirectories()
-////					.copyDefaultConfig()
-////					.copyUserConfigs(userConfigDir);
-//		
-//		MyArtifactResolver myArtifactResolver = new MyArtifactResolver(resolver, factory, local, remoteRepos);
-//		TomcatArtifactDispatcher libDispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBase);
-//		libDispatcher.resolveArtifacts(new TomcatJarArtifactHelper().getTomcatArtifacts(this.tomcatVersion)).copyTo("lib");
-//		libDispatcher.clear();
-//		libDispatcher.resolveArtifacts(libs).copyTo("lib");
-//		libDispatcher.clear();
-//		libDispatcher.resolveArtifacts(webapps).copyTo("webapps");
-//		
-//		copyWebapp();
 		
 		System.setProperty("catalina.home", catalinaBase.getAbsolutePath());
 		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
@@ -61,13 +46,14 @@ public class RunMojo extends AbstractT7Mojo {
 		try {
 			bootstrap.init();
 			if(setAwait){
-				Runtime.getRuntime().addShutdownHook(new InternalShutdownHook());
+				Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
 				bootstrap.setAwait(setAwait);
 				bootstrap.start();
 			}else{
 				bootstrap.start();
-				GlobalTomcatHolder.bootstrap = bootstrap;
-				Runtime.getRuntime().addShutdownHook(new GlobalTomcatShutdownHook(getLog()));
+//				GlobalTomcatHolder.bootstrap = bootstrap;
+				getPluginContext().put("TEST", bootstrap);
+				Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
 				getLog().info("Tomcat started");
 			}
 		} catch (Exception e) {
@@ -75,28 +61,28 @@ public class RunMojo extends AbstractT7Mojo {
 		}
 	}
 
-	private void shutdown() throws MojoExecutionException{
-		getLog().info("Shutting down tomcat ...");
-		if(this.bootstrap != null){
-			try {
-				bootstrap.stop();
-			} catch (Exception e) {
-				throw new MojoExecutionException(e.getMessage(), e);
-			}
-		}
-	}
+//	private void shutdown() throws MojoExecutionException{
+//		getLog().info("Shutting down tomcat ...");
+//		if(this.bootstrap != null){
+//			try {
+//				bootstrap.stop();
+//			} catch (Exception e) {
+//				throw new MojoExecutionException(e.getMessage(), e);
+//			}
+//		}
+//	}
 	
 
-	class InternalShutdownHook extends Thread {
-		
-		@Override
-		public void run() {
-			try {
-				shutdown();
-			} catch (MojoExecutionException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	class InternalShutdownHook extends Thread {
+//		
+//		@Override
+//		public void run() {
+//			try {
+//				shutdown();
+//			} catch (MojoExecutionException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 }
