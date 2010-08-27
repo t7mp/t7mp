@@ -2,6 +2,7 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,7 +17,6 @@ import org.apache.maven.plugin.logging.Log;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -33,7 +33,8 @@ public class TomcatConfigFilesSetupTest {
 	public void setUp(){
 		catalinaBaseDir = new File(new File(System.getProperty("java.io.tmpdir")), "catalinaBase_" + (++counter));
 		catalinaBaseDir.mkdirs();
-		catalinaBaseDir.deleteOnExit();
+		TomcatDirectorySetup directorySetup = new TomcatDirectorySetup(catalinaBaseDir);
+		directorySetup.createTomcatDirectories();
 	}
 	
 	@After
@@ -66,42 +67,78 @@ public class TomcatConfigFilesSetupTest {
 		Assert.assertEquals(expectedFileNames, fileNames);
 	}
 	
-	@Test(expected=TomcatSetupException.class)
+	@Test
 	public void testUserConfigDirDoesNotExist() throws MojoExecutionException{
 		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, Mockito.mock(SetupUtil.class));
-		configurator.copyUserConfigs(new File("/"));
+		configurator.copyUserConfigs(new File("/klaus"));
+		Mockito.verify(log, Mockito.atLeast(2)).warn(Mockito.anyString());
 	}
 	
-	@Ignore
-	@Test(expected=TomcatSetupException.class)
+	@Test
 	public void testUserConfigDirIsNotADirectory() throws MojoExecutionException, IOException{
 		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, Mockito.mock(SetupUtil.class));
 		configurator.copyUserConfigs(File.createTempFile("test_", "tmp"));
+		Mockito.verify(log, Mockito.atLeast(2)).warn(Mockito.anyString());
 	}
 	
 	@Test
 	public void testNoUserconfigDirConfigured() throws MojoExecutionException{
 		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, setupUtil);
 		configurator.copyUserConfigs(null);
+		Mockito.verify(log, Mockito.atLeast(1)).info(Mockito.anyString());
 	}
 	
-
+	@Test
+	public void testCopyUserconfigDir() throws MojoExecutionException{
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, setupUtil);
+		configurator.copyDefaultConfig();
+		File configFileDirectory = new File(catalinaBaseDir, "/conf");
+		configurator.copyUserConfigs(configFileDirectory);
+	}
+	
+	@Test(expected=TomcatSetupException.class)
+	public void testCopyUserconfigDirWithIOException() throws MojoExecutionException{
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, setupUtil);
+		configurator.copyDefaultConfig();
+		//
+		TomcatConfigFilesSetup configurator2 = new TomcatConfigFilesSetup(catalinaBaseDir, log, new IOExceptionSetupUtil());
+		File configFileDirectory = new File(catalinaBaseDir, "/conf");
+		configurator2.copyUserConfigs(configFileDirectory);
+	}
+	
+	@Test(expected=TomcatSetupException.class)
+	public void testCopyUserconfigDirWithFileNotFoundException() throws MojoExecutionException{
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, setupUtil);
+		configurator.copyDefaultConfig();
+		//
+		TomcatConfigFilesSetup configurator2 = new TomcatConfigFilesSetup(catalinaBaseDir, log, new FileNotFoundExceptionSetupUtil());
+		File configFileDirectory = new File(catalinaBaseDir, "/conf");
+		configurator2.copyUserConfigs(configFileDirectory);
+	}
 	
 	@Test(expected=TomcatSetupException.class)
 	public void testCopyConfigResourceWithIOException() throws IOException{
-		SetupUtil setupUtil = Mockito.mock(SetupUtil.class);
-		Mockito.doThrow(new IOException("TESTEXCEPTION")).when(setupUtil).copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class));
-		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(new File("/klaus"), log, setupUtil);
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, new IOExceptionSetupUtil());
 		configurator.copyConfigResource("test");
 	}
 	
-	public static class ExceptionalSetupUtil implements SetupUtil {
-
+	@Test(expected=TomcatSetupException.class)
+	public void testCopyConfigResourceWithFileNotFoundException() throws IOException{
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, new FileNotFoundExceptionSetupUtil());
+		configurator.copyConfigResource("test");
+	}
+	
+	public static class IOExceptionSetupUtil implements SetupUtil {
 		@Override
-		public void copy(InputStream inputStream, OutputStream outputStream)
-				throws IOException {
+		public void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
 			throw new IOException("TESTIOEXCEPTION");
 		}
-		
+	}
+	
+	public static class FileNotFoundExceptionSetupUtil implements SetupUtil {
+		@Override
+		public void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
+			throw new FileNotFoundException("TESTIOEXCEPTION");
+		}
 	}
 }
