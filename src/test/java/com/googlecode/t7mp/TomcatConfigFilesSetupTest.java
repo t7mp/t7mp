@@ -48,6 +48,8 @@ public class TomcatConfigFilesSetupTest {
 	public void testConfiguratorDefaultConfigFiles() throws MojoExecutionException{
 		TomcatDirectorySetup directorySetup = new TomcatDirectorySetup(catalinaBaseDir);
 		directorySetup.createTomcatDirectories();
+		TomcatConfigFilesSetup fileSetup = new TomcatConfigFilesSetup(catalinaBaseDir, log, setupUtil);
+		fileSetup.copyDefaultConfig();
 		File confDir = new File(catalinaBaseDir, "/conf/");
 		File[] createdDirectories = confDir.listFiles(new FileFilter(){
 			@Override
