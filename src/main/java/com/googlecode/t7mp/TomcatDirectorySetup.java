@@ -2,11 +2,11 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 
-public class TomcatDirectoryLayoutCreator {
+public class TomcatDirectorySetup {
 	
 	private final File catalinaBaseDir;
 	
-	public TomcatDirectoryLayoutCreator(File catalinaBaseDir){
+	public TomcatDirectorySetup(File catalinaBaseDir){
 		this.catalinaBaseDir = catalinaBaseDir;
 	}
 	
