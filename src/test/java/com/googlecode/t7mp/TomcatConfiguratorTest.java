@@ -103,20 +103,20 @@ public class TomcatConfiguratorTest {
 	
 	@Test(expected=TomcatSetupException.class)
 	public void testUserConfigDirDoesNotExist() throws MojoExecutionException{
-		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir, log, Mockito.mock(SetupUtil.class));
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, Mockito.mock(SetupUtil.class));
 		configurator.copyUserConfigs(new File("/"));
 	}
 	
 	@Ignore
 	@Test(expected=TomcatSetupException.class)
 	public void testUserConfigDirIsNotADirectory() throws MojoExecutionException, IOException{
-		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir, log, Mockito.mock(SetupUtil.class));
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, Mockito.mock(SetupUtil.class));
 		configurator.copyUserConfigs(File.createTempFile("test_", "tmp"));
 	}
 	
 	@Test
 	public void testNoUserconfigDirConfigured() throws MojoExecutionException{
-		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir, log, setupUtil);
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(catalinaBaseDir, log, setupUtil);
 		configurator.copyUserConfigs(null);
 	}
 	
@@ -126,7 +126,7 @@ public class TomcatConfiguratorTest {
 	public void testCopyConfigResourceWithIOException() throws IOException{
 		SetupUtil setupUtil = Mockito.mock(SetupUtil.class);
 		Mockito.doThrow(new IOException("TESTEXCEPTION")).when(setupUtil).copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class));
-		TomcatConfigurator configurator = new TomcatConfigurator(new File("/klaus"), log, setupUtil);
+		TomcatConfigFilesSetup configurator = new TomcatConfigFilesSetup(new File("/klaus"), log, setupUtil);
 		configurator.copyConfigResource("test");
 	}
 	

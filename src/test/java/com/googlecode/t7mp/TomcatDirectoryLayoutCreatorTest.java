@@ -33,7 +33,7 @@ public class TomcatDirectoryLayoutCreatorTest {
 	
 	@Test
 	public void testCreateDirectory() throws MojoExecutionException{
-		TomcatDirectoryLayoutCreator creator = new TomcatDirectoryLayoutCreator(baseDir);
+		TomcatDirectorySetup creator = new TomcatDirectorySetup(baseDir);
 		creator.createTomcatDirectories();
 		for(String directory : expectedDirectoryNames){
 			Assert.assertTrue(checkExist(directory));
@@ -47,13 +47,13 @@ public class TomcatDirectoryLayoutCreatorTest {
 	
 	@Test(expected=TomcatSetupException.class)
 	public void testBaseDirNotExist(){
-		TomcatDirectoryLayoutCreator creator = new TomcatDirectoryLayoutCreator(new File("/peter"));
+		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"));
 		creator.createTomcatDirectories();
 	}
 	
 	@Test(expected=TomcatSetupException.class)
 	public void testTomcatDirectoryCouldNotBeCreated(){
-		TomcatDirectoryLayoutCreator creator = new TomcatDirectoryLayoutCreator(new File("/peter"));
+		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"));
 		creator.createTomcatDirectory("test");
 	}
 
