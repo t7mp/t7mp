@@ -36,7 +36,7 @@ public class DefaultTomcatArtifactDescriptorReader implements TomcatArtifactDesc
 		}
 		List<JarArtifact> tomcatArtifactList = new ArrayList<JarArtifact>();
 		for(Map.Entry<Object, Object> entry : tomcatLibs.entrySet()){
-			String[] gav = entry.getValue().toString().split("_");
+			String[] gav = entry.getValue().toString().split(":");
 			JarArtifact jarArtifact = new JarArtifact();
 			jarArtifact.setGroupId(gav[0]);
 			jarArtifact.setArtifactId(gav[1]);
