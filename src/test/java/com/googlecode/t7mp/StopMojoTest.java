@@ -13,7 +13,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({GlobalTomcatHolder.class,Bootstrap.class})
+@PrepareForTest({Bootstrap.class})
 public class StopMojoTest {
 	
 	private Bootstrap bootstrap;
@@ -25,21 +25,19 @@ public class StopMojoTest {
 	
 	@Test
 	public void testExecute() throws Exception{
-		GlobalTomcatHolder.bootstrap = bootstrap;
+		Assert.fail("muss neu implementiert werden");
 		StopMojo mojo = new StopMojo();
 		mojo.execute();
 		Mockito.verify(bootstrap, Mockito.atLeastOnce()).stop();
-		Assert.assertTrue(GlobalTomcatHolder.bootstrap == null);
 	}
 	
 	@Test(expected=MojoExecutionException.class)
 	public void testExecuteWithException() throws Exception{
-		GlobalTomcatHolder.bootstrap = bootstrap;
+		Assert.fail("muss neu implementiert werden");
 		Mockito.doThrow(new Exception("TESTEXCEPTION")).when(bootstrap).stop();
 		StopMojo mojo = new StopMojo();
 		mojo.execute();
 		Mockito.verify(bootstrap, Mockito.atLeastOnce()).stop();
-		Assert.assertTrue(GlobalTomcatHolder.bootstrap == null);
 	}
 
 }

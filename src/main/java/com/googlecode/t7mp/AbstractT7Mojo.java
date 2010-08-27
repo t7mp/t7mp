@@ -36,6 +36,8 @@ import org.codehaus.plexus.archiver.manager.ArchiverManager;
  */
 public abstract class AbstractT7Mojo extends AbstractMojo {
 	
+	public static String T7_BOOTSTRAP_CONTEXT_ID = "com.googlecode.t7mp.Bootstrap";
+	
     /**
      * Used to look up Artifacts in the remote repository.
      *

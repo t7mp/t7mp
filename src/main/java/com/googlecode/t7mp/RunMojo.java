@@ -34,6 +34,7 @@ public class RunMojo extends AbstractT7Mojo {
 
     private Bootstrap bootstrap;
 	
+	@SuppressWarnings("unchecked")
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 		
@@ -51,8 +52,7 @@ public class RunMojo extends AbstractT7Mojo {
 				bootstrap.start();
 			}else{
 				bootstrap.start();
-//				GlobalTomcatHolder.bootstrap = bootstrap;
-				getPluginContext().put("TEST", bootstrap);
+				getPluginContext().put(T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
 				Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
 				getLog().info("Tomcat started");
 			}
@@ -60,29 +60,5 @@ public class RunMojo extends AbstractT7Mojo {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-
-//	private void shutdown() throws MojoExecutionException{
-//		getLog().info("Shutting down tomcat ...");
-//		if(this.bootstrap != null){
-//			try {
-//				bootstrap.stop();
-//			} catch (Exception e) {
-//				throw new MojoExecutionException(e.getMessage(), e);
-//			}
-//		}
-//	}
-	
-
-//	class InternalShutdownHook extends Thread {
-//		
-//		@Override
-//		public void run() {
-//			try {
-//				shutdown();
-//			} catch (MojoExecutionException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
 
 }
