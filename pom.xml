@@ -91,6 +91,30 @@
 					<connectionType>developerConnection</connectionType>
 				</configuration>
 			</plugin>
+			<plugin>
+				<inherited>false</inherited>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.8.0</version>
+				<configuration>
+					<basedir>${basedir}</basedir>
+					<header>${basedir}/etc/header.txt</header>
+					<strictChecking>true</strictChecking>
+					<failIfMissing>true</failIfMissing>
+					<aggregate>true</aggregate>
+					<encoding>UTF-8</encoding>
+					<properties>
+						<owner>Joerg Bellmann</owner>
+						<year>2010</year>
+						<email>joerg.bellmann@googlemail.com</email>
+					</properties>
+					<excludes>
+						<exclude>LICENSE.txt</exclude>
+						<exclude>**/src/test/resources/**</exclude>
+						<exclude>**/src/test/data/**</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
   
@@ -201,6 +225,27 @@
 				</plugins>
 			</build>
 		</profile>
+	<profile>
+		<id>license-check</id>
+		<build>
+			<plugins>
+				<plugin>
+					<inherited>false</inherited>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>check-headers</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
 	</profiles>
 
 	<repositories>
