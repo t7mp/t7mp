@@ -41,29 +41,38 @@ class TomcatArtifactDispatcher {
 	
 	protected File catalinaBaseDir;
 	
-	TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir){
+	protected SetupUtil setupUtil;
+	
+	TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil){
 		this.myArtifactResolver = myArtifactResolver;
 		this.catalinaBaseDir = catalinaBaseDir;
+		this.setupUtil = setupUtil;
 	}
 	
-	TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts) throws MojoExecutionException{
+	TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts){
 		for(AbstractArtifact abstractArtifact : artifacts){
-			Artifact artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
+			Artifact artifact;
+			try {
+				artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
+			} catch (MojoExecutionException e) {
+				throw new TomcatSetupException(e.getMessage(),e);
+			}
 			abstractArtifact.setArtifact(artifact);
 			resolvedArtifacts.add(abstractArtifact);
 		}
 		return this;
 	}
 	
-	void copyTo(String directoryName) throws MojoExecutionException{
+	void copyTo(String directoryName){
 		for(AbstractArtifact artifact : this.resolvedArtifacts){
 			try {
 				String targetFileName = createTargetFileName(artifact);
-				IOUtil.copy(new FileInputStream(artifact.getArtifact().getFile()), new FileOutputStream(new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName)));
+//				IOUtil.copy(new FileInputStream(artifact.getArtifact().getFile()), new FileOutputStream(new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName)));
+				this.setupUtil.copy(new FileInputStream(artifact.getArtifact().getFile()), new FileOutputStream(new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName)));
 			} catch (FileNotFoundException e) {
-				throw new MojoExecutionException(e.getMessage(), e);
+				throw new TomcatSetupException(e.getMessage(), e);
 			} catch (IOException e) {
-				throw new MojoExecutionException(e.getMessage(), e);
+				throw new TomcatSetupException(e.getMessage(), e);
 			}
 		}
 	}

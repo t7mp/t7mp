@@ -57,7 +57,7 @@ public class ArtifactDispatcherTest {
 	
 	@Test
 	public void testArtifactDispatcher() throws MojoExecutionException{
-		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir);
+		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
 		Artifact artifact = Mockito.mock(Artifact.class);
 		Mockito.when(artifact.getArtifactId()).thenReturn(ArtifactConstants.ARTIFACTID);
 		Mockito.when(artifact.getGroupId()).thenReturn(ArtifactConstants.GROUPID);

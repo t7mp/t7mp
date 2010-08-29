@@ -30,16 +30,8 @@ public class TomcatSetupException extends RuntimeException {
 	
 	private static final String NOT_EMPTY = " should not be empty";
 
-	public TomcatSetupException(){
-		super();
-	}
-	
 	public TomcatSetupException(String message){
 		super(message);
-	}
-	
-	public TomcatSetupException(Throwable cause){
-		super(cause.getMessage(), cause);
 	}
 	
 	public TomcatSetupException(String message, Throwable cause){

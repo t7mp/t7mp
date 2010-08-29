@@ -61,6 +61,11 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.1.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
@@ -204,9 +209,9 @@
 						<version>2.4</version>
 						<configuration>
 							<check>
+								<haltOnFailure>false</haltOnFailure>
 								<branchRate>85</branchRate>
 								<lineRate>85</lineRate>
-								<haltOnFailure>true</haltOnFailure>
 								<totalBranchRate>85</totalBranchRate>
 								<totalLineRate>85</totalLineRate>
 								<packageLineRate>85</packageLineRate>
@@ -265,4 +270,85 @@
 			<url>http://powermock.googlecode.com/svn/repo/</url>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<site>
+			<id>local</id>
+			<url>/home/joerg/mavensites</url>
+		</site>
+	</distributionManagement>
+	
+    <reporting>
+        <plugins>
+            <!-- for maven plugins -->
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>
+            </plugin>
+            <!-- surefire and other -->
+            <plugin>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <configuration>
+                    <linkJavadoc>true</linkJavadoc>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <quiet>true</quiet>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                        <configuration>
+                            <links>
+                                <link>http://java.sun.com/javase/6/docs/api/</link>
+                            </links>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <targetJdk>${jdk}</targetJdk>
+                    <minimumTokens>100</minimumTokens>
+                    <rulesets>
+                        <!-- Rule sets that come bundled with PMD -->
+                        <ruleset>/rulesets/basic.xml</ruleset>
+                        <ruleset>/rulesets/braces.xml</ruleset>
+                        <ruleset>/rulesets/finalizers.xml</ruleset>
+                        <ruleset>/rulesets/imports.xml</ruleset>
+                        <ruleset>/rulesets/migrating.xml</ruleset>
+                        <ruleset>/rulesets/strings.xml</ruleset>
+                        <ruleset>/rulesets/unusedcode.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <configuration>
+                    <tags>
+                        <tag>TODO</tag>
+                        <tag>FIXME</tag>
+                        <tag>@todo</tag>
+                        <tag>@fixme</tag>
+                        <tag>@deprecated</tag>
+                    </tags>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

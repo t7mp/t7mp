@@ -29,17 +29,20 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class RunMojo extends AbstractT7Mojo {
 
-    private Bootstrap bootstrap;
+    protected Bootstrap bootstrap;
+    
+    protected TomcatSetup tomcatSetup;
 	
 	@SuppressWarnings("unchecked")
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 		
-		new TomcatSetup().withMojo(this).setUp();
+		this.tomcatSetup = getTomcatSetup();
+		this.tomcatSetup.buildTomcat();
 		
 		System.setProperty("catalina.home", catalinaBase.getAbsolutePath());
 		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
-		bootstrap = new Bootstrap();
+		bootstrap = getBootstrap();
 		getLog().info("Starting Tomcat ...");
 		try {
 			bootstrap.init();
@@ -56,6 +59,14 @@ public class RunMojo extends AbstractT7Mojo {
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
+	}
+	
+	protected TomcatSetup getTomcatSetup(){
+		return new DefaultTomcatSetup((AbstractT7Mojo)this);
+	}
+	
+	protected Bootstrap getBootstrap(){
+		return new Bootstrap();
 	}
 
 }

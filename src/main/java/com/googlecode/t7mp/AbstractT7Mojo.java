@@ -90,13 +90,13 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	 * @required
 	 * 
 	 */
-	protected boolean setAwait;
+	protected boolean setAwait = true;
 	
 	/**
 	 * 
 	 * @parameter expression="${t7.tomcat.version}" default-value="7.0-SNAPSHOT"
 	 */
-	protected String tomcatVersion;
+	protected String tomcatVersion = "7.0-SNAPSHOT";
 	
 	/**
 	 * 
