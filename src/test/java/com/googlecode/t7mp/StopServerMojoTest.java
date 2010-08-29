@@ -35,6 +35,7 @@ public class StopServerMojoTest {
 		FakeServer server = new FakeServer(8005);
 		Thread t = new Thread(server);
 		t.start();
+		Thread.sleep(2000);
 		StopServerMojo mojo = new StopServerMojo();
 		mojo.setShutdownCommand("TESTCOMMAND");
 		mojo.setShutdownPort(server.getPort());

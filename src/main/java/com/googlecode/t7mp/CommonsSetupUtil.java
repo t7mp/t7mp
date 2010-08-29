@@ -16,10 +16,12 @@
 
 package com.googlecode.t7mp;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -33,5 +35,12 @@ public class CommonsSetupUtil implements SetupUtil {
 	public void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
 		IOUtils.copy(inputStream, outputStream);
 	}
+
+	@Override
+	public void copyDirectory(File source, File target) throws IOException {
+		FileUtils.copyDirectory(source, target);		
+	}
+	
+	
 
 }

@@ -94,6 +94,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
+	 * @parameter expression="${t7.tomcat.lookInside}" default-value="false"
+	 * @required
+	 * 
+	 */
+	protected boolean lookInside = false;
+	
+	/**
+	 * 
 	 * @parameter expression="${t7.tomcat.version}" default-value="7.0-SNAPSHOT"
 	 */
 	protected String tomcatVersion = "7.0-SNAPSHOT";

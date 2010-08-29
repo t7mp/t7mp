@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.codehaus.plexus.util.IOUtil;
 
 
 /**
@@ -43,13 +42,13 @@ class TomcatArtifactDispatcher {
 	
 	protected SetupUtil setupUtil;
 	
-	TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil){
+	public TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil){
 		this.myArtifactResolver = myArtifactResolver;
 		this.catalinaBaseDir = catalinaBaseDir;
 		this.setupUtil = setupUtil;
 	}
 	
-	TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts){
+	public TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts){
 		for(AbstractArtifact abstractArtifact : artifacts){
 			Artifact artifact;
 			try {
@@ -63,7 +62,7 @@ class TomcatArtifactDispatcher {
 		return this;
 	}
 	
-	void copyTo(String directoryName){
+	public void copyTo(String directoryName){
 		for(AbstractArtifact artifact : this.resolvedArtifacts){
 			try {
 				String targetFileName = createTargetFileName(artifact);

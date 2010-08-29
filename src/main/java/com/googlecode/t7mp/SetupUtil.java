@@ -16,6 +16,7 @@
 
 package com.googlecode.t7mp;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,5 +24,7 @@ import java.io.OutputStream;
 public interface SetupUtil {
 	
 	void copy(InputStream inputStream, OutputStream outputStream) throws IOException;
+	
+	void copyDirectory(File source, File target) throws IOException;
 
 }
