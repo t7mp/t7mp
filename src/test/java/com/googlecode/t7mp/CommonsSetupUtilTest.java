@@ -25,9 +25,30 @@ import java.io.IOException;
 
 import junit.framework.Assert;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CommonsSetupUtilTest {
+	
+	private File catalinaBaseDir;
+	private static int counter = 1;
+	
+
+	@Before
+	public void setUp() throws IOException{
+		catalinaBaseDir = new File(new File(System.getProperty("java.io.tmpdir")), "catalinaBase_" + (++counter));
+		catalinaBaseDir.mkdirs();
+	}
+	
+	@After
+	public void tearDown() throws IOException{
+		FileUtils.deleteDirectory(catalinaBaseDir);
+		if(catalinaBaseDir.exists()){
+			System.err.println("Could not delete directory " + catalinaBaseDir.getAbsolutePath());
+		}
+	}
 	
 	@Test
 	public void testCopy() throws IOException{
@@ -49,6 +70,36 @@ public class CommonsSetupUtilTest {
 		reader.close();
 		String result = new String(buffer);
 		Assert.assertEquals(message, result.trim());
+	}
+	
+	@Test
+	public void testCopyDirectory() throws IOException{
+		File rootDirectory = new File(catalinaBaseDir, "root");
+		Assert.assertTrue(rootDirectory.mkdir());
+		File firstFile = File.createTempFile("first_", ".tmp", rootDirectory);
+		File childDirectory = new File(rootDirectory, "child");
+		Assert.assertTrue(childDirectory.mkdir());
+		File secondFile = File.createTempFile("second_", ".tmp", childDirectory);
+		File webappsDirectory = new File(catalinaBaseDir, "/webapps/");
+		webappsDirectory.mkdirs();
+		File targetDirectory = new File(webappsDirectory, rootDirectory.getName());
+		Assert.assertTrue(targetDirectory.mkdirs());
+		
+		SetupUtil setupUtil = new CommonsSetupUtil();
+		setupUtil.copyDirectory(rootDirectory, targetDirectory);
+		
+		File copiedRootDir = new File(webappsDirectory, "/root/");
+		Assert.assertTrue(copiedRootDir.isDirectory());
+		Assert.assertTrue(copiedRootDir.exists());
+		File copiedChildDirectory = new File(copiedRootDir, "/child/");
+		Assert.assertTrue(copiedChildDirectory.isDirectory());
+		Assert.assertTrue(copiedChildDirectory.exists());
+		File[] rootDirectoryFiles = copiedRootDir.listFiles(new FilesOnlyFileFilter());
+		Assert.assertEquals(1, rootDirectoryFiles.length);
+		Assert.assertTrue(rootDirectoryFiles[0].getName().startsWith("first_"));
+		File[] childDirectoryFiles = copiedChildDirectory.listFiles(new FilesOnlyFileFilter());
+		Assert.assertEquals(1, childDirectoryFiles.length);
+		Assert.assertTrue(childDirectoryFiles[0].getName().startsWith("second_"));
 	}
 
 }

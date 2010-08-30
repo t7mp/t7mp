@@ -25,13 +25,17 @@ import junit.framework.Assert;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class ArtifactDispatcherTest {
+public class TomcatArtifactDispatcherTest {
 	
 	private File catalinaBaseDir;
 	private static int counter = 1;
@@ -93,6 +97,13 @@ public class ArtifactDispatcherTest {
 		
 		dispatcher.clear();
 		Assert.assertTrue(dispatcher.resolvedArtifacts.size() == 0);
+	}
+	
+	@Test(expected=TomcatSetupException.class)
+	public void testArtifactResolverException() throws ArtifactResolutionException, ArtifactNotFoundException, MojoExecutionException{
+		Mockito.doThrow(new MojoExecutionException("TESTEXCEPTION")).when(myArtifactResolver).resolve(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
+		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
+		dispatcher.resolveArtifacts(getArtifacList());
 	}
 
 	private List<AbstractArtifact> getArtifacList() {
