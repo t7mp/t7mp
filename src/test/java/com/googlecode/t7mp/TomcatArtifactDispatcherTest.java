@@ -18,6 +18,8 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +62,7 @@ public class TomcatArtifactDispatcherTest {
 	}
 	
 	@Test
-	public void testArtifactDispatcher() throws MojoExecutionException{
+	public void testArtifactDispatcher() throws MojoExecutionException, IOException{
 		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
 		Artifact artifact = Mockito.mock(Artifact.class);
 		Mockito.when(artifact.getArtifactId()).thenReturn(ArtifactConstants.ARTIFACTID);
@@ -100,19 +102,33 @@ public class TomcatArtifactDispatcherTest {
 	}
 	
 	@Test(expected=TomcatSetupException.class)
-	public void testArtifactResolverException() throws ArtifactResolutionException, ArtifactNotFoundException, MojoExecutionException{
+	public void testCopyArtifactException() throws IOException{
+		SetupUtil setupUtil = Mockito.mock(SetupUtil.class);
+		Mockito.doThrow(new IOException("TESTEXCEPTION")).when(setupUtil).copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class));
+		TomcatArtifactDispatcher artifactDispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
+		artifactDispatcher.setupUtil = setupUtil;
+		artifactDispatcher.resolvedArtifacts = getArtifacList();
+		artifactDispatcher.copyTo("test");
+		Mockito.verify(setupUtil, Mockito.atLeast(1)).copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class));
+	}
+	
+	@Test(expected=TomcatSetupException.class)
+	public void testArtifactResolverException() throws ArtifactResolutionException, ArtifactNotFoundException, MojoExecutionException, IOException{
 		Mockito.doThrow(new MojoExecutionException("TESTEXCEPTION")).when(myArtifactResolver).resolve(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
 		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
 		dispatcher.resolveArtifacts(getArtifacList());
 	}
 
-	private List<AbstractArtifact> getArtifacList() {
+	private List<AbstractArtifact> getArtifacList() throws IOException {
+		Artifact mArtifact = Mockito.mock(Artifact.class);
+		Mockito.when(mArtifact.getFile()).thenReturn(File.createTempFile("anArtifact_", ".jar"));
 		JarArtifact artifact = new JarArtifact();
 		artifact.setArtifactId(ArtifactConstants.ARTIFACTID);
 		artifact.setGroupId(ArtifactConstants.GROUPID);
 		artifact.setVersion(ArtifactConstants.VERSION);
 		artifact.setType(ArtifactConstants.JAR_TYPE);
 		artifact.setClassifier(ArtifactConstants.CLASSIFIER);
+		artifact.setArtifact(mArtifact);
 		
 		WebappArtifact artifact2 = new WebappArtifact();
 		artifact2.setArtifactId(ArtifactConstants.ARTIFACTID);
@@ -120,6 +136,7 @@ public class TomcatArtifactDispatcherTest {
 		artifact2.setVersion(ArtifactConstants.VERSION);
 		artifact2.setType(ArtifactConstants.JAR_TYPE);
 		artifact2.setClassifier(ArtifactConstants.CLASSIFIER);
+		artifact2.setArtifact(mArtifact);
 		
 		List<AbstractArtifact> resultList = new ArrayList<AbstractArtifact>();
 		resultList.add(artifact);

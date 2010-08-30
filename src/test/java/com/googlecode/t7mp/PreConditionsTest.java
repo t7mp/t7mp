@@ -18,6 +18,7 @@ package com.googlecode.t7mp;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -43,6 +44,15 @@ public class PreConditionsTest {
 	@Test
 	public void testCorrectVersion_6() throws MojoExecutionException{
 		PreConditions.checkConfiguredTomcatVersion(log, "6.x");
+	}
+	
+	@Test
+	public void testPrivateConstructor(){
+		try {
+			Invoke.privateConstructor(PreConditions.class);
+		} catch (Exception e) {
+			Assert.assertEquals("Dont call this private constructor", e.getCause().getMessage());
+		}
 	}
 
 }
