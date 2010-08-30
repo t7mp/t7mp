@@ -86,7 +86,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
-	 * @parameter expression="${t7.tomcat.setAwait}" default-value="true"
+	 * @parameter expression="${t7.setAwait}" default-value="true"
 	 * @required
 	 * 
 	 */
@@ -94,7 +94,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
-	 * @parameter expression="${t7.tomcat.lookInside}" default-value="false"
+	 * @parameter expression="${t7.lookInside}" default-value="false"
 	 * @required
 	 * 
 	 */
@@ -102,7 +102,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
-	 * @parameter expression="${t7.tomcat.version}" default-value="7.0-SNAPSHOT"
+	 * @parameter expression="${t7.tomcatVersion}" default-value="7.0-SNAPSHOT"
 	 */
 	protected String tomcatVersion = "7.0-SNAPSHOT";
 	
@@ -131,6 +131,13 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     protected File webappOutputDirectory;
     
     /**
+     * @parameter default-value="${project.packaging}"
+     * 
+     * 
+     */
+    protected String packaging = "war";
+    
+    /**
      * 
      * @parameter
      */
@@ -141,5 +148,9 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter
      */
     protected ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
+    
+    protected boolean isWebProject(){
+    	return this.packaging.equals("war");
+    }
 
 }

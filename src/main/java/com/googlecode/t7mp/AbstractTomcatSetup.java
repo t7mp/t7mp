@@ -89,6 +89,9 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 	}
 	
 	protected void copyWebapp() throws TomcatSetupException {
+		if(!this.t7Mojo.isWebProject()){
+			return;
+		}
 		if((this.t7Mojo.webappOutputDirectory == null) || (!this.t7Mojo.webappOutputDirectory.exists())){
 			return;
 		}
