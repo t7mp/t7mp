@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.maven.artifact.Artifact;
 import org.mockito.Mockito;
 
-public class InsertMockAtValidationTomcatSetup extends DefaultTomcatSetupZwo {
+public class InsertMockAtValidationTomcatSetup extends DefaultTomcatSetup {
 
 	public InsertMockAtValidationTomcatSetup(AbstractT7Mojo t7Mojo) {
 		super(t7Mojo);

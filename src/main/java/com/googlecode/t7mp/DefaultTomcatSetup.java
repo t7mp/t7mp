@@ -1,8 +1,8 @@
 package com.googlecode.t7mp;
 
-public class DefaultTomcatSetupZwo extends AbstractTomcatSetup {
+public class DefaultTomcatSetup extends AbstractTomcatSetup {
 
-	public DefaultTomcatSetupZwo(AbstractT7Mojo t7Mojo) {
+	public DefaultTomcatSetup(AbstractT7Mojo t7Mojo) {
 		super(t7Mojo);
 	}
 
