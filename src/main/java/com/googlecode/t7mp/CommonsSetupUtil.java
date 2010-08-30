@@ -40,7 +40,4 @@ public class CommonsSetupUtil implements SetupUtil {
 	public void copyDirectory(File source, File target) throws IOException {
 		FileUtils.copyDirectory(source, target);		
 	}
-	
-	
-
 }
