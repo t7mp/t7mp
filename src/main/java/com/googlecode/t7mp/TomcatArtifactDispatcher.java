@@ -18,7 +18,6 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,10 +65,7 @@ class TomcatArtifactDispatcher {
 		for(AbstractArtifact artifact : this.resolvedArtifacts){
 			try {
 				String targetFileName = createTargetFileName(artifact);
-//				IOUtil.copy(new FileInputStream(artifact.getArtifact().getFile()), new FileOutputStream(new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName)));
 				this.setupUtil.copy(new FileInputStream(artifact.getArtifact().getFile()), new FileOutputStream(new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName)));
-			} catch (FileNotFoundException e) {
-				throw new TomcatSetupException(e.getMessage(), e);
 			} catch (IOException e) {
 				throw new TomcatSetupException(e.getMessage(), e);
 			}
