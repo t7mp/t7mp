@@ -21,6 +21,10 @@ import org.apache.maven.plugin.logging.Log;
 
 class PreConditions {
 	
+	private PreConditions(){
+		throw new RuntimeException("Dont call this private constructor");
+	}
+	
 	static void checkConfiguredTomcatVersion(Log log, String tomcatVersion) throws MojoExecutionException{
 		if(!tomcatVersion.startsWith("7.") && !tomcatVersion.startsWith("6.")){
 			log.info("");
