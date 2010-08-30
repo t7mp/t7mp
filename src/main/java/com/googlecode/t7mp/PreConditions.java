@@ -22,11 +22,11 @@ import org.apache.maven.plugin.logging.Log;
 class PreConditions {
 	
 	static void checkConfiguredTomcatVersion(Log log, String tomcatVersion) throws MojoExecutionException{
-		if(!tomcatVersion.startsWith("7.")){
+		if(!tomcatVersion.startsWith("7.") || !tomcatVersion.startsWith("6.")){
 			log.info("");
 			log.info("");
 			log.error("======================= MAVEN-T7-PLUGIN ==================");
-			log.error("This plugin supports only Version 7 of Tomcat. You configured: " + tomcatVersion + ". Cancel the Build.");
+			log.error("This plugin supports only Version 7 or 6 of Tomcat. You configured: " + tomcatVersion + ". Cancel the Build.");
 			log.error("===========================================================");
 			log.info("");
 			log.info("");
