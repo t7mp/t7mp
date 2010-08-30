@@ -7,7 +7,7 @@ import org.apache.catalina.startup.Bootstrap;
 
 public class SubRunMojo extends RunMojo {
 	
-	private Map testPluginContext = new HashMap();
+	private Map<Object,Object> testPluginContext = new HashMap<Object,Object>();
 	
 	public SubRunMojo(Bootstrap bootstrap, TomcatSetup setup){
 		this.bootstrap = bootstrap;
@@ -25,7 +25,7 @@ public class SubRunMojo extends RunMojo {
 	}
 
 	@Override
-	public Map getPluginContext() {
+	public Map<Object,Object> getPluginContext() {
 		return testPluginContext;
 	}
 }

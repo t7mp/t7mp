@@ -18,8 +18,6 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.apache.catalina.startup.Bootstrap;
@@ -42,8 +40,6 @@ public class RunMojoTest {
 	private Bootstrap bootstrap;
 	private TomcatSetup setup;
 	private File catalinaBaseDir;
-	
-	private Map pluginContext = new HashMap();
 	
 	@Before
 	public void setUp(){
