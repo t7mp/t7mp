@@ -62,7 +62,7 @@ public class RunMojo extends AbstractT7Mojo {
 	}
 	
 	protected TomcatSetup getTomcatSetup(){
-		return new DefaultTomcatSetup((AbstractT7Mojo)this);
+		return new DefaultTomcatSetupZwo((AbstractT7Mojo)this);
 	}
 	
 	protected Bootstrap getBootstrap(){

@@ -13,7 +13,6 @@ import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.junit.After;
 import org.junit.Before;
@@ -99,7 +98,7 @@ public class TomcatSetupTest {
 	@Test
 	public void testCopyWebapp() throws MojoExecutionException{
 		AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
-		DefaultTomcatSetup setup = new DefaultTomcatSetup(mojo);
+		DefaultTomcatSetupZwo setup = new DefaultTomcatSetupZwo(mojo);
 		setup.copyWebapp();
 	}
 
@@ -107,7 +106,7 @@ public class TomcatSetupTest {
 	public void testCopyWebappWithNotExistingWebappDirectory() throws MojoExecutionException{
 		AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
 		mojo.webappOutputDirectory = new File("/doesNotExist");
-		DefaultTomcatSetup setup = new DefaultTomcatSetup(mojo);
+		DefaultTomcatSetupZwo setup = new DefaultTomcatSetupZwo(mojo);
 		setup.copyWebapp();
 	}
 	
@@ -120,7 +119,7 @@ public class TomcatSetupTest {
 		mojo.catalinaBase = catalinaBaseDir;
 		SetupUtil setupUtil = Mockito.mock(SetupUtil.class);
 		Mockito.doThrow(new IOException("COPYWEBAPPEXCEPTION")).when(setupUtil).copyDirectory(Mockito.any(File.class), Mockito.any(File.class));
-		DefaultTomcatSetup setup = new DefaultTomcatSetup(mojo);
+		DefaultTomcatSetupZwo setup = new DefaultTomcatSetupZwo(mojo);
 		setup.setupUtil = setupUtil;
 		setup.copyWebapp();
 	}
@@ -132,7 +131,7 @@ public class TomcatSetupTest {
 		confDirectory.mkdirs();
 		mojo.webappOutputDirectory = confDirectory;
 		mojo.catalinaBase = catalinaBaseDir;
-		DefaultTomcatSetup setup = new DefaultTomcatSetup(mojo);
+		DefaultTomcatSetupZwo setup = new DefaultTomcatSetupZwo(mojo);
 		setup.copyWebapp();
 	}
 
