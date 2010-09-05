@@ -54,4 +54,9 @@ public class WebappArtifact extends AbstractArtifact {
 		this.contextPath = contextPath;
 	}
 	
+	@Override
+	public String toString(){
+		return "WebappArtifact[contextPath=" + getContextPath() + ":" + super.toString() + "]";
+	}
+	
 }

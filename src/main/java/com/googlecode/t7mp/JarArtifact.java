@@ -42,6 +42,6 @@ public class JarArtifact extends AbstractArtifact {
 	
 	@Override
 	public String toString(){
-		return "JarArtifact[" + getGroupId() + ":" + getArtifactId() + ":"  + getVersion() + "]";
+		return "JarArtifact[" + super.toString() + "]";
 	}
 }
