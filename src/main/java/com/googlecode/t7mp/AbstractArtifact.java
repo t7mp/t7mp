@@ -113,5 +113,16 @@ public abstract class AbstractArtifact {
 	public void setArtifact(Artifact artifact) {
 		this.artifact = artifact;
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append(getGroupId()).append(":");
+		sb.append(getArtifactId()).append(":");
+		sb.append(getVersion()).append(":");
+		sb.append(getClassifier()).append(":");
+		sb.append(getType());
+		return sb.toString().trim();
+	}
 
 }
