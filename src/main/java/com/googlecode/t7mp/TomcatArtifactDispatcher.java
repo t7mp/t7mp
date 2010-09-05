@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 
 
 /**
@@ -41,14 +42,18 @@ class TomcatArtifactDispatcher {
 	
 	protected SetupUtil setupUtil;
 	
-	public TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil){
+	protected Log log;
+	
+	public TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil, Log log){
 		this.myArtifactResolver = myArtifactResolver;
 		this.catalinaBaseDir = catalinaBaseDir;
 		this.setupUtil = setupUtil;
+		this.log = log;
 	}
 	
 	public TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts){
 		for(AbstractArtifact abstractArtifact : artifacts){
+			log.debug("Resolve artifact for " + abstractArtifact.toString());
 			Artifact artifact;
 			try {
 				artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
@@ -65,7 +70,10 @@ class TomcatArtifactDispatcher {
 		for(AbstractArtifact artifact : this.resolvedArtifacts){
 			try {
 				String targetFileName = createTargetFileName(artifact);
-				this.setupUtil.copy(new FileInputStream(artifact.getArtifact().getFile()), new FileOutputStream(new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName)));
+				File sourceFile = artifact.getArtifact().getFile();
+				File targetFile = new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName);
+				log.debug("Copy artifact from " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
+				this.setupUtil.copy(new FileInputStream(sourceFile), new FileOutputStream(targetFile));
 			} catch (IOException e) {
 				throw new TomcatSetupException(e.getMessage(), e);
 			}

@@ -18,12 +18,16 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 
+import org.apache.maven.plugin.logging.Log;
+
 public class TomcatDirectorySetup {
 	
 	private final File catalinaBaseDir;
+	private final Log log;
 	
-	public TomcatDirectorySetup(File catalinaBaseDir){
+	public TomcatDirectorySetup(File catalinaBaseDir, Log log){
 		this.catalinaBaseDir = catalinaBaseDir;
+		this.log = log;
 	}
 	
 	public void createTomcatDirectories() {
@@ -40,6 +44,7 @@ public class TomcatDirectorySetup {
 	
 	protected void createTomcatDirectory(String name) {
 		File directory = new File(catalinaBaseDir, name);
+		log.debug("Try to create directory " + directory.getAbsolutePath());
 		if(!directory.exists() && !directory.mkdir()){
 			throw new TomcatSetupException("could not create '" + name + "' on " + directory.getAbsolutePath());
 		}
