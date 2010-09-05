@@ -34,7 +34,7 @@ public class FullyConfiguredTomcatSetup extends AbstractTomcatSetup {
 	protected void configure() throws TomcatSetupException {
 		log = t7Mojo.getLog();
 		artifactDescriptorReader = Mockito.mock(TomcatArtifactDescriptorReader.class);
-		directorySetup = new TomcatDirectorySetup(t7Mojo.catalinaBase);
+		directorySetup = new TomcatDirectorySetup(t7Mojo.catalinaBase,log);
 		configFilesSetup = new TomcatConfigFilesSetup(t7Mojo.catalinaBase, log, new DoNothingSetupUtil());
 		libDispatcher = Mockito.mock(TomcatArtifactDispatcher.class);
 	}

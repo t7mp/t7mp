@@ -49,7 +49,7 @@ public class TomcatConfigFilesSetupTest {
 	public void setUp(){
 		catalinaBaseDir = new File(new File(System.getProperty("java.io.tmpdir")), "catalinaBase_" + (++counter));
 		catalinaBaseDir.mkdirs();
-		TomcatDirectorySetup directorySetup = new TomcatDirectorySetup(catalinaBaseDir);
+		TomcatDirectorySetup directorySetup = new TomcatDirectorySetup(catalinaBaseDir, log);
 		directorySetup.createTomcatDirectories();
 	}
 	
@@ -63,7 +63,7 @@ public class TomcatConfigFilesSetupTest {
 	
 	@Test
 	public void testConfiguratorDefaultConfigFiles() throws MojoExecutionException{
-		TomcatDirectorySetup directorySetup = new TomcatDirectorySetup(catalinaBaseDir);
+		TomcatDirectorySetup directorySetup = new TomcatDirectorySetup(catalinaBaseDir, log);
 		directorySetup.createTomcatDirectories();
 		TomcatConfigFilesSetup fileSetup = new TomcatConfigFilesSetup(catalinaBaseDir, log, setupUtil);
 		fileSetup.copyDefaultConfig();

@@ -24,10 +24,12 @@ import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class TomcatDirectorySetupTest {
 	
@@ -49,7 +51,7 @@ public class TomcatDirectorySetupTest {
 	
 	@Test
 	public void testCreateDirectory() throws MojoExecutionException{
-		TomcatDirectorySetup creator = new TomcatDirectorySetup(baseDir);
+		TomcatDirectorySetup creator = new TomcatDirectorySetup(baseDir,Mockito.mock(Log.class));
 		creator.createTomcatDirectories();
 		for(String directory : expectedDirectoryNames){
 			Assert.assertTrue(checkExist(directory));
@@ -63,13 +65,13 @@ public class TomcatDirectorySetupTest {
 	
 	@Test(expected=TomcatSetupException.class)
 	public void testBaseDirNotExist(){
-		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"));
+		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"), Mockito.mock(Log.class));
 		creator.createTomcatDirectories();
 	}
 	
 	@Test(expected=TomcatSetupException.class)
 	public void testTomcatDirectoryCouldNotBeCreated(){
-		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"));
+		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"), Mockito.mock(Log.class));
 		creator.createTomcatDirectory("test");
 	}
 	

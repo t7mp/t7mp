@@ -32,6 +32,7 @@ import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class TomcatArtifactDispatcherTest {
 	
 	@Test
 	public void testArtifactDispatcher() throws MojoExecutionException, IOException{
-		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
+		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class), Mockito.mock(Log.class));
 		Artifact artifact = Mockito.mock(Artifact.class);
 		Mockito.when(artifact.getArtifactId()).thenReturn(ArtifactConstants.ARTIFACTID);
 		Mockito.when(artifact.getGroupId()).thenReturn(ArtifactConstants.GROUPID);
@@ -105,7 +106,7 @@ public class TomcatArtifactDispatcherTest {
 	public void testCopyArtifactException() throws IOException{
 		SetupUtil setupUtil = Mockito.mock(SetupUtil.class);
 		Mockito.doThrow(new IOException("TESTEXCEPTION")).when(setupUtil).copy(Mockito.any(InputStream.class), Mockito.any(OutputStream.class));
-		TomcatArtifactDispatcher artifactDispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
+		TomcatArtifactDispatcher artifactDispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class), Mockito.mock(Log.class));
 		artifactDispatcher.setupUtil = setupUtil;
 		artifactDispatcher.resolvedArtifacts = getArtifacList();
 		artifactDispatcher.copyTo("test");
@@ -115,7 +116,7 @@ public class TomcatArtifactDispatcherTest {
 	@Test(expected=TomcatSetupException.class)
 	public void testArtifactResolverException() throws ArtifactResolutionException, ArtifactNotFoundException, MojoExecutionException, IOException{
 		Mockito.doThrow(new MojoExecutionException("TESTEXCEPTION")).when(myArtifactResolver).resolve(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
-		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class));
+		TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class), Mockito.mock(Log.class));
 		dispatcher.resolveArtifacts(getArtifacList());
 	}
 
