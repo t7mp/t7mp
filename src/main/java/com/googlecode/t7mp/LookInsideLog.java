@@ -31,7 +31,7 @@ public class LookInsideLog implements Log {
 		if(realLog.isDebugEnabled()){
 			realLog.debug(arg0);
 		}else{
-			realLog.info(arg0);
+			realLog.info(formatMessage(arg0));
 		}
 	}
 
@@ -49,8 +49,13 @@ public class LookInsideLog implements Log {
 		if(realLog.isDebugEnabled()){
 			realLog.debug(arg0,arg1);
 		}else{
-			realLog.info(arg0,arg1);
+			realLog.info(formatMessage(arg0),arg1);
 		}
+	}
+	
+	
+	private String formatMessage(CharSequence message){
+		return "\t[t7-lookInside] -- " + message;
 	}
 
 	@Override
