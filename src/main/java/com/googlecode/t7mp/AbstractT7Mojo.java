@@ -149,6 +149,8 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      */
     protected ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
     
+    
+    
     protected boolean isWebProject(){
     	return this.packaging.equals("war");
     }

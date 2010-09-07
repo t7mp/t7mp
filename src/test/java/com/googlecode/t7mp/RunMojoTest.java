@@ -93,5 +93,16 @@ public class RunMojoTest {
 		Mockito.verify(bootstrap, Mockito.atLeast(1)).setAwait(Mockito.anyBoolean());
 		Mockito.verify(bootstrap, Mockito.atLeast(1)).start();
 	}
+	
+	@Test
+	public void testGetTomcatSetup(){
+		RunMojo mojo = new RunMojo();
+		Bootstrap bootstrap = mojo.getBootstrap();
+		Assert.assertNotNull(bootstrap);
+		Assert.assertEquals(Bootstrap.class, bootstrap.getClass());
+		TomcatSetup setup = mojo.getTomcatSetup();
+		Assert.assertNotNull(setup);
+		Assert.assertEquals(DefaultTomcatSetup.class, setup.getClass());
+	}
 
 }

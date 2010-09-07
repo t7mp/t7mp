@@ -27,8 +27,8 @@ import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
@@ -62,7 +62,6 @@ public class TomcatSetupTest {
 		t7Mojo.resolver = resolver;
 		t7Mojo.factory = factory;
 		t7Mojo.local = local;
-		t7Mojo.catalinaBase = catalinaBaseDir;
 		t7Mojo.tomcatVersion = "7.0-SNAPSHOT";
 		t7Mojo.webapps = new ArrayList<WebappArtifact>();
 		t7Mojo.libs = new ArrayList<JarArtifact>();
@@ -111,13 +110,70 @@ public class TomcatSetupTest {
 		setup.buildTomcat();
 	}
 	
-	@Ignore
 	@Test(expected=MojoExecutionException.class)
 	public void testDefaultTomcatSetupCopyDirectoryThrowsException() throws MojoExecutionException, IOException{
 		File configDirectory = new File(t7Mojo.catalinaBase, "/conf/");
 		t7Mojo.webappOutputDirectory = configDirectory;
+		t7Mojo.lookInside = true;
+		t7Mojo.userConfigDir = configDirectory;
+		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
+		Assert.assertTrue(t7Mojo.isWebProject());
 		TomcatSetup setup = new SetupUtilThrowsExceptionSetup(t7Mojo);
 		setup.buildTomcat();
+	}
+	
+	@Test
+	public void testWebappOutputDirectoryDoesNotExist() throws MojoExecutionException, IOException{
+		File configDirectory = new File(t7Mojo.catalinaBase, "/conf/");
+		File webappOutputDirectory = new File("/klaus");
+		Assert.assertFalse(webappOutputDirectory.exists());
+		t7Mojo.webappOutputDirectory = webappOutputDirectory;
+		t7Mojo.lookInside = true;
+		t7Mojo.userConfigDir = configDirectory;
+		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
+		Assert.assertTrue(t7Mojo.isWebProject());
+		TomcatSetup setup = new SetupUtilThrowsExceptionSetup(t7Mojo);
+		setup.buildTomcat();
+	}
+	
+	@Test
+	public void testWebappOutputDirectoryIsNull() throws MojoExecutionException, IOException{
+		File configDirectory = new File(t7Mojo.catalinaBase, "/conf/");
+		t7Mojo.webappOutputDirectory = null;
+		t7Mojo.lookInside = true;
+		t7Mojo.userConfigDir = configDirectory;
+		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
+		Assert.assertTrue(t7Mojo.isWebProject());
+		TomcatSetup setup = new SetupUtilThrowsExceptionSetup(t7Mojo);
+		setup.buildTomcat();
+	}
+	
+	@Test
+	public void testSuccessfullCopyWebapp() throws MojoExecutionException, IOException{
+		File configDirectory = new File(t7Mojo.catalinaBase, "/conf/");
+		t7Mojo.webappOutputDirectory = configDirectory;
+		t7Mojo.lookInside = true;
+		t7Mojo.userConfigDir = configDirectory;
+		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
+		Assert.assertTrue(t7Mojo.isWebProject());
+		TomcatSetup setup = new SuccessfullCopyWebappMockSetup(t7Mojo);
+		setup.buildTomcat();
+		File webappsDirectory = new File(catalinaBaseDir, "/webapps");
+		Assert.assertTrue(webappsDirectory.exists());
+		File confWebapp = new File(webappsDirectory, "/conf");
+		Assert.assertTrue(confWebapp.exists());
+		Assert.assertTrue(confWebapp.isDirectory());
+	}
+	
+	
+	
+	@Test
+	public void testIsWebProject(){
+		RunMojo runMojo = new RunMojo();
+		Assert.assertEquals("war", runMojo.packaging);
+		Assert.assertTrue(runMojo.isWebProject());
+		Assert.assertFalse(runMojo.packaging.equals("jar"));
+		Assert.assertFalse(runMojo.packaging.equals("pom"));
 	}
 	
 	@Test(expected=MojoExecutionException.class)

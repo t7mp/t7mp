@@ -75,23 +75,18 @@ public class TomcatDirectorySetupTest {
 		creator.createTomcatDirectory("test");
 	}
 	
-//	@Test
-//	public void testConfigurator() throws MojoExecutionException{
-//		TomcatConfigurator configurator = new TomcatConfigurator(catalinaBaseDir, log, setupUtil);
-//		configurator.createTomcatDirectories();
-//		File[] createdDirectories = catalinaBaseDir.listFiles(new FileFilter(){
-//			@Override
-//			public boolean accept(File file) {
-//				return file.isDirectory();
-//			}
-//		});
-//		List<String> directoryNames = new ArrayList<String>();
-//		for(File directory : createdDirectories) {
-//			directoryNames.add(directory.getName());
-//		}
-//		Collections.sort(expectedDirectoryNames);
-//		Collections.sort(directoryNames);
-//		Assert.assertEquals(expectedDirectoryNames, directoryNames);
-//	}
+	/**
+	 * This test is only to get a 100% Branch-Coverage
+	 * 
+	 * @throws IOException
+	 */
+	@Test(expected=Exception.class)
+	public void testTomcatDirectoryIsNotADirectory() throws IOException{
+		File file = Mockito.mock(File.class);
+		Mockito.when(file.exists()).thenReturn(false);
+		Mockito.when(file.mkdirs()).thenReturn(true);
+		TomcatDirectorySetup setup = new TomcatDirectorySetup(file, Mockito.mock(Log.class));
+		setup.createTomcatDirectories();
+	}
 
 }
