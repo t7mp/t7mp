@@ -33,14 +33,14 @@ import org.apache.maven.plugin.MojoExecutionException;
  * 
  *
  */
-class MyArtifactResolver {
+public class MyArtifactResolver {
 	
 	private ArtifactResolver resolver;
 	private ArtifactFactory factory;
 	private ArtifactRepository local;
 	private List<ArtifactRepository> remoteRepositories;
 	
-	MyArtifactResolver(ArtifactResolver resolver, ArtifactFactory factory, ArtifactRepository local, List<ArtifactRepository> remoteRepositories){
+	public MyArtifactResolver(ArtifactResolver resolver, ArtifactFactory factory, ArtifactRepository local, List<ArtifactRepository> remoteRepositories){
 		this.remoteRepositories = remoteRepositories;
 		this.factory = factory;
 		this.resolver = resolver;

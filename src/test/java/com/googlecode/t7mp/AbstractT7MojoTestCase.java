@@ -2,7 +2,7 @@ package com.googlecode.t7mp;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
-public class AbstractT7MojoTestCase extends AbstractMojoTestCase {
+public abstract class AbstractT7MojoTestCase extends AbstractMojoTestCase {
 	
 	public AbstractT7MojoTestCase(){
 		super();
