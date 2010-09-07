@@ -31,7 +31,7 @@ public class TomcatDirectorySetup {
 	}
 	
 	public void createTomcatDirectories() {
-		if(!catalinaBaseDir.exists() && !catalinaBaseDir.mkdir()){
+		if(!catalinaBaseDir.exists() && !catalinaBaseDir.mkdirs()){
 			throw new TomcatSetupException("could not create 'catalina.base' on " + catalinaBaseDir.getAbsolutePath());
 		}
 		createTomcatDirectory("conf");
@@ -45,7 +45,7 @@ public class TomcatDirectorySetup {
 	protected void createTomcatDirectory(String name) {
 		File directory = new File(catalinaBaseDir, name);
 		log.debug("Try to create directory " + directory.getAbsolutePath());
-		if(!directory.exists() && !directory.mkdir()){
+		if(!directory.exists() && !directory.mkdirs()){
 			throw new TomcatSetupException("could not create '" + name + "' on " + directory.getAbsolutePath());
 		}
 	}
