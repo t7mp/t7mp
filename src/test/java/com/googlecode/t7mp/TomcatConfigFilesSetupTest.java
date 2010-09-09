@@ -44,7 +44,7 @@ public class TomcatConfigFilesSetupTest {
 	private Log log = Mockito.mock(Log.class);
 	private SetupUtil setupUtil = Mockito.mock(SetupUtil.class);
 	
-	private List<String> expectedFileNames = Arrays.asList(new String[]{"context.xml", "server.xml", "catalina.properties","catalina.policy", "logging.properties", "tomcat-users.xml", "web.xml"});
+	private List<String> expectedFileNames = Arrays.asList(new String[]{"context.xml", "server.xml", "catalina.policy", "logging.properties", "tomcat-users.xml", "web.xml"});
 	@Before
 	public void setUp(){
 		catalinaBaseDir = new File(new File(System.getProperty("java.io.tmpdir")), "catalinaBase_" + (++counter));

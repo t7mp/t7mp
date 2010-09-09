@@ -178,7 +178,13 @@ public class TomcatSetupTest {
 	
 	@Test(expected=MojoExecutionException.class)
 	public void testCopyWebappthrowsException() throws MojoExecutionException {
+		Mockito.when(t7Mojo.getTomcatHttpPort()).thenReturn(8080);
+		Mockito.when(t7Mojo.getTomcatShutdownPort()).thenReturn(8005);
+		Mockito.when(t7Mojo.getTomcatShutdownCommand()).thenReturn("SHUTDOWN");
 		TomcatSetup setup = new CopyWebappThrowsExceptionSetup(t7Mojo);
 		setup.buildTomcat();
+		Mockito.verify(t7Mojo, Mockito.atLeast(1)).getTomcatHttpPort();
+		Mockito.verify(t7Mojo, Mockito.atLeast(1)).getTomcatShutdownPort();
+		Mockito.verify(t7Mojo, Mockito.atLeast(1)).getTomcatShutdownCommand();
 	}
 }

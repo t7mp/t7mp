@@ -21,7 +21,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -33,37 +32,16 @@ import org.apache.maven.plugin.MojoFailureException;
  * 
  *
  */
-public class StopServerMojo extends AbstractMojo {
+public class StopServerMojo extends AbstractT7Mojo {
 	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcat.shutdownCommand}" default-value="SHUTDOWN"
-	 * 
-	 */
-	private String shutdownCommand = "SHUTDOWN";
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcat.shutdownPort}" default-value="8005"
-	 * 
-	 */
-	private int shutdownPort = 8005;
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcat.shutdownHost}" default-value="localhost"
-	 * 
-	 */
-	private String shutdownHost = "localhost";
-
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
 			getLog().info("StopMojo -- shutdown Tomcat.");
-			Socket socket = new Socket(shutdownHost, shutdownPort);
+			Socket socket = new Socket(tomcatShutdownHost, tomcatShutdownPort);
 			OutputStream out = socket.getOutputStream();
-			for(int i = 0; i < shutdownCommand.length(); i++){
-				out.write(shutdownCommand.charAt(i));
+			for(int i = 0; i < tomcatShutdownCommand.length(); i++){
+				out.write(tomcatShutdownCommand.charAt(i));
 			}
 			out.flush();
 			out.close();
@@ -74,29 +52,6 @@ public class StopServerMojo extends AbstractMojo {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-
-	public String getShutdownCommand() {
-		return shutdownCommand;
-	}
-
-	public void setShutdownCommand(String shutdownCommand) {
-		this.shutdownCommand = shutdownCommand;
-	}
-
-	public int getShutdownPort() {
-		return shutdownPort;
-	}
-
-	public void setShutdownPort(int shutdownPort) {
-		this.shutdownPort = shutdownPort;
-	}
-
-	public String getShutdownHost() {
-		return shutdownHost;
-	}
-
-	public void setShutdownHost(String shutdownHost) {
-		this.shutdownHost = shutdownHost;
-	}
+	
 	
 }

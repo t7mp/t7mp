@@ -37,11 +37,11 @@ public class StopServerMojoTest {
 		t.start();
 		Thread.sleep(2000);
 		StopServerMojo mojo = new StopServerMojo();
-		mojo.setShutdownCommand("TESTCOMMAND");
-		mojo.setShutdownPort(server.getPort());
+		mojo.setTomcatShutdownCommand("TESTCOMMAND");
+		mojo.setTomcatShutdownPort(server.getPort());
 		mojo.execute();
 		Thread.sleep(2000);
-		Assert.assertEquals(server.getCommand(), mojo.getShutdownCommand());
+		Assert.assertEquals(server.getCommand(), mojo.getTomcatShutdownCommand());
 		Assert.assertFalse(t.isAlive());
 	}
 	
@@ -49,9 +49,9 @@ public class StopServerMojoTest {
 	public void testExecuteWithUnknowHostException() throws MojoExecutionException, MojoFailureException{
 		StopServerMojo mojo = new StopServerMojo();
 		mojo.setLog(Mockito.mock(Log.class));
-		mojo.setShutdownCommand("SHUTDOWN");
-		mojo.setShutdownPort(8005);
-		mojo.setShutdownHost("petermeier");
+		mojo.setTomcatShutdownCommand("SHUTDOWN");
+		mojo.setTomcatShutdownPort(8005);
+		mojo.setTomcatShutdownHost("petermeier");
 		mojo.execute();
 	}
 	
@@ -59,18 +59,18 @@ public class StopServerMojoTest {
 	public void testExecuteWithIOException() throws MojoExecutionException, MojoFailureException{
 		StopServerMojo mojo = new StopServerMojo();
 		mojo.setLog(Mockito.mock(Log.class));
-		mojo.setShutdownCommand("SHUTDOWN");
-		mojo.setShutdownPort(8005);
-		mojo.setShutdownHost("localhost");
+		mojo.setTomcatShutdownCommand("SHUTDOWN");
+		mojo.setTomcatShutdownPort(8005);
+		mojo.setTomcatShutdownHost("localhost");
 		mojo.execute();
 	}
 	
 	@Test
 	public void testDefaultValues(){
 		StopServerMojo mojo = new StopServerMojo();
-		Assert.assertEquals(8005, mojo.getShutdownPort());
-		Assert.assertEquals("SHUTDOWN", mojo.getShutdownCommand());
-		Assert.assertEquals("localhost", mojo.getShutdownHost());
+		Assert.assertEquals(8005, mojo.getTomcatShutdownPort());
+		Assert.assertEquals("SHUTDOWN", mojo.getTomcatShutdownCommand());
+		Assert.assertEquals("localhost", mojo.getTomcatShutdownHost());
 	}
 	
 	public class FakeServer implements Runnable {

@@ -108,6 +108,31 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
+	 * @parameter expression="${t7.tomcatHttpPort}" default-value="8080"
+	 */
+	protected int tomcatHttpPort = 8080;
+	
+	/**
+	 * 
+	 * @parameter expression="${t7.tomcatShutdownPort}" default-value="8005"
+	 */
+	protected int tomcatShutdownPort = 8005;
+	
+	/**
+	 * 
+	 * @parameter expression="${t7.tomcatShutdownCommand}" default-value="SHUTDOWN"
+	 */
+	protected String tomcatShutdownCommand = "SHUTDOWN";
+	
+	/**
+	 * 
+	 * @parameter expression="${t7.tomcatShutdownHost}" default-value="localhost"
+	 * 
+	 */
+	protected String tomcatShutdownHost = "localhost";
+	
+	/**
+	 * 
 	 * @parameter default-value="${project.build.directory}/tomcat"
 	 * @readonly // at the moment
 	 * 
@@ -154,5 +179,77 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     protected boolean isWebProject(){
     	return this.packaging.equals("war");
     }
+
+	public boolean isSetAwait() {
+		return setAwait;
+	}
+
+	public void setSetAwait(boolean setAwait) {
+		this.setAwait = setAwait;
+	}
+
+	public boolean isLookInside() {
+		return lookInside;
+	}
+
+	public void setLookInside(boolean lookInside) {
+		this.lookInside = lookInside;
+	}
+
+	public String getTomcatVersion() {
+		return tomcatVersion;
+	}
+
+	public void setTomcatVersion(String tomcatVersion) {
+		this.tomcatVersion = tomcatVersion;
+	}
+
+	public int getTomcatHttpPort() {
+		return tomcatHttpPort;
+	}
+
+	public void setTomcatHttpPort(int tomcatHttpPort) {
+		this.tomcatHttpPort = tomcatHttpPort;
+	}
+
+	public int getTomcatShutdownPort() {
+		return tomcatShutdownPort;
+	}
+
+	public void setTomcatShutdownPort(int tomcatShutdownPort) {
+		this.tomcatShutdownPort = tomcatShutdownPort;
+	}
+
+	public String getTomcatShutdownCommand() {
+		return tomcatShutdownCommand;
+	}
+
+	public void setTomcatShutdownCommand(String tomcatShutdownCommand) {
+		this.tomcatShutdownCommand = tomcatShutdownCommand;
+	}
+
+	public String getTomcatShutdownHost() {
+		return tomcatShutdownHost;
+	}
+
+	public void setTomcatShutdownHost(String tomcatShutdownHost) {
+		this.tomcatShutdownHost = tomcatShutdownHost;
+	}
+
+	public File getUserConfigDir() {
+		return userConfigDir;
+	}
+
+	public void setUserConfigDir(File userConfigDir) {
+		this.userConfigDir = userConfigDir;
+	}
+
+	public File getWebappOutputDirectory() {
+		return webappOutputDirectory;
+	}
+
+	public void setWebappOutputDirectory(File webappOutputDirectory) {
+		this.webappOutputDirectory = webappOutputDirectory;
+	}
 
 }

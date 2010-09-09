@@ -17,11 +17,22 @@
 package com.googlecode.t7mp;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.runtime.RuntimeServices;
+import org.apache.velocity.runtime.log.LogChute;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 /**
  * 
@@ -73,6 +84,7 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 			validateConfiguration();
 			directorySetup.createTomcatDirectories();
 			configFilesSetup.copyDefaultConfig();
+			buildCatalinaPropertiesFile();
 			configFilesSetup.copyUserConfigs(this.t7Mojo.userConfigDir);
 			List<JarArtifact> tomcatLibs = artifactDescriptorReader.getJarArtifacts(this.t7Mojo.tomcatVersion);
 			libDispatcher.resolveArtifacts(tomcatLibs).copyTo("lib");
@@ -88,6 +100,28 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 		}
 	}
 	
+
+	protected void buildCatalinaPropertiesFile() {
+		try {
+			Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, new LogNothingLogChute());
+			Velocity.setProperty(Velocity.RESOURCE_LOADER, "class");
+			Velocity.setProperty("class.resource.loader.description", "Velocity Classpath Resource Loader");
+			Velocity.setProperty("class.resource.loader.class", ClasspathResourceLoader.class.getName());
+			Velocity.init();
+			Template template = Velocity.getTemplate("com/googlecode/t7mp/conf/catalina.properties");
+			VelocityContext context = new VelocityContext();
+			context.put("tomcatHttpPort", this.t7Mojo.getTomcatHttpPort() + "");
+			context.put("tomcatShutdownPort", this.t7Mojo.getTomcatShutdownPort() + "");
+			context.put("tomcatShutdownCommand", this.t7Mojo.getTomcatShutdownCommand());
+			Writer writer = new FileWriter(new File(this.t7Mojo.catalinaBase,"/conf/catalina.properties"));
+			template.merge(context, writer);
+			writer.flush();
+			writer.close();
+		} catch (Exception e) {
+			throw new TomcatSetupException(e.getMessage(), e);
+		}
+	}
+	
 	protected void copyWebapp() throws TomcatSetupException {
 		if(!this.t7Mojo.isWebProject()){
 			return;
@@ -100,6 +134,37 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 		} catch (IOException e) {
 			throw new TomcatSetupException(e.getMessage(), e);
 		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	static class LogNothingLogChute implements LogChute {
+
+		@Override
+		public void init(RuntimeServices rs) throws Exception {
+			
+		}
+
+		@Override
+		public void log(int level, String message) {
+			
+		}
+
+		@Override
+		public void log(int level, String message, Throwable t) {
+			
+		}
+
+		@Override
+		public boolean isLevelEnabled(int level) {
+			return false;
+		}
+		
 	}
 
 }
