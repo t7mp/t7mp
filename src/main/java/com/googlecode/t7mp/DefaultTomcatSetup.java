@@ -32,7 +32,7 @@ public class DefaultTomcatSetup extends AbstractTomcatSetup {
 		directorySetup = new TomcatDirectorySetup(t7Mojo.catalinaBase, log);
 		configFilesSetup = new TomcatConfigFilesSetup(t7Mojo.catalinaBase, log, setupUtil);
 		artifactDescriptorReader = new DefaultTomcatArtifactDescriptorReader(log);
-		MyArtifactResolver myArtifactResolver = new MyArtifactResolver(t7Mojo.resolver, t7Mojo.factory, t7Mojo.local, t7Mojo.remoteRepos);
+		MyArtifactResolver myArtifactResolver = new MyArtifactResolver(t7Mojo);
 		libDispatcher = new TomcatArtifactDispatcher(myArtifactResolver, this.t7Mojo.catalinaBase, setupUtil, log);
 	}
 

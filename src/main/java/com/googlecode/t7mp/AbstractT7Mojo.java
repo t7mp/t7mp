@@ -102,6 +102,13 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
+	 * @parameter expression="${t7.resolverUpdateSnapshotsAlways}" default-value="false"
+	 * @required
+	 */
+	protected boolean resolverUpdateSnapshotsAllways = false;
+	
+	/**
+	 * 
 	 * @parameter expression="${t7.tomcatVersion}" default-value="7.0.2"
 	 */
 	protected String tomcatVersion = "7.0.2";
