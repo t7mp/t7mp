@@ -82,7 +82,7 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 			directorySetup.createTomcatDirectories();
 			configFilesSetup.copyDefaultConfig();
 			buildCatalinaPropertiesFile();
-			configFilesSetup.copyUserConfigs(this.t7Mojo.userConfigDir);
+			configFilesSetup.copyUserConfigs(this.t7Mojo.tomcatConfigDirectory);
 			List<JarArtifact> tomcatLibs = artifactDescriptorReader.getJarArtifacts(this.t7Mojo.tomcatVersion);
 			libDispatcher.resolveArtifacts(tomcatLibs).copyTo("lib");
 			libDispatcher.clear();

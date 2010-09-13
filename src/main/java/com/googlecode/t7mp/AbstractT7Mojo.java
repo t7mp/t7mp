@@ -148,11 +148,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
-	 * @parameter expression="${t7.tomcat.confdir}" default-value="${basedir}/src/main/tomcat/conf"
+	 * @parameter expression="${t7.tomcatConfigDirectory}" default-value="${basedir}/src/main/tomcat/conf"
 	 * @optional
 	 * 
 	 */
-	protected File userConfigDir;
+	protected File tomcatConfigDirectory;
 	
     /**
      * 
@@ -244,11 +244,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	}
 
 	public File getUserConfigDir() {
-		return userConfigDir;
+		return tomcatConfigDirectory;
 	}
 
 	public void setUserConfigDir(File userConfigDir) {
-		this.userConfigDir = userConfigDir;
+		this.tomcatConfigDirectory = userConfigDir;
 	}
 
 	public File getWebappOutputDirectory() {

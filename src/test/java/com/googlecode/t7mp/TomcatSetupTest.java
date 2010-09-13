@@ -115,7 +115,7 @@ public class TomcatSetupTest {
 		File configDirectory = new File(t7Mojo.catalinaBase, "/conf/");
 		t7Mojo.webappOutputDirectory = configDirectory;
 		t7Mojo.lookInside = true;
-		t7Mojo.userConfigDir = configDirectory;
+		t7Mojo.tomcatConfigDirectory = configDirectory;
 		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
 		Assert.assertTrue(t7Mojo.isWebProject());
 		TomcatSetup setup = new SetupUtilThrowsExceptionSetup(t7Mojo);
@@ -129,7 +129,7 @@ public class TomcatSetupTest {
 		Assert.assertFalse(webappOutputDirectory.exists());
 		t7Mojo.webappOutputDirectory = webappOutputDirectory;
 		t7Mojo.lookInside = true;
-		t7Mojo.userConfigDir = configDirectory;
+		t7Mojo.tomcatConfigDirectory = configDirectory;
 		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
 		Assert.assertTrue(t7Mojo.isWebProject());
 		TomcatSetup setup = new SetupUtilThrowsExceptionSetup(t7Mojo);
@@ -141,7 +141,7 @@ public class TomcatSetupTest {
 		File configDirectory = new File(t7Mojo.catalinaBase, "/conf/");
 		t7Mojo.webappOutputDirectory = null;
 		t7Mojo.lookInside = true;
-		t7Mojo.userConfigDir = configDirectory;
+		t7Mojo.tomcatConfigDirectory = configDirectory;
 		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
 		Assert.assertTrue(t7Mojo.isWebProject());
 		TomcatSetup setup = new SetupUtilThrowsExceptionSetup(t7Mojo);
@@ -153,7 +153,7 @@ public class TomcatSetupTest {
 		File configDirectory = new File(t7Mojo.catalinaBase, "/conf/");
 		t7Mojo.webappOutputDirectory = configDirectory;
 		t7Mojo.lookInside = true;
-		t7Mojo.userConfigDir = configDirectory;
+		t7Mojo.tomcatConfigDirectory = configDirectory;
 		Mockito.when(t7Mojo.isWebProject()).thenReturn(true);
 		Assert.assertTrue(t7Mojo.isWebProject());
 		TomcatSetup setup = new SuccessfullCopyWebappMockSetup(t7Mojo);
