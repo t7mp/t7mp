@@ -59,7 +59,7 @@ public class RunMojoTest {
 	public void testRunMojo() throws Exception{
 		RunMojo mojo = new SubRunMojo(bootstrap, setup);
 		mojo.catalinaBase = catalinaBaseDir;
-		mojo.setAwait = false;
+		mojo.tomcatSetAwait = false;
 		mojo.execute();
 		Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
 		Mockito.verify(bootstrap, Mockito.atLeastOnce()).start();
@@ -70,7 +70,7 @@ public class RunMojoTest {
 	public void testRunMojoSetAwaitWithException() throws Exception{
 		RunMojo mojo = new SubRunMojo(bootstrap, setup);
 		mojo.catalinaBase = catalinaBaseDir;
-		mojo.setAwait = true;
+		mojo.tomcatSetAwait = true;
 		
 		Mockito.doThrow(new Exception("TESTEXCEPTION")).when(bootstrap).start();
 		
@@ -86,7 +86,7 @@ public class RunMojoTest {
 	public void testRunMojoSetAwait() throws Exception{
 		RunMojo mojo = new SubRunMojo(bootstrap, setup);
 		mojo.catalinaBase = catalinaBaseDir;
-		mojo.setAwait = true;
+		mojo.tomcatSetAwait = true;
 		mojo.execute();
 		Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
 		Mockito.verify(bootstrap, Mockito.atLeast(1)).init();

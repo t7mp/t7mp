@@ -86,11 +86,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 	
 	/**
 	 * 
-	 * @parameter expression="${t7.setAwait}" default-value="true"
+	 * @parameter expression="${t7.tomcatSetAwait}" default-value="true"
 	 * @required
 	 * 
 	 */
-	protected boolean setAwait = true;
+	protected boolean tomcatSetAwait = true;
 	
 	/**
 	 * 
@@ -188,11 +188,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     }
 
 	public boolean isSetAwait() {
-		return setAwait;
+		return tomcatSetAwait;
 	}
 
 	public void setSetAwait(boolean setAwait) {
-		this.setAwait = setAwait;
+		this.tomcatSetAwait = setAwait;
 	}
 
 	public boolean isLookInside() {

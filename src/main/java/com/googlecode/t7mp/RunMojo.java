@@ -46,9 +46,9 @@ public class RunMojo extends AbstractT7Mojo {
 		getLog().info("Starting Tomcat ...");
 		try {
 			bootstrap.init();
-			if(setAwait){
+			if(tomcatSetAwait){
 				Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
-				bootstrap.setAwait(setAwait);
+				bootstrap.setAwait(tomcatSetAwait);
 				bootstrap.start();
 			}else{
 				bootstrap.start();
