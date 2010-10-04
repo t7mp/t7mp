@@ -22,7 +22,7 @@
         <version>@project.version@</version>
         <configuration>
         	<tomcatVersion>6.0.29</tomcatVersion>
-        	<setAwait>false</setAwait>
+        	<tomcatSetAwait>false</tomcatSetAwait>
         	<lookInside>true</lookInside>
         </configuration>
         <executions>
