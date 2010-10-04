@@ -7,7 +7,7 @@
   </parent>
   <groupId>com.googlecode.t7mp</groupId>
   <artifactId>maven-t7-plugin</artifactId>
-  <version>0.9.6</version>
+  <version>0.9.7-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>maven-t7-plugin</name>
   <description>Tomcat 7 Maven Plugin</description>
@@ -23,9 +23,9 @@
   </licenses>
   
   <scm>
-  	<url>http://t7mp.googlecode.com/svn/tags/maven-t7-plugin-0.9.6</url>
-  	<connection>scm:svn:http://t7mp.googlecode.com/svn/tags/maven-t7-plugin-0.9.6</connection>
-  	<developerConnection>scm:svn:https://t7mp.googlecode.com/svn/tags/maven-t7-plugin-0.9.6</developerConnection>
+  	<url>http://t7mp.googlecode.com/svn/trunk/</url>
+  	<connection>scm:svn:http://t7mp.googlecode.com/svn/trunk/</connection>
+  	<developerConnection>scm:svn:https://t7mp.googlecode.com/svn/trunk/</developerConnection>
   </scm>
   
   <issueManagement>
