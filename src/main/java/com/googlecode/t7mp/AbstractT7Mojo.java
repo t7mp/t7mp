@@ -187,11 +187,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     	return this.packaging.equals("war");
     }
 
-	public boolean isSetAwait() {
+	public boolean isTomcatSetAwait() {
 		return tomcatSetAwait;
 	}
 
-	public void setSetAwait(boolean setAwait) {
+	public void setTomcatSetAwait(boolean setAwait) {
 		this.tomcatSetAwait = setAwait;
 	}
 
