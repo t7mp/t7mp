@@ -23,36 +23,36 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public class PreConditionsTest {
-	
-	private Log log = Mockito.mock(Log.class);
-	
-	@Test(expected=MojoExecutionException.class)
-	public void testWrongVersion_5() throws MojoExecutionException{
-		PreConditions.checkConfiguredTomcatVersion(log, "5.x");
-	}
-	
-	@Test(expected=MojoExecutionException.class)
-	public void testWrongVersion_8() throws MojoExecutionException{
-		PreConditions.checkConfiguredTomcatVersion(log, "8.x");
-	}
-	
-	@Test
-	public void testCorrectVersion_7() throws MojoExecutionException{
-		PreConditions.checkConfiguredTomcatVersion(log, "7.x");
-	}
-	
-	@Test
-	public void testCorrectVersion_6() throws MojoExecutionException{
-		PreConditions.checkConfiguredTomcatVersion(log, "6.x");
-	}
-	
-	@Test
-	public void testPrivateConstructor(){
-		try {
-			Invoke.privateConstructor(PreConditions.class);
-		} catch (Exception e) {
-			Assert.assertEquals("Dont call this private constructor", e.getCause().getMessage());
-		}
-	}
+
+    private Log log = Mockito.mock(Log.class);
+
+    @Test(expected = MojoExecutionException.class)
+    public void testWrongVersion_5() throws MojoExecutionException {
+        PreConditions.checkConfiguredTomcatVersion(log, "5.x");
+    }
+
+    @Test(expected = MojoExecutionException.class)
+    public void testWrongVersion_8() throws MojoExecutionException {
+        PreConditions.checkConfiguredTomcatVersion(log, "8.x");
+    }
+
+    @Test
+    public void testCorrectVersion_7() throws MojoExecutionException {
+        PreConditions.checkConfiguredTomcatVersion(log, "7.x");
+    }
+
+    @Test
+    public void testCorrectVersion_6() throws MojoExecutionException {
+        PreConditions.checkConfiguredTomcatVersion(log, "6.x");
+    }
+
+    @Test
+    public void testPrivateConstructor() {
+        try {
+            Invoke.privateConstructor(PreConditions.class);
+        } catch (Exception e) {
+            Assert.assertEquals("Dont call this private constructor", e.getCause().getMessage());
+        }
+    }
 
 }

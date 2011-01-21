@@ -6,9 +6,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(JUnit38ClassRunner.class)
 public class TestStopServerMojo extends AbstractT7MojoTestCase {
-	
-	public void testHelloWorld(){
-		Assert.assertTrue(true);
-	}
+
+    public void testHelloWorld() {
+        Assert.assertTrue(true);
+    }
 
 }

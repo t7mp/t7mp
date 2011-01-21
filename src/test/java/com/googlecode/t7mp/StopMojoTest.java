@@ -32,43 +32,43 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Bootstrap.class})
+@PrepareForTest({ Bootstrap.class })
 public class StopMojoTest {
-	
-	private Bootstrap bootstrap;
-	private Map<Object,Object> pluginContext;
 
-	@Before
-	public void setUp(){
-		bootstrap = PowerMockito.mock(Bootstrap.class);
-		pluginContext = new HashMap<Object,Object>();
-		pluginContext.put(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
-	}
-	
-	@Test
-	public void testExecute() throws Exception{
-		StopMojo mojo = new StopMojo();
-		mojo.setPluginContext(pluginContext);
-		mojo.execute();
-		Mockito.verify(bootstrap, Mockito.atLeastOnce()).stop();
-	}
-	
-	@Test
-	public void testExecuteWithEmptyPluginContext() throws Exception{
-		StopMojo mojo = new StopMojo();
-		pluginContext.put(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID, null);
-		mojo.setPluginContext(pluginContext);
-		mojo.execute();
-		Assert.assertTrue(pluginContext.get(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID) == null);
-	}
-	
-	@Test(expected=MojoExecutionException.class)
-	public void testExecuteWithException() throws Exception{
-		Mockito.doThrow(new Exception("TESTEXCEPTION")).when(bootstrap).stop();
-		StopMojo mojo = new StopMojo();
-		mojo.setPluginContext(pluginContext);
-		mojo.execute();
-		Mockito.verify(bootstrap, Mockito.atLeastOnce()).stop();
-	}
+    private Bootstrap bootstrap;
+    private Map<Object, Object> pluginContext;
+
+    @Before
+    public void setUp() {
+        bootstrap = PowerMockito.mock(Bootstrap.class);
+        pluginContext = new HashMap<Object, Object>();
+        pluginContext.put(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
+    }
+
+    @Test
+    public void testExecute() throws Exception {
+        StopMojo mojo = new StopMojo();
+        mojo.setPluginContext(pluginContext);
+        mojo.execute();
+        Mockito.verify(bootstrap, Mockito.atLeastOnce()).stop();
+    }
+
+    @Test
+    public void testExecuteWithEmptyPluginContext() throws Exception {
+        StopMojo mojo = new StopMojo();
+        pluginContext.put(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID, null);
+        mojo.setPluginContext(pluginContext);
+        mojo.execute();
+        Assert.assertTrue(pluginContext.get(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID) == null);
+    }
+
+    @Test(expected = MojoExecutionException.class)
+    public void testExecuteWithException() throws Exception {
+        Mockito.doThrow(new Exception("TESTEXCEPTION")).when(bootstrap).stop();
+        StopMojo mojo = new StopMojo();
+        mojo.setPluginContext(pluginContext);
+        mojo.execute();
+        Mockito.verify(bootstrap, Mockito.atLeastOnce()).stop();
+    }
 
 }

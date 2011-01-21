@@ -19,29 +19,25 @@ package com.googlecode.t7mp;
 import org.apache.maven.artifact.Artifact;
 
 /**
- * 
- * 
- * 
- * 
- *
+ * TODO Comment.
  */
 public class JarArtifact extends AbstractArtifact {
-	
-	public JarArtifact(){
-		super();
-	}
-	
-	public JarArtifact(Artifact artifact){
-		super(artifact);
-	}
 
-	@Override
-	public String getType() {
-		return "jar";
-	}
-	
-	@Override
-	public String toString(){
-		return "JarArtifact[" + super.toString() + "]";
-	}
+    public JarArtifact() {
+        super();
+    }
+
+    public JarArtifact(Artifact artifact) {
+        super(artifact);
+    }
+
+    @Override
+    public String getType() {
+        return "jar";
+    }
+
+    @Override
+    public String toString() {
+        return "JarArtifact[" + super.toString() + "]";
+    }
 }

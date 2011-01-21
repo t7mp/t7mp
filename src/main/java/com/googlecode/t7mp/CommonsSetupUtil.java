@@ -25,19 +25,17 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 /**
- * 
- * 
- *
+ * TODO Comment.
  */
 public class CommonsSetupUtil implements SetupUtil {
 
-	@Override
-	public void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
-		IOUtils.copy(inputStream, outputStream);
-	}
+    @Override
+    public void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
+        IOUtils.copy(inputStream, outputStream);
+    }
 
-	@Override
-	public void copyDirectory(File source, File target) throws IOException {
-		FileUtils.copyDirectory(source, target);		
-	}
+    @Override
+    public void copyDirectory(File source, File target) throws IOException {
+        FileUtils.copyDirectory(source, target);
+    }
 }

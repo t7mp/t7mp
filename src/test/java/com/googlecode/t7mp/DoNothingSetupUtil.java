@@ -23,14 +23,14 @@ import java.io.OutputStream;
 
 public class DoNothingSetupUtil implements SetupUtil {
 
-	@Override
-	public void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
+    @Override
+    public void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
 
-	}
+    }
 
-	@Override
-	public void copyDirectory(File source, File target) throws IOException {
-				
-	}
+    @Override
+    public void copyDirectory(File source, File target) throws IOException {
+
+    }
 
 }

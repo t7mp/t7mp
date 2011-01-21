@@ -34,75 +34,74 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({SubRunMojo.class, Bootstrap.class})
+@PrepareForTest({ SubRunMojo.class, Bootstrap.class })
 public class RunMojoTest {
-	
-	private Bootstrap bootstrap;
-	private TomcatSetup setup;
-	private File catalinaBaseDir;
-	
-	@Before
-	public void setUp(){
-		File tempDir = new File(System.getProperty("java.io.tmpdir"));
-		catalinaBaseDir = new File(tempDir, "tomcat_TEST_" +  UUID.randomUUID().toString());
-		Assert.assertTrue(catalinaBaseDir.mkdirs());
-		bootstrap = PowerMockito.mock(Bootstrap.class);
-		setup = PowerMockito.mock(TomcatSetup.class);
-	}
-	
-	@After
-	public void tearDown() throws IOException{
-		FileUtils.deleteDirectory(catalinaBaseDir);
-	}
-	
-	@Test
-	public void testRunMojo() throws Exception{
-		RunMojo mojo = new SubRunMojo(bootstrap, setup);
-		mojo.catalinaBase = catalinaBaseDir;
-		mojo.tomcatSetAwait = false;
-		mojo.execute();
-		Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
-		Mockito.verify(bootstrap, Mockito.atLeastOnce()).start();
-		Assert.assertEquals(bootstrap, mojo.getPluginContext().get(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID));
-	}
 
-	@Test(expected=MojoExecutionException.class)
-	public void testRunMojoSetAwaitWithException() throws Exception{
-		RunMojo mojo = new SubRunMojo(bootstrap, setup);
-		mojo.catalinaBase = catalinaBaseDir;
-		mojo.tomcatSetAwait = true;
-		
-		Mockito.doThrow(new Exception("TESTEXCEPTION")).when(bootstrap).start();
-		
-		mojo.execute();
-		Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
-		Mockito.verify(bootstrap, Mockito.atLeast(1)).init();
-		Mockito.verify(bootstrap, Mockito.atLeast(1)).setAwait(Mockito.anyBoolean());
-		Mockito.verify(bootstrap, Mockito.atLeast(1)).start();
-	}
+    private Bootstrap bootstrap;
+    private TomcatSetup setup;
+    private File catalinaBaseDir;
 
-	
-	@Test
-	public void testRunMojoSetAwait() throws Exception{
-		RunMojo mojo = new SubRunMojo(bootstrap, setup);
-		mojo.catalinaBase = catalinaBaseDir;
-		mojo.tomcatSetAwait = true;
-		mojo.execute();
-		Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
-		Mockito.verify(bootstrap, Mockito.atLeast(1)).init();
-		Mockito.verify(bootstrap, Mockito.atLeast(1)).setAwait(Mockito.anyBoolean());
-		Mockito.verify(bootstrap, Mockito.atLeast(1)).start();
-	}
-	
-	@Test
-	public void testGetTomcatSetup(){
-		RunMojo mojo = new RunMojo();
-		Bootstrap bootstrap = mojo.getBootstrap();
-		Assert.assertNotNull(bootstrap);
-		Assert.assertEquals(Bootstrap.class, bootstrap.getClass());
-		TomcatSetup setup = mojo.getTomcatSetup();
-		Assert.assertNotNull(setup);
-		Assert.assertEquals(DefaultTomcatSetup.class, setup.getClass());
-	}
+    @Before
+    public void setUp() {
+        File tempDir = new File(System.getProperty("java.io.tmpdir"));
+        catalinaBaseDir = new File(tempDir, "tomcat_TEST_" + UUID.randomUUID().toString());
+        Assert.assertTrue(catalinaBaseDir.mkdirs());
+        bootstrap = PowerMockito.mock(Bootstrap.class);
+        setup = PowerMockito.mock(TomcatSetup.class);
+    }
+
+    @After
+    public void tearDown() throws IOException {
+        FileUtils.deleteDirectory(catalinaBaseDir);
+    }
+
+    @Test
+    public void testRunMojo() throws Exception {
+        RunMojo mojo = new SubRunMojo(bootstrap, setup);
+        mojo.catalinaBase = catalinaBaseDir;
+        mojo.tomcatSetAwait = false;
+        mojo.execute();
+        Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
+        Mockito.verify(bootstrap, Mockito.atLeastOnce()).start();
+        Assert.assertEquals(bootstrap, mojo.getPluginContext().get(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID));
+    }
+
+    @Test(expected = MojoExecutionException.class)
+    public void testRunMojoSetAwaitWithException() throws Exception {
+        RunMojo mojo = new SubRunMojo(bootstrap, setup);
+        mojo.catalinaBase = catalinaBaseDir;
+        mojo.tomcatSetAwait = true;
+
+        Mockito.doThrow(new Exception("TESTEXCEPTION")).when(bootstrap).start();
+
+        mojo.execute();
+        Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
+        Mockito.verify(bootstrap, Mockito.atLeast(1)).init();
+        Mockito.verify(bootstrap, Mockito.atLeast(1)).setAwait(Mockito.anyBoolean());
+        Mockito.verify(bootstrap, Mockito.atLeast(1)).start();
+    }
+
+    @Test
+    public void testRunMojoSetAwait() throws Exception {
+        RunMojo mojo = new SubRunMojo(bootstrap, setup);
+        mojo.catalinaBase = catalinaBaseDir;
+        mojo.tomcatSetAwait = true;
+        mojo.execute();
+        Mockito.verify(setup, Mockito.atLeast(1)).buildTomcat();
+        Mockito.verify(bootstrap, Mockito.atLeast(1)).init();
+        Mockito.verify(bootstrap, Mockito.atLeast(1)).setAwait(Mockito.anyBoolean());
+        Mockito.verify(bootstrap, Mockito.atLeast(1)).start();
+    }
+
+    @Test
+    public void testGetTomcatSetup() {
+        RunMojo mojo = new RunMojo();
+        Bootstrap bootstrap = mojo.getBootstrap();
+        Assert.assertNotNull(bootstrap);
+        Assert.assertEquals(Bootstrap.class, bootstrap.getClass());
+        TomcatSetup setup = mojo.getTomcatSetup();
+        Assert.assertNotNull(setup);
+        Assert.assertEquals(DefaultTomcatSetup.class, setup.getClass());
+    }
 
 }

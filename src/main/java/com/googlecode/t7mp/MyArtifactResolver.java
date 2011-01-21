@@ -30,76 +30,75 @@ import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.plugin.MojoExecutionException;
 
-
 /**
  * Uses Maven-API to resolve the Artifacts.
  * 
  *
  */
 public class MyArtifactResolver {
-	
-	private ArtifactResolver resolver;
-	private ArtifactFactory factory;
-	private ArtifactRepository local;
-	private List<ArtifactRepository> remoteRepositories;
-	private boolean resolveAllways = false;
-	
-	@Deprecated
-	public MyArtifactResolver(ArtifactResolver resolver, ArtifactFactory factory, ArtifactRepository local, List<ArtifactRepository> remoteRepositories){
-		this.remoteRepositories = remoteRepositories;
-		this.factory = factory;
-		this.resolver = resolver;
-		this.local = local;
-	}
-	
-	public MyArtifactResolver(AbstractT7Mojo t7Mojo){
-		this.remoteRepositories = t7Mojo.remoteRepos;
-		this.local = t7Mojo.local;
-		this.resolver = t7Mojo.resolver;
-		this.factory = t7Mojo.factory;
-		this.resolveAllways = t7Mojo.resolverUpdateSnapshotsAllways;
-	}
-	
-	public Artifact resolve(String groupId, String artifactId, String version, String type, String scope) throws MojoExecutionException{
-		if(version.endsWith("SNAPSHOT")){
-			this.remoteRepositories.add(createStagingRepository());
-			this.remoteRepositories.add(createSnapshotsRepository());
-		}
-		Artifact artifact = factory.createDependencyArtifact(groupId, artifactId, VersionRange.createFromVersion(version), type, null, Artifact.SCOPE_COMPILE);
-		try {
-			resolver.resolve(artifact,remoteRepositories, local);
-		} catch (ArtifactResolutionException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		} catch (ArtifactNotFoundException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-		return artifact;
-	}
-	
-	private ArtifactRepository createSnapshotsRepository() {
-		ArtifactRepository repository = new DefaultArtifactRepository("t7mp.apache.tomcat.snapshots", "http://people.apache.org/repo/m2-snapshot-repository", new DefaultRepositoryLayout(), createSnapshotPolicy() , createRelasesPolicy());
-		return repository;
-	}
 
-	private ArtifactRepository createStagingRepository() {
-		ArtifactRepository repository = new DefaultArtifactRepository("t7mp.apache.tomcat.dev", "http://tomcat.apache.org/dev/dist/m2-repository", new DefaultRepositoryLayout(), createSnapshotPolicy(), createRelasesPolicy());
-		return repository;
-	}
-	
-	private ArtifactRepositoryPolicy createSnapshotPolicy(){
-		String updatePolicy = resolveAllways ? ArtifactRepositoryPolicy.UPDATE_POLICY_ALWAYS : ArtifactRepositoryPolicy.UPDATE_POLICY_DAILY;
-		return new ArtifactRepositoryPolicy(true, updatePolicy, ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN);
-	}
-	
-	private ArtifactRepositoryPolicy createRelasesPolicy(){
-		return new ArtifactRepositoryPolicy(false, ArtifactRepositoryPolicy.UPDATE_POLICY_DAILY, ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN);
-	}
+    private ArtifactResolver resolver;
+    private ArtifactFactory factory;
+    private ArtifactRepository local;
+    private List<ArtifactRepository> remoteRepositories;
+    private boolean resolveAllways = false;
 
-	public Artifact resolveJar(String groupId, String artifactId, String version) throws MojoExecutionException {
-		return resolve(groupId, artifactId, version, "jar", Artifact.SCOPE_COMPILE);
-	}
-	
-	public Artifact resolveWar(String groupId, String artifactId, String version) throws MojoExecutionException {
-		return resolve(groupId, artifactId, version, "war", Artifact.SCOPE_COMPILE);
-	}
+    @Deprecated
+    public MyArtifactResolver(ArtifactResolver resolver, ArtifactFactory factory, ArtifactRepository local, List<ArtifactRepository> remoteRepositories) {
+        this.remoteRepositories = remoteRepositories;
+        this.factory = factory;
+        this.resolver = resolver;
+        this.local = local;
+    }
+
+    public MyArtifactResolver(AbstractT7Mojo t7Mojo) {
+        this.remoteRepositories = t7Mojo.remoteRepos;
+        this.local = t7Mojo.local;
+        this.resolver = t7Mojo.resolver;
+        this.factory = t7Mojo.factory;
+        this.resolveAllways = t7Mojo.resolverUpdateSnapshotsAllways;
+    }
+
+    public Artifact resolve(String groupId, String artifactId, String version, String type, String scope) throws MojoExecutionException {
+        if (version.endsWith("SNAPSHOT")) {
+            this.remoteRepositories.add(createStagingRepository());
+            this.remoteRepositories.add(createSnapshotsRepository());
+        }
+        Artifact artifact = factory.createDependencyArtifact(groupId, artifactId, VersionRange.createFromVersion(version), type, null, Artifact.SCOPE_COMPILE);
+        try {
+            resolver.resolve(artifact, remoteRepositories, local);
+        } catch (ArtifactResolutionException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        } catch (ArtifactNotFoundException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
+        return artifact;
+    }
+
+    private ArtifactRepository createSnapshotsRepository() {
+        ArtifactRepository repository = new DefaultArtifactRepository("t7mp.apache.tomcat.snapshots", "http://people.apache.org/repo/m2-snapshot-repository", new DefaultRepositoryLayout(), createSnapshotPolicy(), createRelasesPolicy());
+        return repository;
+    }
+
+    private ArtifactRepository createStagingRepository() {
+        ArtifactRepository repository = new DefaultArtifactRepository("t7mp.apache.tomcat.dev", "http://tomcat.apache.org/dev/dist/m2-repository", new DefaultRepositoryLayout(), createSnapshotPolicy(), createRelasesPolicy());
+        return repository;
+    }
+
+    private ArtifactRepositoryPolicy createSnapshotPolicy() {
+        String updatePolicy = resolveAllways ? ArtifactRepositoryPolicy.UPDATE_POLICY_ALWAYS : ArtifactRepositoryPolicy.UPDATE_POLICY_DAILY;
+        return new ArtifactRepositoryPolicy(true, updatePolicy, ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN);
+    }
+
+    private ArtifactRepositoryPolicy createRelasesPolicy() {
+        return new ArtifactRepositoryPolicy(false, ArtifactRepositoryPolicy.UPDATE_POLICY_DAILY, ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN);
+    }
+
+    public Artifact resolveJar(String groupId, String artifactId, String version) throws MojoExecutionException {
+        return resolve(groupId, artifactId, version, "jar", Artifact.SCOPE_COMPILE);
+    }
+
+    public Artifact resolveWar(String groupId, String artifactId, String version) throws MojoExecutionException {
+        return resolve(groupId, artifactId, version, "war", Artifact.SCOPE_COMPILE);
+    }
 }

@@ -24,7 +24,6 @@ import java.net.UnknownHostException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-
 /**
  * This Mojo uses the StandardServer for shutdown.
  * 
@@ -33,25 +32,24 @@ import org.apache.maven.plugin.MojoFailureException;
  *
  */
 public class StopServerMojo extends AbstractT7Mojo {
-	
-	@Override
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		try {
-			getLog().info("StopMojo -- shutdown Tomcat.");
-			Socket socket = new Socket(tomcatShutdownHost, tomcatShutdownPort);
-			OutputStream out = socket.getOutputStream();
-			for(int i = 0; i < tomcatShutdownCommand.length(); i++){
-				out.write(tomcatShutdownCommand.charAt(i));
-			}
-			out.flush();
-			out.close();
-			socket.close();
-		} catch (UnknownHostException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}
-	
-	
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        try {
+            getLog().info("StopMojo -- shutdown Tomcat.");
+            Socket socket = new Socket(tomcatShutdownHost, tomcatShutdownPort);
+            OutputStream out = socket.getOutputStream();
+            for (int i = 0; i < tomcatShutdownCommand.length(); i++) {
+                out.write(tomcatShutdownCommand.charAt(i));
+            }
+            out.flush();
+            out.close();
+            socket.close();
+        } catch (UnknownHostException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        } catch (IOException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
+    }
+
 }

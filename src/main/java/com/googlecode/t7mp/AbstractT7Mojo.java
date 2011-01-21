@@ -26,15 +26,14 @@ import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 
-
 /**
- * Maven components. Maybe used in subclasses.
- *
+ * Maven components.
+ * Maybe used in subclasses.
  */
 public abstract class AbstractT7Mojo extends AbstractMojo {
-	
-	public static String T7_BOOTSTRAP_CONTEXT_ID = "com.googlecode.t7mp.Bootstrap";
-	
+
+    public static String T7_BOOTSTRAP_CONTEXT_ID = "com.googlecode.t7mp.Bootstrap";
+
     /**
      * Used to look up Artifacts in the remote repository.
      *
@@ -68,7 +67,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     protected ArtifactRepository local;
 
     /**
-     * List of Remote Repositories used by the resolver
+     * List of Remote Repositories used by the resolver.
      *
      * @parameter expression="${project.remoteArtifactRepositories}"
      * @readonly
@@ -77,83 +76,82 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     protected java.util.List<ArtifactRepository> remoteRepos;
 
     /**
-     * To look up Archiver/UnArchiver implementations
+     * To look up Archiver/UnArchiver implementations.
      *
      * @component
      */
     protected ArchiverManager archiverManager;
-    
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcatSetAwait}" default-value="true"
-	 * @required
-	 * 
-	 */
-	protected boolean tomcatSetAwait = true;
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.lookInside}" default-value="false"
-	 * @required
-	 * 
-	 */
-	protected boolean lookInside = false;
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.resolverUpdateSnapshotsAlways}" default-value="false"
-	 * @required
-	 */
-	protected boolean resolverUpdateSnapshotsAllways = false;
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcatVersion}" default-value="7.0.2"
-	 */
-	protected String tomcatVersion = "7.0.2";
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcatHttpPort}" default-value="8080"
-	 */
-	protected int tomcatHttpPort = 8080;
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcatShutdownPort}" default-value="8005"
-	 */
-	protected int tomcatShutdownPort = 8005;
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcatShutdownCommand}" default-value="SHUTDOWN"
-	 */
-	protected String tomcatShutdownCommand = "SHUTDOWN";
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcatShutdownHost}" default-value="localhost"
-	 * 
-	 */
-	protected String tomcatShutdownHost = "localhost";
-	
-	/**
-	 * 
-	 * @parameter default-value="${project.build.directory}/tomcat"
-	 * @readonly // at the moment
-	 * 
-	 */
-	protected File catalinaBase;
-	
-	/**
-	 * 
-	 * @parameter expression="${t7.tomcatConfigDirectory}" default-value="${basedir}/src/main/tomcat/conf"
-	 * @optional
-	 * 
-	 */
-	protected File tomcatConfigDirectory;
-	
+
+    /**
+     * 
+     * @parameter expression="${t7.tomcatSetAwait}" default-value="true"
+     * @required
+     * 
+     */
+    protected boolean tomcatSetAwait = true;
+
+    /**
+     * 
+     * @parameter expression="${t7.lookInside}" default-value="false"
+     * @required
+     * 
+     */
+    protected boolean lookInside = false;
+
+    /**
+     * 
+     * @parameter expression="${t7.resolverUpdateSnapshotsAlways}" default-value="false"
+     * @required
+     */
+    protected boolean resolverUpdateSnapshotsAllways = false;
+
+    /**
+     * 
+     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.2"
+     */
+    protected String tomcatVersion = "7.0.2";
+
+    /**
+     * 
+     * @parameter expression="${t7.tomcatHttpPort}" default-value="8080"
+     */
+    protected int tomcatHttpPort = 8080;
+
+    /**
+     * 
+     * @parameter expression="${t7.tomcatShutdownPort}" default-value="8005"
+     */
+    protected int tomcatShutdownPort = 8005;
+
+    /**
+     * 
+     * @parameter expression="${t7.tomcatShutdownCommand}" default-value="SHUTDOWN"
+     */
+    protected String tomcatShutdownCommand = "SHUTDOWN";
+
+    /**
+     * 
+     * @parameter expression="${t7.tomcatShutdownHost}" default-value="localhost"
+     * 
+     */
+    protected String tomcatShutdownHost = "localhost";
+
+    /**
+     * 
+     * @parameter default-value="${project.build.directory}/tomcat"
+     * @readonly // at the moment
+     * 
+     */
+    protected File catalinaBase;
+
+    /**
+     * 
+     * @parameter expression="${t7.tomcatConfigDirectory}" default-value="${basedir}/src/main/tomcat/conf"
+     * @optional
+     * 
+     */
+    protected File tomcatConfigDirectory;
+
     /**
      * 
      * @parameter default-value="${project.build.directory}/${project.build.finalName}"
@@ -161,102 +159,100 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      */
     protected File webappOutputDirectory;
-    
+
     /**
      * @parameter default-value="${project.packaging}"
      * 
      * 
      */
     protected String packaging = "war";
-    
+
     /**
      * 
      * @parameter
      */
     protected ArrayList<WebappArtifact> webapps = new ArrayList<WebappArtifact>();
-    
+
     /**
      * 
      * @parameter
      */
     protected ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
-    
-    
-    
-    protected boolean isWebProject(){
-    	return this.packaging.equals("war");
+
+    protected boolean isWebProject() {
+        return this.packaging.equals("war");
     }
 
-	public boolean isTomcatSetAwait() {
-		return tomcatSetAwait;
-	}
+    public boolean isTomcatSetAwait() {
+        return tomcatSetAwait;
+    }
 
-	public void setTomcatSetAwait(boolean setAwait) {
-		this.tomcatSetAwait = setAwait;
-	}
+    public void setTomcatSetAwait(boolean setAwait) {
+        this.tomcatSetAwait = setAwait;
+    }
 
-	public boolean isLookInside() {
-		return lookInside;
-	}
+    public boolean isLookInside() {
+        return lookInside;
+    }
 
-	public void setLookInside(boolean lookInside) {
-		this.lookInside = lookInside;
-	}
+    public void setLookInside(boolean lookInside) {
+        this.lookInside = lookInside;
+    }
 
-	public String getTomcatVersion() {
-		return tomcatVersion;
-	}
+    public String getTomcatVersion() {
+        return tomcatVersion;
+    }
 
-	public void setTomcatVersion(String tomcatVersion) {
-		this.tomcatVersion = tomcatVersion;
-	}
+    public void setTomcatVersion(String tomcatVersion) {
+        this.tomcatVersion = tomcatVersion;
+    }
 
-	public int getTomcatHttpPort() {
-		return tomcatHttpPort;
-	}
+    public int getTomcatHttpPort() {
+        return tomcatHttpPort;
+    }
 
-	public void setTomcatHttpPort(int tomcatHttpPort) {
-		this.tomcatHttpPort = tomcatHttpPort;
-	}
+    public void setTomcatHttpPort(int tomcatHttpPort) {
+        this.tomcatHttpPort = tomcatHttpPort;
+    }
 
-	public int getTomcatShutdownPort() {
-		return tomcatShutdownPort;
-	}
+    public int getTomcatShutdownPort() {
+        return tomcatShutdownPort;
+    }
 
-	public void setTomcatShutdownPort(int tomcatShutdownPort) {
-		this.tomcatShutdownPort = tomcatShutdownPort;
-	}
+    public void setTomcatShutdownPort(int tomcatShutdownPort) {
+        this.tomcatShutdownPort = tomcatShutdownPort;
+    }
 
-	public String getTomcatShutdownCommand() {
-		return tomcatShutdownCommand;
-	}
+    public String getTomcatShutdownCommand() {
+        return tomcatShutdownCommand;
+    }
 
-	public void setTomcatShutdownCommand(String tomcatShutdownCommand) {
-		this.tomcatShutdownCommand = tomcatShutdownCommand;
-	}
+    public void setTomcatShutdownCommand(String tomcatShutdownCommand) {
+        this.tomcatShutdownCommand = tomcatShutdownCommand;
+    }
 
-	public String getTomcatShutdownHost() {
-		return tomcatShutdownHost;
-	}
+    public String getTomcatShutdownHost() {
+        return tomcatShutdownHost;
+    }
 
-	public void setTomcatShutdownHost(String tomcatShutdownHost) {
-		this.tomcatShutdownHost = tomcatShutdownHost;
-	}
+    public void setTomcatShutdownHost(String tomcatShutdownHost) {
+        this.tomcatShutdownHost = tomcatShutdownHost;
+    }
 
-	public File getUserConfigDir() {
-		return tomcatConfigDirectory;
-	}
+    public File getUserConfigDir() {
+        return tomcatConfigDirectory;
+    }
 
-	public void setUserConfigDir(File userConfigDir) {
-		this.tomcatConfigDirectory = userConfigDir;
-	}
+    public void setUserConfigDir(File userConfigDir) {
+        this.tomcatConfigDirectory = userConfigDir;
+    }
 
-	public File getWebappOutputDirectory() {
-		return webappOutputDirectory;
-	}
+    public File getWebappOutputDirectory() {
+        return webappOutputDirectory;
+    }
 
-	public void setWebappOutputDirectory(File webappOutputDirectory) {
-		this.webappOutputDirectory = webappOutputDirectory;
-	}
+    public void setWebappOutputDirectory(File webappOutputDirectory) {
+        this.webappOutputDirectory = webappOutputDirectory;
+    }
 
 }

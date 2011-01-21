@@ -29,61 +29,61 @@ import org.apache.maven.plugin.logging.Log;
  * 
  */
 public class TomcatConfigFilesSetup {
-	
-	private final File catalinaBaseDir;
-	private final Log log;
-	private final SetupUtil setupUtil;
-	
-	public TomcatConfigFilesSetup(File catalinaBaseDir, Log log, SetupUtil setupUtil){
-		this.catalinaBaseDir = catalinaBaseDir;
-		this.log = log;
-		this.setupUtil = setupUtil;
-	}
-	
-	public TomcatConfigFilesSetup copyDefaultConfig() {
-		copyConfigResource("catalina.policy");
-//		copyConfigResource("catalina.properties");
-		copyConfigResource("context.xml");
-		copyConfigResource("logging.properties");
-		copyConfigResource("server.xml");
-		copyConfigResource("tomcat-users.xml");
-		copyConfigResource("web.xml");
-		return this;
-	}
-	
-	protected void copyConfigResource(String name) {
-		log.debug("Copy default config file '" + name + "' to " + catalinaBaseDir.getAbsolutePath() + "/conf/" + name);
-		try {
-			this.setupUtil.copy(getClass().getResourceAsStream("conf/" + name), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + name)));
-		} catch (FileNotFoundException e) {
-			throw new TomcatSetupException(e.getMessage(),e);
-		} catch (IOException e) {
-			throw new TomcatSetupException(e.getMessage(),e);
-		}
-	}
-	
-	public void copyUserConfigs(File userConfigDir) {
-		if(userConfigDir == null){
-			log.info("No directory for userConfigFiles configured.");
-			return;
-		}
-		if(!userConfigDir.exists() || !userConfigDir.isDirectory()) { 
-			log.warn("The configured Directory for configuration files does not exist. " + userConfigDir.getAbsolutePath());
-			log.warn("Ignoring user configuration.");
-		}
-		if(userConfigDir.exists() && userConfigDir.isDirectory()) {
-			File[] files = userConfigDir.listFiles(new FilesOnlyFileFilter());
-			for(File configFile : files){
-				try {
-					log.debug("Copy provided config file '" + configFile.getName() + "' to " + catalinaBaseDir.getAbsolutePath() + "/conf/" + configFile.getName());
-					this.setupUtil.copy(new FileInputStream(configFile), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + configFile.getName())));
-				} catch (FileNotFoundException e) {
-					throw new TomcatSetupException(e.getMessage(), e);
-				} catch (IOException e) {
-					throw new TomcatSetupException(e.getMessage(), e);
-				}
-			}
-		}
-	}
+
+    private final File catalinaBaseDir;
+    private final Log log;
+    private final SetupUtil setupUtil;
+
+    public TomcatConfigFilesSetup(File catalinaBaseDir, Log log, SetupUtil setupUtil) {
+        this.catalinaBaseDir = catalinaBaseDir;
+        this.log = log;
+        this.setupUtil = setupUtil;
+    }
+
+    public TomcatConfigFilesSetup copyDefaultConfig() {
+        copyConfigResource("catalina.policy");
+        //		copyConfigResource("catalina.properties");
+        copyConfigResource("context.xml");
+        copyConfigResource("logging.properties");
+        copyConfigResource("server.xml");
+        copyConfigResource("tomcat-users.xml");
+        copyConfigResource("web.xml");
+        return this;
+    }
+
+    protected void copyConfigResource(String name) {
+        log.debug("Copy default config file '" + name + "' to " + catalinaBaseDir.getAbsolutePath() + "/conf/" + name);
+        try {
+            this.setupUtil.copy(getClass().getResourceAsStream("conf/" + name), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + name)));
+        } catch (FileNotFoundException e) {
+            throw new TomcatSetupException(e.getMessage(), e);
+        } catch (IOException e) {
+            throw new TomcatSetupException(e.getMessage(), e);
+        }
+    }
+
+    public void copyUserConfigs(File userConfigDir) {
+        if (userConfigDir == null) {
+            log.info("No directory for userConfigFiles configured.");
+            return;
+        }
+        if (!userConfigDir.exists() || !userConfigDir.isDirectory()) {
+            log.warn("The configured Directory for configuration files does not exist. " + userConfigDir.getAbsolutePath());
+            log.warn("Ignoring user configuration.");
+        }
+        if (userConfigDir.exists() && userConfigDir.isDirectory()) {
+            File[] files = userConfigDir.listFiles(new FilesOnlyFileFilter());
+            for (File configFile : files) {
+                try {
+                    log.debug("Copy provided config file '" + configFile.getName() + "' to " + catalinaBaseDir.getAbsolutePath() + "/conf/" + configFile.getName());
+                    this.setupUtil.copy(new FileInputStream(configFile), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + configFile.getName())));
+                } catch (FileNotFoundException e) {
+                    throw new TomcatSetupException(e.getMessage(), e);
+                } catch (IOException e) {
+                    throw new TomcatSetupException(e.getMessage(), e);
+                }
+            }
+        }
+    }
 
 }

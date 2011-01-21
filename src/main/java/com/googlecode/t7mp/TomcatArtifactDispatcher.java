@@ -27,67 +27,66 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 
-
 /**
  * Resolves artifacts from configuration-section and copy them to a specified directory.
  * 
  */
 class TomcatArtifactDispatcher {
-	
-	protected MyArtifactResolver myArtifactResolver;
-	
-	protected List<AbstractArtifact> resolvedArtifacts = new ArrayList<AbstractArtifact>();
-	
-	protected File catalinaBaseDir;
-	
-	protected SetupUtil setupUtil;
-	
-	protected Log log;
-	
-	public TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil, Log log){
-		this.myArtifactResolver = myArtifactResolver;
-		this.catalinaBaseDir = catalinaBaseDir;
-		this.setupUtil = setupUtil;
-		this.log = log;
-	}
-	
-	public TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts){
-		for(AbstractArtifact abstractArtifact : artifacts){
-			log.debug("Resolve artifact for " + abstractArtifact.toString());
-			Artifact artifact;
-			try {
-				artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
-			} catch (MojoExecutionException e) {
-				throw new TomcatSetupException(e.getMessage(),e);
-			}
-			abstractArtifact.setArtifact(artifact);
-			resolvedArtifacts.add(abstractArtifact);
-		}
-		return this;
-	}
-	
-	public void copyTo(String directoryName){
-		for(AbstractArtifact artifact : this.resolvedArtifacts){
-			try {
-				String targetFileName = createTargetFileName(artifact);
-				File sourceFile = artifact.getArtifact().getFile();
-				File targetFile = new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName);
-				log.debug("Copy artifact from " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
-				this.setupUtil.copy(new FileInputStream(sourceFile), new FileOutputStream(targetFile));
-			} catch (IOException e) {
-				throw new TomcatSetupException(e.getMessage(), e);
-			}
-		}
-	}
-	
-	protected String createTargetFileName(AbstractArtifact abstractArtifact){
-		if(abstractArtifact.getClass().isAssignableFrom(WebappArtifact.class)){
-			return ((WebappArtifact)abstractArtifact).getContextPath() + "." + abstractArtifact.getType();
-		}
-		return abstractArtifact.getArtifactId() + "-" + abstractArtifact.getVersion() + "." + abstractArtifact.getType();
-	}
-	
-	void clear(){
-		resolvedArtifacts.clear();
-	}
+
+    protected MyArtifactResolver myArtifactResolver;
+
+    protected List<AbstractArtifact> resolvedArtifacts = new ArrayList<AbstractArtifact>();
+
+    protected File catalinaBaseDir;
+
+    protected SetupUtil setupUtil;
+
+    protected Log log;
+
+    public TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil, Log log) {
+        this.myArtifactResolver = myArtifactResolver;
+        this.catalinaBaseDir = catalinaBaseDir;
+        this.setupUtil = setupUtil;
+        this.log = log;
+    }
+
+    public TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts) {
+        for (AbstractArtifact abstractArtifact : artifacts) {
+            log.debug("Resolve artifact for " + abstractArtifact.toString());
+            Artifact artifact;
+            try {
+                artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
+            } catch (MojoExecutionException e) {
+                throw new TomcatSetupException(e.getMessage(), e);
+            }
+            abstractArtifact.setArtifact(artifact);
+            resolvedArtifacts.add(abstractArtifact);
+        }
+        return this;
+    }
+
+    public void copyTo(String directoryName) {
+        for (AbstractArtifact artifact : this.resolvedArtifacts) {
+            try {
+                String targetFileName = createTargetFileName(artifact);
+                File sourceFile = artifact.getArtifact().getFile();
+                File targetFile = new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName);
+                log.debug("Copy artifact from " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
+                this.setupUtil.copy(new FileInputStream(sourceFile), new FileOutputStream(targetFile));
+            } catch (IOException e) {
+                throw new TomcatSetupException(e.getMessage(), e);
+            }
+        }
+    }
+
+    protected String createTargetFileName(AbstractArtifact abstractArtifact) {
+        if (abstractArtifact.getClass().isAssignableFrom(WebappArtifact.class)) {
+            return ((WebappArtifact) abstractArtifact).getContextPath() + "." + abstractArtifact.getType();
+        }
+        return abstractArtifact.getArtifactId() + "-" + abstractArtifact.getVersion() + "." + abstractArtifact.getType();
+    }
+
+    void clear() {
+        resolvedArtifacts.clear();
+    }
 }

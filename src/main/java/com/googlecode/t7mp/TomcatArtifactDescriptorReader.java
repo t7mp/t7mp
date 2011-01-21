@@ -18,8 +18,13 @@ package com.googlecode.t7mp;
 
 import java.util.List;
 
+/**
+ * TODO Comment.
+ * @author jbellmann
+ *
+ */
 public interface TomcatArtifactDescriptorReader {
-	
-	List<JarArtifact> getJarArtifacts(String tomcatVersion);
+
+    List<JarArtifact> getJarArtifacts(String tomcatVersion);
 
 }

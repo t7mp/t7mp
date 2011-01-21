@@ -21,10 +21,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * TODO Comment.
+ * @author jbellmann
+ *
+ */
 public interface SetupUtil {
-	
-	void copy(InputStream inputStream, OutputStream outputStream) throws IOException;
-	
-	void copyDirectory(File source, File target) throws IOException;
+
+    void copy(InputStream inputStream, OutputStream outputStream) throws IOException;
+
+    void copyDirectory(File source, File target) throws IOException;
 
 }

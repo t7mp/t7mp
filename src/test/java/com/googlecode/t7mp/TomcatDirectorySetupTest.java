@@ -32,61 +32,61 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public class TomcatDirectorySetupTest {
-	
-	private File baseDir = null;
-	
-	private List<String> expectedDirectoryNames = Arrays.asList(new String[]{"conf","lib", "logs", "temp", "webapps", "work"});
-	
-	@Before
-	public void setUp(){
-		File tempDir = new File(System.getProperty("java.io.tmpdir"));
-		baseDir = new File(tempDir, "tomcat_TEST_" +  UUID.randomUUID().toString());
-		Assert.assertTrue(baseDir.mkdirs());
-	}
-	
-	@After
-	public void tearDown() throws IOException{
-		FileUtils.deleteDirectory(baseDir);
-	}
-	
-	@Test
-	public void testCreateDirectory() throws MojoExecutionException{
-		TomcatDirectorySetup creator = new TomcatDirectorySetup(baseDir,Mockito.mock(Log.class));
-		creator.createTomcatDirectories();
-		for(String directory : expectedDirectoryNames){
-			Assert.assertTrue(checkExist(directory));
-		}
-	}
-	
-	private boolean checkExist(String directoryName){
-		File targetDirectory = new File(baseDir, "/"+ directoryName + "/");
-		return targetDirectory.exists();
-	}
-	
-	@Test(expected=TomcatSetupException.class)
-	public void testBaseDirNotExist(){
-		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"), Mockito.mock(Log.class));
-		creator.createTomcatDirectories();
-	}
-	
-	@Test(expected=TomcatSetupException.class)
-	public void testTomcatDirectoryCouldNotBeCreated(){
-		TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"), Mockito.mock(Log.class));
-		creator.createTomcatDirectory("test");
-	}
-	
-	/**
-	 * This test is only to get a 100% Branch-Coverage
-	 * 
-	 * @throws IOException
-	 */
-	@Test(expected=Exception.class)
-	public void testTomcatDirectoryIsNotADirectory() throws IOException{
-		File file = Mockito.mock(File.class);
-		Mockito.when(file.exists()).thenReturn(false);
-		Mockito.when(file.mkdirs()).thenReturn(true);
-		TomcatDirectorySetup setup = new TomcatDirectorySetup(file, Mockito.mock(Log.class));
-		setup.createTomcatDirectories();
-	}
+
+    private File baseDir = null;
+
+    private List<String> expectedDirectoryNames = Arrays.asList(new String[] { "conf", "lib", "logs", "temp", "webapps", "work" });
+
+    @Before
+    public void setUp() {
+        File tempDir = new File(System.getProperty("java.io.tmpdir"));
+        baseDir = new File(tempDir, "tomcat_TEST_" + UUID.randomUUID().toString());
+        Assert.assertTrue(baseDir.mkdirs());
+    }
+
+    @After
+    public void tearDown() throws IOException {
+        FileUtils.deleteDirectory(baseDir);
+    }
+
+    @Test
+    public void testCreateDirectory() throws MojoExecutionException {
+        TomcatDirectorySetup creator = new TomcatDirectorySetup(baseDir, Mockito.mock(Log.class));
+        creator.createTomcatDirectories();
+        for (String directory : expectedDirectoryNames) {
+            Assert.assertTrue(checkExist(directory));
+        }
+    }
+
+    private boolean checkExist(String directoryName) {
+        File targetDirectory = new File(baseDir, "/" + directoryName + "/");
+        return targetDirectory.exists();
+    }
+
+    @Test(expected = TomcatSetupException.class)
+    public void testBaseDirNotExist() {
+        TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"), Mockito.mock(Log.class));
+        creator.createTomcatDirectories();
+    }
+
+    @Test(expected = TomcatSetupException.class)
+    public void testTomcatDirectoryCouldNotBeCreated() {
+        TomcatDirectorySetup creator = new TomcatDirectorySetup(new File("/peter"), Mockito.mock(Log.class));
+        creator.createTomcatDirectory("test");
+    }
+
+    /**
+     * This test is only to get a 100% Branch-Coverage
+     * 
+     * @throws IOException
+     */
+    @Test(expected = Exception.class)
+    public void testTomcatDirectoryIsNotADirectory() throws IOException {
+        File file = Mockito.mock(File.class);
+        Mockito.when(file.exists()).thenReturn(false);
+        Mockito.when(file.mkdirs()).thenReturn(true);
+        TomcatDirectorySetup setup = new TomcatDirectorySetup(file, Mockito.mock(Log.class));
+        setup.createTomcatDirectories();
+    }
 
 }

@@ -30,43 +30,43 @@ import org.apache.maven.plugin.MojoFailureException;
 public class RunMojo extends AbstractT7Mojo {
 
     protected Bootstrap bootstrap;
-    
+
     protected TomcatSetup tomcatSetup;
-	
-	@SuppressWarnings("unchecked")
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
-		
-		this.tomcatSetup = getTomcatSetup();
-		this.tomcatSetup.buildTomcat();
-		
-		System.setProperty("catalina.home", catalinaBase.getAbsolutePath());
-		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
-		bootstrap = getBootstrap();
-		getLog().info("Starting Tomcat ...");
-		try {
-			bootstrap.init();
-			if(tomcatSetAwait){
-				Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
-				bootstrap.setAwait(tomcatSetAwait);
-				bootstrap.start();
-			}else{
-				bootstrap.start();
-				getPluginContext().put(T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
-				Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
-				getLog().info("Tomcat started");
-			}
-		} catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}
-	
-	protected TomcatSetup getTomcatSetup(){
-		return new DefaultTomcatSetup((AbstractT7Mojo)this);
-	}
-	
-	protected Bootstrap getBootstrap(){
-		return new Bootstrap();
-	}
+
+    @SuppressWarnings("unchecked")
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
+
+        this.tomcatSetup = getTomcatSetup();
+        this.tomcatSetup.buildTomcat();
+
+        System.setProperty("catalina.home", catalinaBase.getAbsolutePath());
+        System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
+        bootstrap = getBootstrap();
+        getLog().info("Starting Tomcat ...");
+        try {
+            bootstrap.init();
+            if (tomcatSetAwait) {
+                Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
+                bootstrap.setAwait(tomcatSetAwait);
+                bootstrap.start();
+            } else {
+                bootstrap.start();
+                getPluginContext().put(T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
+                Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
+                getLog().info("Tomcat started");
+            }
+        } catch (Exception e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
+    }
+
+    protected TomcatSetup getTomcatSetup() {
+        return new DefaultTomcatSetup((AbstractT7Mojo) this);
+    }
+
+    protected Bootstrap getBootstrap() {
+        return new Bootstrap();
+    }
 
 }

@@ -26,9 +26,9 @@ import java.io.FileFilter;
  */
 public class FilesOnlyFileFilter implements FileFilter {
 
-	@Override
-	public boolean accept(File file) {
-		return file.isFile();
-	}
+    @Override
+    public boolean accept(File file) {
+        return file.isFile();
+    }
 
 }

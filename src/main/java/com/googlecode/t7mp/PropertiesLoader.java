@@ -19,8 +19,13 @@ package com.googlecode.t7mp;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * TODO Comment.
+ * @author jbellmann
+ *
+ */
 public interface PropertiesLoader {
-	
-	Properties load(Class<?> clazz, String propertiesFilename) throws IOException;
+
+    Properties load(Class<?> clazz, String propertiesFilename) throws IOException;
 
 }

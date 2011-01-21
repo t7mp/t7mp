@@ -29,91 +29,91 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public class StopServerMojoTest {
-	
-	@Test
-	public void testExecute() throws IOException, MojoExecutionException, MojoFailureException, InterruptedException{
-		FakeServer server = new FakeServer(8005);
-		Thread t = new Thread(server);
-		t.start();
-		Thread.sleep(2000);
-		StopServerMojo mojo = new StopServerMojo();
-		mojo.setTomcatShutdownCommand("TESTCOMMAND");
-		mojo.setTomcatShutdownPort(server.getPort());
-		mojo.execute();
-		Thread.sleep(2000);
-		Assert.assertEquals(server.getCommand(), mojo.getTomcatShutdownCommand());
-		Assert.assertFalse(t.isAlive());
-	}
-	
-	@Test(expected=MojoExecutionException.class)
-	public void testExecuteWithUnknowHostException() throws MojoExecutionException, MojoFailureException{
-		StopServerMojo mojo = new StopServerMojo();
-		mojo.setLog(Mockito.mock(Log.class));
-		mojo.setTomcatShutdownCommand("SHUTDOWN");
-		mojo.setTomcatShutdownPort(8005);
-		mojo.setTomcatShutdownHost("petermeier");
-		mojo.execute();
-	}
-	
-	@Test(expected=MojoExecutionException.class)
-	public void testExecuteWithIOException() throws MojoExecutionException, MojoFailureException{
-		StopServerMojo mojo = new StopServerMojo();
-		mojo.setLog(Mockito.mock(Log.class));
-		mojo.setTomcatShutdownCommand("SHUTDOWN");
-		mojo.setTomcatShutdownPort(8005);
-		mojo.setTomcatShutdownHost("localhost");
-		mojo.execute();
-	}
-	
-	@Test
-	public void testDefaultValues(){
-		StopServerMojo mojo = new StopServerMojo();
-		Assert.assertEquals(8005, mojo.getTomcatShutdownPort());
-		Assert.assertEquals("SHUTDOWN", mojo.getTomcatShutdownCommand());
-		Assert.assertEquals("localhost", mojo.getTomcatShutdownHost());
-	}
-	
-	public class FakeServer implements Runnable {
-		
-		private String command = "NO_COMMAND";
-		
-		private int port;
-		
-		public FakeServer(int port){
-			this.port = port;
-		}
-		
-		public void start() throws IOException{
-			ServerSocket server = new ServerSocket(port);
-			Socket socket = server.accept();
-			InputStream is = socket.getInputStream();
-			StringBuilder sb = new StringBuilder();
-			int i = 0;
-			while((i = is.read()) != -1){
-				sb.append((char)i);
-			}
-			socket.close();
-			server.close();
-			command = sb.toString();
-		}
 
-		public String getCommand() {
-			return command;
-		}
+    @Test
+    public void testExecute() throws IOException, MojoExecutionException, MojoFailureException, InterruptedException {
+        FakeServer server = new FakeServer(8005);
+        Thread t = new Thread(server);
+        t.start();
+        Thread.sleep(2000);
+        StopServerMojo mojo = new StopServerMojo();
+        mojo.setTomcatShutdownCommand("TESTCOMMAND");
+        mojo.setTomcatShutdownPort(server.getPort());
+        mojo.execute();
+        Thread.sleep(2000);
+        Assert.assertEquals(server.getCommand(), mojo.getTomcatShutdownCommand());
+        Assert.assertFalse(t.isAlive());
+    }
 
-		public int getPort() {
-			return port;
-		}
+    @Test(expected = MojoExecutionException.class)
+    public void testExecuteWithUnknowHostException() throws MojoExecutionException, MojoFailureException {
+        StopServerMojo mojo = new StopServerMojo();
+        mojo.setLog(Mockito.mock(Log.class));
+        mojo.setTomcatShutdownCommand("SHUTDOWN");
+        mojo.setTomcatShutdownPort(8005);
+        mojo.setTomcatShutdownHost("petermeier");
+        mojo.execute();
+    }
 
-		@Override
-		public void run() {
-			try {
-				start();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}			
-		}
-	
-	}
+    @Test(expected = MojoExecutionException.class)
+    public void testExecuteWithIOException() throws MojoExecutionException, MojoFailureException {
+        StopServerMojo mojo = new StopServerMojo();
+        mojo.setLog(Mockito.mock(Log.class));
+        mojo.setTomcatShutdownCommand("SHUTDOWN");
+        mojo.setTomcatShutdownPort(8005);
+        mojo.setTomcatShutdownHost("localhost");
+        mojo.execute();
+    }
+
+    @Test
+    public void testDefaultValues() {
+        StopServerMojo mojo = new StopServerMojo();
+        Assert.assertEquals(8005, mojo.getTomcatShutdownPort());
+        Assert.assertEquals("SHUTDOWN", mojo.getTomcatShutdownCommand());
+        Assert.assertEquals("localhost", mojo.getTomcatShutdownHost());
+    }
+
+    public class FakeServer implements Runnable {
+
+        private String command = "NO_COMMAND";
+
+        private int port;
+
+        public FakeServer(int port) {
+            this.port = port;
+        }
+
+        public void start() throws IOException {
+            ServerSocket server = new ServerSocket(port);
+            Socket socket = server.accept();
+            InputStream is = socket.getInputStream();
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            while ((i = is.read()) != -1) {
+                sb.append((char) i);
+            }
+            socket.close();
+            server.close();
+            command = sb.toString();
+        }
+
+        public String getCommand() {
+            return command;
+        }
+
+        public int getPort() {
+            return port;
+        }
+
+        @Override
+        public void run() {
+            try {
+                start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
 }

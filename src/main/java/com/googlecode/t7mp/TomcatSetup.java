@@ -18,8 +18,13 @@ package com.googlecode.t7mp;
 
 import org.apache.maven.plugin.MojoExecutionException;
 
+/**
+ * TODO Comment.
+ * @author jbellmann
+ *
+ */
 public interface TomcatSetup {
-	
-	void buildTomcat() throws MojoExecutionException;
+
+    void buildTomcat() throws MojoExecutionException;
 
 }

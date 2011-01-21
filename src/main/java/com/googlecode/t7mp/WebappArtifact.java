@@ -19,44 +19,42 @@ package com.googlecode.t7mp;
 import org.apache.maven.artifact.Artifact;
 
 /**
- * 
- * 
- *
+ * TODO Comment.
  */
 public class WebappArtifact extends AbstractArtifact {
-	
-	private String contextPath;
-	
-	public WebappArtifact(){
-		super();
-	}
-	
-	public WebappArtifact(Artifact artifact){
-		super(artifact);
-	}
 
-	@Override
-	public String getType() {
-		return "war";
-	}
+    private String contextPath;
 
-	public String getContextPath() {
-		if(contextPath == null || contextPath.equals("")){
-			return artifactId;
-		}
-		if(contextPath.startsWith("/")){
-			return contextPath.substring(1);
-		}
-		return contextPath;
-	}
+    public WebappArtifact() {
+        super();
+    }
 
-	public void setContextPath(String contextPath) {
-		this.contextPath = contextPath;
-	}
-	
-	@Override
-	public String toString(){
-		return "WebappArtifact[contextPath=" + getContextPath() + ":" + super.toString() + "]";
-	}
-	
+    public WebappArtifact(Artifact artifact) {
+        super(artifact);
+    }
+
+    @Override
+    public String getType() {
+        return "war";
+    }
+
+    public String getContextPath() {
+        if (contextPath == null || contextPath.equals("")) {
+            return artifactId;
+        }
+        if (contextPath.startsWith("/")) {
+            return contextPath.substring(1);
+        }
+        return contextPath;
+    }
+
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
+    }
+
+    @Override
+    public String toString() {
+        return "WebappArtifact[contextPath=" + getContextPath() + ":" + super.toString() + "]";
+    }
+
 }

@@ -16,37 +16,34 @@
 
 package com.googlecode.t7mp;
 
-
 /**
- * 
- * 
- *
+ * TODO Comment.
  */
 public class TomcatSetupException extends RuntimeException {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private static final String NOT_NULL = " should not be null";
-	
-	private static final String NOT_EMPTY = " should not be empty";
 
-	public TomcatSetupException(String message){
-		super(message);
-	}
-	
-	public TomcatSetupException(String message, Throwable cause){
-		super(message, cause);
-	}
-	
-	public static void notNull(Object arg, String name) throws TomcatSetupException {
-		if(arg == null){
-			throw new TomcatSetupException(name + NOT_NULL);
-		}
-	}
-	
-	public static void notEmpty(String string, String name) throws TomcatSetupException {
-		if(string.isEmpty()){
-			throw new TomcatSetupException(name + NOT_EMPTY);
-		}
-	}
+    private static final long serialVersionUID = 1L;
+
+    private static final String NOT_NULL = " should not be null";
+
+    private static final String NOT_EMPTY = " should not be empty";
+
+    public TomcatSetupException(String message) {
+        super(message);
+    }
+
+    public TomcatSetupException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public static void notNull(Object arg, String name) throws TomcatSetupException {
+        if (arg == null) {
+            throw new TomcatSetupException(name + NOT_NULL);
+        }
+    }
+
+    public static void notEmpty(String string, String name) throws TomcatSetupException {
+        if (string.isEmpty()) {
+            throw new TomcatSetupException(name + NOT_EMPTY);
+        }
+    }
 }

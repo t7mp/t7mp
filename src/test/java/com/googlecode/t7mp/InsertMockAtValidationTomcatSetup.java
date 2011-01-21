@@ -26,30 +26,30 @@ import org.mockito.Mockito;
 
 public class InsertMockAtValidationTomcatSetup extends DefaultTomcatSetup {
 
-	public InsertMockAtValidationTomcatSetup(AbstractT7Mojo t7Mojo) {
-		super(t7Mojo);
-	}
+    public InsertMockAtValidationTomcatSetup(AbstractT7Mojo t7Mojo) {
+        super(t7Mojo);
+    }
 
-	@Override
-	protected void validateConfiguration() throws TomcatSetupException {
-		super.validateConfiguration();
-		// try to fake some components
-		setupUtil = new DoNothingSetupUtil();
-		TomcatArtifactDescriptorReader artifactDescriptorReader = Mockito.mock(TomcatArtifactDescriptorReader.class);
-		Artifact mavenArtifact = Mockito.mock(Artifact.class);
-		JarArtifact jarArtifact = Mockito.mock(JarArtifact.class);
-		
-		Mockito.when(jarArtifact.getArtifact()).thenReturn(mavenArtifact);
-		File fakeJar;
-		try {
-			fakeJar = File.createTempFile("mavenArtifact_", ".jar");
-		} catch (IOException e) {
-			throw new RuntimeException("This Exception comes from a TestClass", e);
-		}
-		Mockito.when(mavenArtifact.getFile()).thenReturn(fakeJar);
-		List<AbstractArtifact> artifactList = new ArrayList<AbstractArtifact>();
-		artifactList.add(jarArtifact);
-		Mockito.when(artifactDescriptorReader.getJarArtifacts(Mockito.anyString())).thenReturn(new ArrayList<JarArtifact>());
-		this.artifactDescriptorReader = artifactDescriptorReader;
-	}
+    @Override
+    protected void validateConfiguration() throws TomcatSetupException {
+        super.validateConfiguration();
+        // try to fake some components
+        setupUtil = new DoNothingSetupUtil();
+        TomcatArtifactDescriptorReader artifactDescriptorReader = Mockito.mock(TomcatArtifactDescriptorReader.class);
+        Artifact mavenArtifact = Mockito.mock(Artifact.class);
+        JarArtifact jarArtifact = Mockito.mock(JarArtifact.class);
+
+        Mockito.when(jarArtifact.getArtifact()).thenReturn(mavenArtifact);
+        File fakeJar;
+        try {
+            fakeJar = File.createTempFile("mavenArtifact_", ".jar");
+        } catch (IOException e) {
+            throw new RuntimeException("This Exception comes from a TestClass", e);
+        }
+        Mockito.when(mavenArtifact.getFile()).thenReturn(fakeJar);
+        List<AbstractArtifact> artifactList = new ArrayList<AbstractArtifact>();
+        artifactList.add(jarArtifact);
+        Mockito.when(artifactDescriptorReader.getJarArtifacts(Mockito.anyString())).thenReturn(new ArrayList<JarArtifact>());
+        this.artifactDescriptorReader = artifactDescriptorReader;
+    }
 }
