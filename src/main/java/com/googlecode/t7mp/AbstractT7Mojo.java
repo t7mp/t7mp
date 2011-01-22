@@ -32,7 +32,13 @@ import org.codehaus.plexus.archiver.manager.ArchiverManager;
  */
 public abstract class AbstractT7Mojo extends AbstractMojo {
 
-    public static String T7_BOOTSTRAP_CONTEXT_ID = "com.googlecode.t7mp.Bootstrap";
+    public static final String T7_BOOTSTRAP_CONTEXT_ID = "com.googlecode.t7mp.Bootstrap";
+
+    public static final int DEFAULT_TOMCAT_HTTP_PORT = 8080;
+
+    public static final int DEFAULT_TOMCAT_SHUTDOWN_PORT = 8005;
+
+    public static final String DEFAULT_TOMCAT_VERSION = "7.0.6";
 
     /**
      * Used to look up Artifacts in the remote repository.
@@ -109,19 +115,19 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      * @parameter expression="${t7.tomcatVersion}" default-value="7.0.2"
      */
-    protected String tomcatVersion = "7.0.2";
+    protected String tomcatVersion = DEFAULT_TOMCAT_VERSION;
 
     /**
      * 
      * @parameter expression="${t7.tomcatHttpPort}" default-value="8080"
      */
-    protected int tomcatHttpPort = 8080;
+    protected int tomcatHttpPort = DEFAULT_TOMCAT_HTTP_PORT;
 
     /**
      * 
      * @parameter expression="${t7.tomcatShutdownPort}" default-value="8005"
      */
-    protected int tomcatShutdownPort = 8005;
+    protected int tomcatShutdownPort = DEFAULT_TOMCAT_SHUTDOWN_PORT;
 
     /**
      * 

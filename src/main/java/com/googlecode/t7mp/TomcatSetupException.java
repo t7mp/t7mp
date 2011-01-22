@@ -35,13 +35,13 @@ public class TomcatSetupException extends RuntimeException {
         super(message, cause);
     }
 
-    public static void notNull(Object arg, String name) throws TomcatSetupException {
+    public static void notNull(Object arg, String name) {
         if (arg == null) {
             throw new TomcatSetupException(name + NOT_NULL);
         }
     }
 
-    public static void notEmpty(String string, String name) throws TomcatSetupException {
+    public static void notEmpty(String string, String name) {
         if (string.isEmpty()) {
             throw new TomcatSetupException(name + NOT_EMPTY);
         }

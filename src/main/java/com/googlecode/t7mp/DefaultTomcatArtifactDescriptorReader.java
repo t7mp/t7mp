@@ -31,6 +31,8 @@ import org.apache.maven.plugin.logging.Log;
  */
 public class DefaultTomcatArtifactDescriptorReader implements TomcatArtifactDescriptorReader {
 
+    public static final int GAV_LENGTH = 3;
+
     private final Log log;
     private PropertiesLoader propertiesLoader = new DefaultPropertiesLoader();
 
@@ -61,7 +63,7 @@ public class DefaultTomcatArtifactDescriptorReader implements TomcatArtifactDesc
             JarArtifact jarArtifact = new JarArtifact();
             jarArtifact.setGroupId(gav[0]);
             jarArtifact.setArtifactId(gav[1]);
-            if (gav.length == 3) {
+            if (gav.length == GAV_LENGTH) {
                 jarArtifact.setVersion(gav[2]);
             } else {
                 jarArtifact.setVersion(tomcatVersion);

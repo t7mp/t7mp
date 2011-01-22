@@ -35,7 +35,7 @@ final class TomcatJarArtifactHelper {
 
     List<JarArtifact> getTomcatArtifacts(String tomcatVersion) throws MojoExecutionException {
         List<JarArtifact> tomcatArtifactList = new ArrayList<JarArtifact>();
-        //		Properties tomcatLibs = new Properties();
+        //Properties tomcatLibs = new Properties();
         try {
             tomcatLibs.load(TomcatJarArtifactHelper.class.getResourceAsStream("artifacts.properties"));
         } catch (IOException e) {

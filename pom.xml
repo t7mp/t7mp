@@ -165,8 +165,17 @@
             <configuration>
               <consoleOutput>true</consoleOutput>
               <failsOnError>true</failsOnError>
-              <configLocation>sun_checks.xml</configLocation>
+              <configLocation>checkstyle.xml</configLocation>
             </configuration>
+            <executions>
+                <execution>
+                    <id>checkstyle</id>
+                    <goals>
+                        <goal>checkstyle</goal>
+                    </goals>
+                    <phase>verify</phase>
+                </execution>
+            </executions>
         </plugin>
 		</plugins>
 	</build>

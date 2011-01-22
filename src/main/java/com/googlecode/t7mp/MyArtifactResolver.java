@@ -86,7 +86,10 @@ public class MyArtifactResolver {
     }
 
     private ArtifactRepositoryPolicy createSnapshotPolicy() {
-        String updatePolicy = resolveAllways ? ArtifactRepositoryPolicy.UPDATE_POLICY_ALWAYS : ArtifactRepositoryPolicy.UPDATE_POLICY_DAILY;
+        String updatePolicy = ArtifactRepositoryPolicy.UPDATE_POLICY_ALWAYS;
+        if (!resolveAllways) {
+            updatePolicy = ArtifactRepositoryPolicy.UPDATE_POLICY_DAILY;
+        }
         return new ArtifactRepositoryPolicy(true, updatePolicy, ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN);
     }
 

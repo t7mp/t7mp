@@ -51,14 +51,18 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         this.t7Mojo = t7Mojo;
     }
 
-    protected abstract void configure() throws TomcatSetupException;
+    /**
+     * Configure the tomcat.
+     * @throws TomcatSetupException
+     */
+    protected abstract void configure();
 
     /**
      * Validates that all needed Dependencies are set.
      * 
      * @throws TomcatSetupException
      */
-    protected void validateConfiguration() throws TomcatSetupException {
+    protected void validateConfiguration() {
         TomcatSetupException.notNull(t7Mojo, "t7Mojo");
         TomcatSetupException.notNull(log, "log");
         TomcatSetupException.notNull(setupUtil, "setupUtil");
@@ -70,7 +74,7 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 
     /**
      * 
-     * 
+     * @throws MojoExecutionException
      */
     @Override
     public void buildTomcat() throws MojoExecutionException {
@@ -95,6 +99,9 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         }
     }
 
+    /**
+     * @throws TomcatSetupException
+     */
     //TODO think about merging with userconfig
     protected void buildCatalinaPropertiesFile() {
         try {
@@ -117,7 +124,10 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         }
     }
 
-    protected void copyWebapp() throws TomcatSetupException {
+    /**
+     * @throws TomcatSetupException
+     */
+    protected void copyWebapp() {
         if (!this.t7Mojo.isWebProject()) {
             return;
         }

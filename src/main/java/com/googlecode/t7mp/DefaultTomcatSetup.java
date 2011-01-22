@@ -27,8 +27,11 @@ public class DefaultTomcatSetup extends AbstractTomcatSetup {
         super(t7Mojo);
     }
 
+    /**
+     * @throws TomcatSetupException
+     */
     @Override
-    protected void configure() throws TomcatSetupException {
+    protected void configure() {
         if (t7Mojo.lookInside) {
             log = new LookInsideLog(t7Mojo.getLog());
         } else {

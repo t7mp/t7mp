@@ -6,7 +6,7 @@ package com.googlecode.t7mp;
  * @author jbellmann
  *
  */
-public class WebappLink {
+public final class WebappLink {
 
     private static final String DEFAULT_HOST = "localhost";
     private static final String DEFAULT_ENGINE = "Catalina";
@@ -15,5 +15,9 @@ public class WebappLink {
     private String engine = DEFAULT_ENGINE;
     private String contextPath = "";
     private String documentPath = "";
+
+    private WebappLink() {
+        //
+    }
 
 }

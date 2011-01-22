@@ -42,7 +42,7 @@ public class TomcatConfigFilesSetup {
 
     public TomcatConfigFilesSetup copyDefaultConfig() {
         copyConfigResource("catalina.policy");
-        //		copyConfigResource("catalina.properties");
+        //copyConfigResource("catalina.properties");
         copyConfigResource("context.xml");
         copyConfigResource("logging.properties");
         copyConfigResource("server.xml");
