@@ -166,7 +166,7 @@
                 <configuration>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
-                    <configLocation>checkstyle.xml</configLocation>
+                    <configLocation>${basedir}/etc/checkstyle.xml</configLocation>
                 </configuration>
                 <executions>
                     <execution>
