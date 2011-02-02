@@ -31,5 +31,7 @@ public interface SetupUtil {
     void copy(InputStream inputStream, OutputStream outputStream) throws IOException;
 
     void copyDirectory(File source, File target) throws IOException;
+    
+    void copyFile(File source, File target) throws IOException;
 
 }
