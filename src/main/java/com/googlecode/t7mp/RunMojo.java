@@ -40,8 +40,6 @@ public class RunMojo extends AbstractT7Mojo {
         this.tomcatSetup = getTomcatSetup();
         this.tomcatSetup.buildTomcat();
 
-        System.setProperty("catalina.home", catalinaBase.getAbsolutePath());
-        System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
         bootstrap = getBootstrap();
         getLog().info("Starting Tomcat ...");
         try {

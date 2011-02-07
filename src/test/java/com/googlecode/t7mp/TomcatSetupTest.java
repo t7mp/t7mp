@@ -65,6 +65,7 @@ public class TomcatSetupTest {
         t7Mojo.tomcatVersion = "7.0-SNAPSHOT";
         t7Mojo.webapps = new ArrayList<WebappArtifact>();
         t7Mojo.libs = new ArrayList<JarArtifact>();
+        t7Mojo.systemProperties = new ArrayList<SystemProperty>();
     }
 
     @After
