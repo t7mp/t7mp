@@ -93,6 +93,7 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
             libDispatcher.resolveArtifacts(this.t7Mojo.webapps).copyTo("webapps");
             copyWebapp();
             setSystemProperties();
+            copyOverwriteWebXML();
         } catch (TomcatSetupException e) {
             this.t7Mojo.getLog().error("Error setting up tomcat.");
             this.t7Mojo.getLog().error(e.getMessage(), e);
@@ -137,6 +138,18 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         }
         try {
             setupUtil.copyDirectory(this.t7Mojo.webappOutputDirectory, new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName()));
+        } catch (IOException e) {
+            throw new TomcatSetupException(e.getMessage(), e);
+        }
+    }
+    
+    protected void copyOverwriteWebXML() {
+        if ((this.t7Mojo.overwriteWebXML == null) || (!this.t7Mojo.overwriteWebXML.exists())) {
+            return;
+        }
+        try {
+            setupUtil.copyFile(this.t7Mojo.overwriteWebXML, 
+                    new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName() + "/WEB-INF/web.xml"));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }

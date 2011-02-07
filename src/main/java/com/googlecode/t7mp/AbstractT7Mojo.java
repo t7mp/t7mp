@@ -157,6 +157,12 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      */
     protected File tomcatConfigDirectory;
+    
+    /**
+     * 
+     * @parameter expression="${t7.overwriteWebXML}"
+     */
+    protected File overwriteWebXML;
 
     /**
      * 
@@ -266,5 +272,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     public void setWebappOutputDirectory(File webappOutputDirectory) {
         this.webappOutputDirectory = webappOutputDirectory;
     }
+
+    public File getOverwriteWebXML() {
+        return overwriteWebXML;
+    }
+
+    public void setOverwriteWebXML(File overwriteWebXML) {
+        this.overwriteWebXML = overwriteWebXML;
+    }
+    
 
 }

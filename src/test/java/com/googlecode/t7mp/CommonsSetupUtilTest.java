@@ -35,10 +35,23 @@ public class CommonsSetupUtilTest {
     private File catalinaBaseDir;
     private static int counter = 1;
 
+    private final static String MESSAGE = "TEST";
+    private File source;
+    private File target;
+
     @Before
     public void setUp() throws IOException {
         catalinaBaseDir = new File(new File(System.getProperty("java.io.tmpdir")), "catalinaBase_" + (++counter));
         catalinaBaseDir.mkdirs();
+
+        source = File.createTempFile("source", ".tmp");
+        source.deleteOnExit();
+        target = File.createTempFile("target", ".tmp");
+        target.deleteOnExit();
+
+        FileWriter sourceWriter = new FileWriter(source);
+        sourceWriter.write(MESSAGE);
+        sourceWriter.close();
     }
 
     @After
@@ -47,28 +60,31 @@ public class CommonsSetupUtilTest {
         if (catalinaBaseDir.exists()) {
             System.err.println("Could not delete directory " + catalinaBaseDir.getAbsolutePath());
         }
+        FileUtils.deleteQuietly(source);
+        FileUtils.deleteQuietly(target);
     }
 
     @Test
     public void testCopy() throws IOException {
-
-        String message = "TEST";
-
-        File source = File.createTempFile("source", ".tmp");
-        source.deleteOnExit();
-        File target = File.createTempFile("target", ".tmp");
-        target.deleteOnExit();
-        FileWriter sourceWriter = new FileWriter(source);
-        sourceWriter.write(message);
-        sourceWriter.close();
         SetupUtil setupUtil = new CommonsSetupUtil();
         setupUtil.copy(new FileInputStream(source), new FileOutputStream(target));
+        checkResultFile();
+    }
+
+    @Test
+    public void testCopyFile() throws IOException {
+        SetupUtil setupUtil = new CommonsSetupUtil();
+        setupUtil.copyFile(source, target);
+        checkResultFile();
+    }
+
+    private void checkResultFile() throws IOException {
         FileReader reader = new FileReader(target);
         char[] buffer = new char[10];
         reader.read(buffer);
         reader.close();
         String result = new String(buffer);
-        Assert.assertEquals(message, result.trim());
+        Assert.assertEquals(MESSAGE, result.trim());
     }
 
     @Test
