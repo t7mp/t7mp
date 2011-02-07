@@ -18,7 +18,6 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -35,7 +34,7 @@ public class CommonsSetupUtilTest {
 
     private File catalinaBaseDir;
     private static int counter = 1;
-    
+
     private final static String MESSAGE = "TEST";
     private File source;
     private File target;
@@ -49,7 +48,6 @@ public class CommonsSetupUtilTest {
         source.deleteOnExit();
         target = File.createTempFile("target", ".tmp");
         target.deleteOnExit();
-        
         FileWriter sourceWriter = new FileWriter(source);
         sourceWriter.write(MESSAGE);
         sourceWriter.close();
@@ -71,14 +69,14 @@ public class CommonsSetupUtilTest {
         setupUtil.copy(new FileInputStream(source), new FileOutputStream(target));
         checkResultFile();
     }
-    
+
     @Test
     public void testCopyFile() throws IOException {
         SetupUtil setupUtil = new CommonsSetupUtil();
         setupUtil.copyFile(source, target);
         checkResultFile();
     }
-    
+
     private void checkResultFile() throws IOException {
         FileReader reader = new FileReader(target);
         char[] buffer = new char[10];

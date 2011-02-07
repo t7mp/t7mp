@@ -92,6 +92,7 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
             libDispatcher.clear();
             libDispatcher.resolveArtifacts(this.t7Mojo.webapps).copyTo("webapps");
             copyWebapp();
+            setSystemProperties();
             copyOverwriteWebXML();
         } catch (TomcatSetupException e) {
             this.t7Mojo.getLog().error("Error setting up tomcat.");
@@ -141,16 +142,26 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
             throw new TomcatSetupException(e.getMessage(), e);
         }
     }
-    
+
     protected void copyOverwriteWebXML() {
         if ((this.t7Mojo.overwriteWebXML == null) || (!this.t7Mojo.overwriteWebXML.exists())) {
             return;
         }
         try {
-            setupUtil.copyFile(this.t7Mojo.overwriteWebXML, 
-                    new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName() + "/WEB-INF/web.xml"));
+            setupUtil.copyFile(this.t7Mojo.overwriteWebXML, new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName() + "/WEB-INF/web.xml"));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
+        }
+    }
+
+    protected void setSystemProperties() {
+        System.setProperty("catalina.home", this.t7Mojo.catalinaBase.getAbsolutePath());
+        log.debug("set systemproperty key: catalina.home to value " + this.t7Mojo.catalinaBase.getAbsolutePath());
+        System.setProperty("catalina.base", this.t7Mojo.catalinaBase.getAbsolutePath());
+        log.debug("set systemproperty key: catalina.base to value " + this.t7Mojo.catalinaBase.getAbsolutePath());
+        for (SystemProperty property : this.t7Mojo.systemProperties) {
+            System.setProperty(property.getKey(), property.getValue());
+            log.debug("set systemproperty key: " + property.getKey() + " to value " + property.getValue());
         }
     }
 

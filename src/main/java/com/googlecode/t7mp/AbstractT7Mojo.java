@@ -113,7 +113,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     /**
      * 
-     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.2"
+     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.6"
      */
     protected String tomcatVersion = DEFAULT_TOMCAT_VERSION;
 
@@ -184,6 +184,12 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter
      */
     protected ArrayList<WebappArtifact> webapps = new ArrayList<WebappArtifact>();
+
+    /**
+     * 
+     * @parameter
+     */
+    protected ArrayList<SystemProperty> systemProperties = new ArrayList<SystemProperty>();
 
     /**
      * 
