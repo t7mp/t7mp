@@ -38,7 +38,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public static final int DEFAULT_TOMCAT_SHUTDOWN_PORT = 8005;
 
-    public static final String DEFAULT_TOMCAT_VERSION = "7.0.6";
+    public static final String DEFAULT_TOMCAT_VERSION = "7.0.8";
 
     /**
      * Used to look up Artifacts in the remote repository.
@@ -157,7 +157,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      */
     protected File tomcatConfigDirectory;
-    
+
     /**
      * 
      * @parameter expression="${t7.overwriteWebXML}"
@@ -280,6 +280,5 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     public void setOverwriteWebXML(File overwriteWebXML) {
         this.overwriteWebXML = overwriteWebXML;
     }
-    
 
 }
