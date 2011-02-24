@@ -142,14 +142,13 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
             throw new TomcatSetupException(e.getMessage(), e);
         }
     }
-    
+
     protected void copyOverwriteWebXML() {
         if ((this.t7Mojo.overwriteWebXML == null) || (!this.t7Mojo.overwriteWebXML.exists())) {
             return;
         }
         try {
-            setupUtil.copyFile(this.t7Mojo.overwriteWebXML, 
-                    new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName() + "/WEB-INF/web.xml"));
+            setupUtil.copyFile(this.t7Mojo.overwriteWebXML, new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName() + "/WEB-INF/web.xml"));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }
@@ -161,9 +160,20 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         System.setProperty("catalina.base", this.t7Mojo.catalinaBase.getAbsolutePath());
         log.debug("set systemproperty key: catalina.base to value " + this.t7Mojo.catalinaBase.getAbsolutePath());
         for (SystemProperty property : this.t7Mojo.systemProperties) {
-            System.setProperty(property.getKey(), property.getValue());
-            log.debug("set systemproperty key: " + property.getKey() + " to value " + property.getValue());
+            String value = replaceCatalinas(property.getValue());
+            System.setProperty(property.getKey(), value);
+            log.debug("set systemproperty key: " + property.getKey() + " to value: " + System.getProperty(property.getKey()));
         }
+    }
+
+    protected String replaceCatalinas(String value) {
+        if (value.startsWith("${catalina.home}")) {
+            value = value.replace("${catalina.home}", System.getProperty("catalina.home"));
+        }
+        if (value.startsWith("${catalina.base}")) {
+            value = value.replace("${catalina.base}", System.getProperty("catalina.base"));
+        }
+        return value;
     }
 
     /**
