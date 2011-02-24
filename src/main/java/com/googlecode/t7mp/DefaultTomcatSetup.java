@@ -32,16 +32,11 @@ public class DefaultTomcatSetup extends AbstractTomcatSetup {
      */
     @Override
     protected void configure() {
-        if (t7Mojo.lookInside) {
-            log = new LookInsideLog(t7Mojo.getLog());
-        } else {
-            log = t7Mojo.getLog();
-        }
-        directorySetup = new TomcatDirectorySetup(t7Mojo.catalinaBase, log);
-        configFilesSetup = new TomcatConfigFilesSetup(t7Mojo.catalinaBase, log, setupUtil);
-        artifactDescriptorReader = new DefaultTomcatArtifactDescriptorReader(log);
+        directorySetup = new TomcatDirectorySetup(t7Mojo.catalinaBase, t7Mojo.getLog());
+        configFilesSetup = new TomcatConfigFilesSetup(t7Mojo.catalinaBase, t7Mojo.getLog(), setupUtil);
+        artifactDescriptorReader = new DefaultTomcatArtifactDescriptorReader(t7Mojo.getLog());
         MyArtifactResolver myArtifactResolver = new MyArtifactResolver(t7Mojo);
-        libDispatcher = new TomcatArtifactDispatcher(myArtifactResolver, this.t7Mojo.catalinaBase, setupUtil, log);
+        libDispatcher = new TomcatArtifactDispatcher(myArtifactResolver, this.t7Mojo.catalinaBase, setupUtil, t7Mojo.getLog());
     }
 
 }

@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.googlecode.t7mp</groupId>
     <artifactId>maven-t7-plugin</artifactId>
-    <version>0.9.7-SNAPSHOT</version>
+    <version>0.9.7-scanner-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>maven-t7-plugin</name>
     <description>Tomcat 7 Maven Plugin</description>
@@ -223,6 +223,11 @@
             <artifactId>commons-io</artifactId>
             <version>1.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r08</version>
+        </dependency>
         <!-- TOMCAT -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
@@ -239,7 +244,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.1</version>
+            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
