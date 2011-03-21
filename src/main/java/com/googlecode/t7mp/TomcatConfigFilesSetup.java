@@ -21,7 +21,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.logging.Log;
 
 /**
@@ -75,6 +81,10 @@ public class TomcatConfigFilesSetup {
             File[] files = userConfigDir.listFiles(new FilesOnlyFileFilter());
             for (File configFile : files) {
                 try {
+                    if (configFile.getName().equals("catalina.properties")) {
+                        mergeUserCatalinaPropertiesWithDefault(configFile);
+                        continue;
+                    }
                     log.debug("Copy provided config file '" + configFile.getName() + "' to " + catalinaBaseDir.getAbsolutePath() + "/conf/" + configFile.getName());
                     this.setupUtil.copy(new FileInputStream(configFile), new FileOutputStream(new File(catalinaBaseDir, "/conf/" + configFile.getName())));
                 } catch (FileNotFoundException e) {
@@ -83,6 +93,57 @@ public class TomcatConfigFilesSetup {
                     throw new TomcatSetupException(e.getMessage(), e);
                 }
             }
+        }
+    }
+    
+    private void mergeUserCatalinaPropertiesWithDefault(File userCatlinaPropertiesFile) throws IOException {
+        File defaultConfigFile = new File(catalinaBaseDir, "/conf/catalina.properties");
+        
+        Properties userCatalinaProperties = loadPropertiesFromFile(userCatlinaPropertiesFile);
+        Properties defaultCatalinProperties = loadPropertiesFromFile(defaultConfigFile);
+        
+        mergeProperties(defaultCatalinProperties, userCatalinaProperties, getExcludes());
+        
+        writePropertiesToFile(defaultCatalinProperties, defaultConfigFile);
+    }
+    
+    private Properties loadPropertiesFromFile(File propertiesFile) throws IOException {
+        Properties properties = new Properties();
+        InputStream in = new FileInputStream(propertiesFile);
+        try {
+            properties.load(in);
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+        
+        return properties;
+    }
+    
+    private Collection<String> getExcludes() {
+        Collection<String> excludes = new ArrayList<String>();
+        excludes.add("http.port");
+        excludes.add("shutdown.port");
+        excludes.add("shutdown.command");
+        return excludes;
+    }
+    
+    private void mergeProperties(Properties target, Properties source, Collection<String> excludes) {
+        for (Object key : source.keySet()) {
+            if (!excludes.contains(key)) {
+                target.setProperty((String) key, (String) source.get(key));
+            } else {
+                log.debug("Skip property " + key + " from user catalina.properties");
+            }
+        }
+    }
+    
+    private void writePropertiesToFile(Properties properties, File target) throws IOException {
+        OutputStream defaultOut = null;
+        try {
+            defaultOut = new FileOutputStream(target);
+            properties.store(defaultOut, "");
+        } finally {
+            IOUtils.closeQuietly(defaultOut);
         }
     }
 
