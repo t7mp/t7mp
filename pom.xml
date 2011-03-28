@@ -30,8 +30,8 @@
     </scm>
 
     <issueManagement>
-        <system>Google Code Issue Tracking</system>
-        <url>http://code.google.com/p/t7mp/issues/list</url>
+        <system>GitHub Issue Tracking</system>
+        <url>https://github.com/t7mp/t7mp/issues</url>
     </issueManagement>
 
     <developers>
@@ -95,7 +95,7 @@
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>1.4</version>
                 <configuration>
-                    <username>joerg.bellmann</username>
+                    <username>t7mp</username>
                     <connectionType>developerConnection</connectionType>
                 </configuration>
             </plugin>
@@ -462,4 +462,4 @@
             </plugin>
         </plugins>
     </reporting>
-</project>
+</project>            
