@@ -49,6 +49,7 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 
     public AbstractTomcatSetup(AbstractT7Mojo t7Mojo) {
         this.t7Mojo = t7Mojo;
+        this.log = t7Mojo.getLog();
     }
 
     /**

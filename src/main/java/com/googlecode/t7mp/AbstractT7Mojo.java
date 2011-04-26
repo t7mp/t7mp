@@ -24,6 +24,7 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 
 /**
@@ -113,7 +114,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     /**
      * 
-     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.6"
+     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.8"
      */
     protected String tomcatVersion = DEFAULT_TOMCAT_VERSION;
 
@@ -173,6 +174,18 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     protected File webappOutputDirectory;
 
     /**
+     * @parameter default-value="${project.build.finalName}"
+     * @readonly
+     */
+    protected String buildFinalName;
+
+    /**
+     * @parameter default-value="${basedir}/src/main/webapp"
+     * @readonly
+     */
+    protected File webappSourceDirectory;
+
+    /**
      * @parameter default-value="${project.packaging}"
      * 
      * 
@@ -196,6 +209,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter
      */
     protected ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
+
+    /**
+     * 
+     * @parameter
+     */
+    protected ArrayList<ScannerConfiguration> scanners = new ArrayList<ScannerConfiguration>();
+
+    private Log log;
 
     protected boolean isWebProject() {
         return this.packaging.equals("war");
@@ -279,6 +300,22 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public void setOverwriteWebXML(File overwriteWebXML) {
         this.overwriteWebXML = overwriteWebXML;
+    }
+
+    public ArrayList<ScannerConfiguration> getScanners() {
+        return scanners;
+    }
+
+    @Override
+    public Log getLog() {
+        if (this.log == null) {
+            if (lookInside) {
+                this.log = new LookInsideLog(super.getLog());
+            } else {
+                this.log = super.getLog();
+            }
+        }
+        return this.log;
     }
 
 }
