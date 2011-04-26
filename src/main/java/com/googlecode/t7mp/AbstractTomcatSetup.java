@@ -49,6 +49,7 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
 
     public AbstractTomcatSetup(AbstractT7Mojo t7Mojo) {
         this.t7Mojo = t7Mojo;
+        this.log = t7Mojo.getLog();
     }
 
     /**
@@ -160,9 +161,20 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         System.setProperty("catalina.base", this.t7Mojo.catalinaBase.getAbsolutePath());
         log.debug("set systemproperty key: catalina.base to value " + this.t7Mojo.catalinaBase.getAbsolutePath());
         for (SystemProperty property : this.t7Mojo.systemProperties) {
-            System.setProperty(property.getKey(), property.getValue());
-            log.debug("set systemproperty key: " + property.getKey() + " to value " + property.getValue());
+            String value = replaceCatalinas(property.getValue());
+            System.setProperty(property.getKey(), value);
+            log.debug("set systemproperty key: " + property.getKey() + " to value: " + System.getProperty(property.getKey()));
         }
+    }
+
+    protected String replaceCatalinas(String value) {
+        if (value.startsWith("${catalina.home}")) {
+            value = value.replace("${catalina.home}", System.getProperty("catalina.home"));
+        }
+        if (value.startsWith("${catalina.base}")) {
+            value = value.replace("${catalina.base}", System.getProperty("catalina.base"));
+        }
+        return value;
     }
 
     /**
