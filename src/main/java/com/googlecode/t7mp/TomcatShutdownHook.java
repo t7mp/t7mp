@@ -16,6 +16,9 @@
 
 package com.googlecode.t7mp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.catalina.startup.Bootstrap;
 
 /**
@@ -23,16 +26,24 @@ import org.apache.catalina.startup.Bootstrap;
  * @author jbellmann
  *
  */
-public class TomcatShutdownHook extends Thread {
+public final class TomcatShutdownHook extends Thread {
 
     private Bootstrap bootstrap;
+    private List<Scanner> scanners = new ArrayList<Scanner>();
 
     public TomcatShutdownHook(Bootstrap bootstrap) {
         this.bootstrap = bootstrap;
     }
 
+    public void addScanner(Scanner scanner) {
+        this.scanners.add(scanner);
+    }
+
     @Override
     public void run() {
+        for (Scanner scanner : scanners) {
+            scanner.stop();
+        }
         if (bootstrap != null) {
             try {
                 bootstrap.stop();

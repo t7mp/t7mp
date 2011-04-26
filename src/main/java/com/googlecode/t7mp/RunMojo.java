@@ -16,6 +16,8 @@
 
 package com.googlecode.t7mp;
 
+import java.io.File;
+
 import org.apache.catalina.startup.Bootstrap;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -44,14 +46,22 @@ public class RunMojo extends AbstractT7Mojo {
         getLog().info("Starting Tomcat ...");
         try {
             bootstrap.init();
+            final TomcatShutdownHook shutdownHook = new TomcatShutdownHook(bootstrap);
+            for (ScannerConfiguration scannerConfiguration : getScanners()) {
+                scannerConfiguration.setRootDirectory(webappSourceDirectory);
+                scannerConfiguration.setWebappDirectory(new File(catalinaBase, "webapps/" + buildFinalName));
+                Scanner scanner = new Scanner(scannerConfiguration, getLog());
+                scanner.start();
+                shutdownHook.addScanner(scanner);
+            }
             if (tomcatSetAwait) {
-                Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
+                Runtime.getRuntime().addShutdownHook(shutdownHook);
                 bootstrap.setAwait(tomcatSetAwait);
                 bootstrap.start();
             } else {
                 bootstrap.start();
                 getPluginContext().put(T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
-                Runtime.getRuntime().addShutdownHook(new TomcatShutdownHook(this.bootstrap));
+                Runtime.getRuntime().addShutdownHook(shutdownHook);
                 getLog().info("Tomcat started");
             }
         } catch (Exception e) {

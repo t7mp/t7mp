@@ -186,4 +186,28 @@ public class TomcatSetupTest {
         Mockito.verify(t7Mojo, Mockito.atLeast(1)).getTomcatShutdownPort();
         Mockito.verify(t7Mojo, Mockito.atLeast(1)).getTomcatShutdownCommand();
     }
+
+    @Test
+    public void testSystemPropertyCatalinaHomeReplacement() {
+        AbstractTomcatSetup setup = new ReplacementTomcatSetup(t7Mojo);
+        System.setProperty("catalina.home", System.getProperty("user.dir"));
+        System.setProperty("catalina.base", System.getProperty("user.dir"));
+        String replacedCatalinaHome = setup.replaceCatalinas("${catalina.home}/logs");
+        Assert.assertEquals("catalina.home could not replaced", System.getProperty("user.dir") + "/logs", replacedCatalinaHome);
+        String replacedCatalinaBase = setup.replaceCatalinas("${catalina.base}/logs");
+        Assert.assertEquals("catalina.base could not replaced", System.getProperty("user.dir") + "/logs", replacedCatalinaBase);
+    }
+
+    static class ReplacementTomcatSetup extends AbstractTomcatSetup {
+
+        public ReplacementTomcatSetup(AbstractT7Mojo t7Mojo) {
+            super(t7Mojo);
+        }
+
+        @Override
+        protected void configure() {
+
+        }
+
+    }
 }
