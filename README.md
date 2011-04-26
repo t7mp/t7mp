@@ -17,3 +17,29 @@ It supports multiple webapps deployed on tomcat.
  * runs multiple webapps in the container where contextPath is configurable
  * cofigure shared libs similar to dependencies in pom.xml
  * using some best practices for configuration in server.xml
+ 
+## Configuration Snippets ##
+
+Change the port tomcat is listening for http connections (default is 8080). Use 
+the tomcatHttpPort configuration element. 
+Example:
+
+		<configuration>
+		  <tomcatHttpPort>12345</tomcatHttpPort>
+		</configuration>
+
+Change the port tomcat is listening for shutdown (default is 8005). Use 
+the tomcatShutdownPort configuration element.
+Example:
+
+		<configuration>
+		  <tomcatShutdownPort>54321</tomcatShutdownPort>
+		</configuration>
+
+Change version of tomcat (default is 7.0.6). 
+Use the tomcatVersion configuration element. 
+Example:
+
+		<configuration>
+		  <tomcatVersion>6.0.28</tomcatVersion>
+		</configuration>
