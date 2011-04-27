@@ -21,7 +21,7 @@ It supports multiple webapps deployed on tomcat.
 ## Configuration Snippets ##
 
 Change the port tomcat is listening for http connections (default is 8080). Use 
-the tomcatHttpPort configuration element. 
+the `tomcatHttpPort` configuration element. 
 Example:
 
 		<configuration>
@@ -29,7 +29,7 @@ Example:
 		</configuration>
 
 Change the port tomcat is listening for shutdown (default is 8005). Use 
-the tomcatShutdownPort configuration element.
+the `tomcatShutdownPort` configuration element.
 Example:
 
 		<configuration>
@@ -37,7 +37,7 @@ Example:
 		</configuration>
 
 Change version of tomcat (default is 7.0.6). 
-Use the tomcatVersion configuration element. 
+Use the `tomcatVersion` configuration element. 
 Example:
 
 		<configuration>
