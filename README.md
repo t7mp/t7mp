@@ -8,7 +8,7 @@ It supports multiple webapps deployed on tomcat.
 
 ## News & Features ##
 
- * first simple implementation for scanning changed resources (use 0.9.7-scanner-SNAPSHOT) as version in your pom.mxl, please report all your issues, thanks
+ * first simple implementation for scanning changed resources (use 0.9.7-SNAPSHOT, 27.04.2011) as version in your pom.mxl, please report all your issues, thanks
  * default version for tomcat is now 7.0.8
  * configure systemproperties is supported 0.9.7-SNAPSHOT (07.02.2011), try it
  * default version for tomcat is now 7.0.6 (first official release of Tomcat 7)
@@ -21,8 +21,7 @@ It supports multiple webapps deployed on tomcat.
 ## Configuration Snippets ##
 
 Change the port tomcat is listening for http connections (default is 8080). Use 
-the `tomcatHttpPort` configuration element. 
-Example:
+the `tomcatHttpPort` configuration element.
 
 		<configuration>
 		  <tomcatHttpPort>12345</tomcatHttpPort>
@@ -30,15 +29,13 @@ Example:
 
 Change the port tomcat is listening for shutdown (default is 8005). Use 
 the `tomcatShutdownPort` configuration element.
-Example:
 
 		<configuration>
 		  <tomcatShutdownPort>54321</tomcatShutdownPort>
 		</configuration>
 
 Change version of tomcat (default is 7.0.6). 
-Use the `tomcatVersion` configuration element. 
-Example:
+Use the `tomcatVersion` configuration element.
 
 		<configuration>
 		  <tomcatVersion>6.0.28</tomcatVersion>
