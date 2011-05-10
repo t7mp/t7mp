@@ -191,6 +191,18 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      */
     protected String packaging = "war";
+    
+    /**
+     * 
+     * @parameter expression="${t7.scanClasses}" default-value="false"
+     */
+    protected boolean scanClasses = false;
+
+    /**
+     * @parameter default-value="${basedir}/target/classes"
+     * @readonly
+     */
+    protected File webappClassDirectory;
 
     /**
      * 
@@ -236,6 +248,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public void setLookInside(boolean lookInside) {
         this.lookInside = lookInside;
+    }
+
+    public boolean isScanClasses() {
+        return scanClasses;
+    }
+
+    public void setScanClasses(boolean scanClasses) {
+        this.scanClasses = scanClasses;
     }
 
     public String getTomcatVersion() {

@@ -46,6 +46,9 @@ public class ScannerConfiguration {
     }
 
     public void setEndings(String endings) {
+        if ("%".equals(endings)) {
+            endings = "";
+        }
         this.endings = endings;
     }
 
