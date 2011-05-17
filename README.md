@@ -8,6 +8,9 @@ It supports multiple webapps deployed on tomcat.
 
 ## News & Features ##
 
+ * alexcojocaru supported an update to react on changed class-files, thanks to alex (17.05.2011)
+ * integration tests added to test that local artifacts are resolved (17.05.2011)
+ * default version for tomcat is now 7.0.14 (17.05.2011)
  * first simple implementation for scanning changed resources (use 0.9.7-SNAPSHOT, 27.04.2011) as version in your pom.mxl, please report all your issues, thanks
  * default version for tomcat is now 7.0.8
  * configure systemproperties is supported 0.9.7-SNAPSHOT (07.02.2011), try it
