@@ -33,9 +33,9 @@ public class DoNothingSetupUtil implements SetupUtil {
 
     }
 
-	@Override
-	public void copyFile(File source, File target) throws IOException {
-		
-	}
+    @Override
+    public void copyFile(File source, File target) throws IOException {
+
+    }
 
 }

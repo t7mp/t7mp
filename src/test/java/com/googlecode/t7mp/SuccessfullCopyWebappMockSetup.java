@@ -26,6 +26,7 @@ public class SuccessfullCopyWebappMockSetup extends DefaultTomcatSetup {
         File fakeJar;
         try {
             fakeJar = File.createTempFile("mavenArtifact_", ".jar");
+            fakeJar.deleteOnExit();
         } catch (IOException e) {
             throw new RuntimeException("This Exception comes from a TestClass", e);
         }

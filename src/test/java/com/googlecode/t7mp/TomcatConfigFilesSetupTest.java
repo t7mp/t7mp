@@ -156,10 +156,10 @@ public class TomcatConfigFilesSetupTest {
             throw new IOException("TESTIOEXCEPTION");
         }
 
-		@Override
-		public void copyFile(File source, File target) throws IOException {
-			throw new IOException("TESTIOEXCEPTION");
-		}
+        @Override
+        public void copyFile(File source, File target) throws IOException {
+            throw new IOException("TESTIOEXCEPTION");
+        }
     }
 
     public static class FileNotFoundExceptionSetupUtil implements SetupUtil {
@@ -173,9 +173,9 @@ public class TomcatConfigFilesSetupTest {
             throw new FileNotFoundException("TESTIOEXCEPTION");
         }
 
-		@Override
-		public void copyFile(File source, File target) throws IOException {
-			throw new IOException("TESTIOEXCEPTION");
-		}
+        @Override
+        public void copyFile(File source, File target) throws IOException {
+            throw new IOException("TESTIOEXCEPTION");
+        }
     }
 }

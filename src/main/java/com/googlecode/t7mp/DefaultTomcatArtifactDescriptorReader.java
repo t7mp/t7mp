@@ -74,6 +74,9 @@ public class DefaultTomcatArtifactDescriptorReader implements TomcatArtifactDesc
     }
 
     protected String getMajorVersion(String tomcatVersion) {
+        if (tomcatVersion.equals("6.0.32")) {
+            return tomcatVersion;
+        }
         String majorVersion = tomcatVersion.substring(0, tomcatVersion.indexOf("."));
         if (majorVersion.length() > 1) {
             throw new TomcatSetupException("Could not get major version from " + tomcatVersion);

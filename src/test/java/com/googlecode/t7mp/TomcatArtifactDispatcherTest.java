@@ -50,6 +50,7 @@ public class TomcatArtifactDispatcherTest {
         catalinaBaseDir.mkdirs();
         catalinaBaseDir.deleteOnExit();
         sourceFile = File.createTempFile("sourceTest", ".tmp");
+        sourceFile.deleteOnExit();
     }
 
     @After
@@ -98,6 +99,32 @@ public class TomcatArtifactDispatcherTest {
         Assert.assertTrue(dispatcher.resolvedArtifacts.size() == 0);
     }
 
+    @Test
+    public void testArtifactDispatcherWithLocal() throws MojoExecutionException, IOException {
+        TomcatArtifactDispatcher dispatcher = new TomcatArtifactDispatcher(myArtifactResolver, catalinaBaseDir, Mockito.mock(SetupUtil.class), Mockito.mock(Log.class));
+
+        List<? extends AbstractArtifact> artifactList = getLocalArtifacList();
+        dispatcher.resolveArtifacts(artifactList);
+        Assert.assertNotNull(dispatcher.resolvedArtifacts);
+        Assert.assertTrue(artifactList.size() == dispatcher.resolvedArtifacts.size());
+
+        File targetDir = new File(catalinaBaseDir, "lib");
+        targetDir.mkdirs();
+        Assert.assertTrue(targetDir.exists());
+        dispatcher.copyTo(targetDir.getName());
+        File[] targetFiles = targetDir.listFiles(new FilesOnlyFileFilter());
+        Assert.assertTrue(targetFiles.length == 3);
+
+        for (File f : targetFiles) {
+            System.out.println(f.getAbsolutePath());
+            Assert.assertTrue(f.getName().startsWith("ecj-"));
+            Assert.assertTrue(f.getName().endsWith(".jar"));
+        }
+
+        dispatcher.clear();
+        Assert.assertTrue(dispatcher.resolvedArtifacts.size() == 0);
+    }
+
     @Test(expected = TomcatSetupException.class)
     public void testCopyArtifactException() throws IOException {
         SetupUtil setupUtil = Mockito.mock(SetupUtil.class);
@@ -138,6 +165,31 @@ public class TomcatArtifactDispatcherTest {
         List<AbstractArtifact> resultList = new ArrayList<AbstractArtifact>();
         resultList.add(artifact);
         resultList.add(artifact2);
+        return resultList;
+    }
+
+    private List<AbstractArtifact> getLocalArtifacList() throws IOException {
+        JarArtifact artifact3 = new JarArtifact();
+        artifact3.setArtifactId("ecj");
+        artifact3.setGroupId("local");
+        artifact3.setVersion("3.6");
+        artifact3.setType(ArtifactConstants.JAR_TYPE);
+
+        JarArtifact artifact2 = new JarArtifact();
+        artifact2.setArtifactId("ecj");
+        artifact2.setGroupId("local");
+        artifact2.setVersion("3.6.2");
+        artifact2.setType(ArtifactConstants.JAR_TYPE);
+
+        JarArtifact artifact1 = new JarArtifact();
+        artifact1.setArtifactId("ecj");
+        artifact1.setGroupId("local");
+        artifact1.setVersion("3.3.1");
+        artifact1.setType(ArtifactConstants.JAR_TYPE);
+        List<AbstractArtifact> resultList = new ArrayList<AbstractArtifact>();
+        resultList.add(artifact2);
+        resultList.add(artifact3);
+        resultList.add(artifact1);
         return resultList;
     }
 

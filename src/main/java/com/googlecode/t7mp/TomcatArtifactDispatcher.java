@@ -16,14 +16,20 @@
 
 package com.googlecode.t7mp;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.DefaultArtifact;
+import org.apache.maven.artifact.handler.DefaultArtifactHandler;
+import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 
@@ -53,14 +59,33 @@ class TomcatArtifactDispatcher {
     public TomcatArtifactDispatcher resolveArtifacts(List<? extends AbstractArtifact> artifacts) {
         for (AbstractArtifact abstractArtifact : artifacts) {
             log.debug("Resolve artifact for " + abstractArtifact.toString());
-            Artifact artifact;
-            try {
-                artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
-            } catch (MojoExecutionException e) {
-                throw new TomcatSetupException(e.getMessage(), e);
+            if (!abstractArtifact.getGroupId().equals("local")) {
+                Artifact artifact;
+                try {
+                    artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
+                } catch (MojoExecutionException e) {
+                    throw new TomcatSetupException(e.getMessage(), e);
+                }
+                abstractArtifact.setArtifact(artifact);
+                resolvedArtifacts.add(abstractArtifact);
+            } else {
+                Artifact artifact = new DefaultArtifact(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), VersionRange.createFromVersion(abstractArtifact.getVersion()), Artifact.SCOPE_COMPILE, abstractArtifact.getType(), null, new DefaultArtifactHandler("jar"), false);
+                String resourceName = "/com/googlecode/t7mp/repo/" + abstractArtifact.getArtifactId() + "/" + abstractArtifact.getVersion() + "/" + abstractArtifact.getArtifactId() + "-" + abstractArtifact.getVersion() + ".jar";
+                BufferedInputStream bis = new BufferedInputStream(getClass().getResourceAsStream(resourceName));
+                File tempFile;
+                try {
+                    tempFile = File.createTempFile("local_Artifact", ".maven.tmp");
+                    tempFile.deleteOnExit();
+                    IOUtils.copy(bis, new FileOutputStream(tempFile));
+                    artifact.setFile(tempFile);
+                    abstractArtifact.setArtifact(artifact);
+                    resolvedArtifacts.add(abstractArtifact);
+                } catch (FileNotFoundException e) {
+                    throw new TomcatSetupException(e.getMessage(), e);
+                } catch (IOException e) {
+                    throw new TomcatSetupException(e.getMessage(), e);
+                }
             }
-            abstractArtifact.setArtifact(artifact);
-            resolvedArtifacts.add(abstractArtifact);
         }
         return this;
     }
