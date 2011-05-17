@@ -39,7 +39,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public static final int DEFAULT_TOMCAT_SHUTDOWN_PORT = 8005;
 
-    public static final String DEFAULT_TOMCAT_VERSION = "7.0.12";
+    public static final String DEFAULT_TOMCAT_VERSION = "7.0.14";
 
     /**
      * Used to look up Artifacts in the remote repository.
@@ -114,7 +114,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     /**
      * 
-     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.12"
+     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.14"
      */
     protected String tomcatVersion = DEFAULT_TOMCAT_VERSION;
 
@@ -191,7 +191,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      */
     protected String packaging = "war";
-    
+
     /**
      * 
      * @parameter expression="${t7.scanClasses}" default-value="false"
