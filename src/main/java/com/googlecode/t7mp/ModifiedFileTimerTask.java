@@ -14,7 +14,8 @@ import com.google.common.collect.Collections2;
 
 public final class ModifiedFileTimerTask extends TimerTask {
 
-    private static final String DEF = "src/main/webapp/";
+    private static final String DEF_STATIC = "src/main/webapp/";
+    private static final String DEF_CLASSES = "target/classes/";
     private long lastrun = System.currentTimeMillis();
     private final File rootDirectory;
     private final File webappDirectory;
@@ -34,9 +35,10 @@ public final class ModifiedFileTimerTask extends TimerTask {
         Collection<File> changedFiles = Collections2.filter(fileSet, Predicates.and(new ModifiedFilePredicate(timeStamp), new FileSuffixPredicate(suffixe)));
         for (File file : changedFiles) {
             String absolutePath = file.getAbsolutePath();
-
-            int endIndex = absolutePath.lastIndexOf("src/main/webapp/");
-            String copyFragment = absolutePath.substring(endIndex + DEF.length());
+            String def = getResourceDef(absolutePath);
+            
+            int endIndex = absolutePath.lastIndexOf(def);
+            String copyFragment = absolutePath.substring(endIndex + def.length());
             File copyToFile = new File(webappDirectory, copyFragment);
             System.out.println("CHANGED: " + absolutePath);
             System.out.println("GOES TO : " + copyToFile.getAbsolutePath());
@@ -48,5 +50,13 @@ public final class ModifiedFileTimerTask extends TimerTask {
             }
         }
         System.out.println("-----------END SCAN-------------");
+    }
+    
+    private String getResourceDef(String absolutePath) {
+        if (absolutePath.lastIndexOf(DEF_STATIC) != -1) {
+            return DEF_STATIC;
+        } else {
+            return DEF_CLASSES;
+        }
     }
 }

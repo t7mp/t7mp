@@ -54,6 +54,15 @@ public class RunMojo extends AbstractT7Mojo {
                 scanner.start();
                 shutdownHook.addScanner(scanner);
             }
+            if (scanClasses) {
+                ScannerConfiguration scannerConfiguration = new ScannerConfiguration();
+                scannerConfiguration.setRootDirectory(webappClassDirectory);
+                scannerConfiguration.setWebappDirectory(new File(catalinaBase, "webapps/" + buildFinalName + "/WEB-INF/classes"));
+                scannerConfiguration.setEndings("%"); // it's all or nothing
+                Scanner scanner = new Scanner(scannerConfiguration, getLog());
+                scanner.start();
+                shutdownHook.addScanner(scanner);
+            }
             if (tomcatSetAwait) {
                 Runtime.getRuntime().addShutdownHook(shutdownHook);
                 bootstrap.setAwait(tomcatSetAwait);
