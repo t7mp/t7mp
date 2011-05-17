@@ -1,0 +1,31 @@
+import java.io.*;
+
+File libDir = new File( basedir, "target/tomcat/lib" );
+
+String[] expectedFiles = {
+    "catalina-6.0.28.jar",
+    "catalina-ha-6.0.28.jar",
+    "annotations-api-6.0.28.jar",
+    "coyote-6.0.28.jar",
+    "dbcp-6.0.28.jar",
+    "el-api-6.0.28.jar",
+    "jasper-6.0.28.jar",
+    "jasper-el-6.0.28.jar",
+    "jasper-jdt-6.0.28.jar",
+    "jsp-api-6.0.28.jar",
+    "juli-6.0.28.jar",
+    "servlet-api-6.0.28.jar",
+    "tribes-6.0.28.jar"
+};
+
+for ( String expectedFile : expectedFiles )
+{
+    File file = new File( libDir, expectedFile );
+    System.out.println( "Checking for existence of " + file );
+    if ( !file.isFile() )
+    {
+        throw new Exception( "Missing file " + file );
+    }
+}
+
+return true;
