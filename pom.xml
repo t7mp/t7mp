@@ -227,6 +227,11 @@
             <artifactId>guava</artifactId>
             <version>r08</version>
         </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.1</version>
+		</dependency>
         <!-- TOMCAT -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>

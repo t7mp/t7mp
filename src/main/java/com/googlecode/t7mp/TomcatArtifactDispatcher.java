@@ -49,7 +49,8 @@ class TomcatArtifactDispatcher {
 
     protected Log log;
 
-    public TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil, Log log) {
+    public TomcatArtifactDispatcher(MyArtifactResolver myArtifactResolver, File catalinaBaseDir, SetupUtil setupUtil,
+            Log log) {
         this.myArtifactResolver = myArtifactResolver;
         this.catalinaBaseDir = catalinaBaseDir;
         this.setupUtil = setupUtil;
@@ -62,15 +63,22 @@ class TomcatArtifactDispatcher {
             if (!abstractArtifact.getGroupId().equals("local")) {
                 Artifact artifact;
                 try {
-                    artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), abstractArtifact.getVersion(), abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
+                    artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(),
+                            abstractArtifact.getArtifactId(), abstractArtifact.getVersion(),
+                            abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
                 } catch (MojoExecutionException e) {
                     throw new TomcatSetupException(e.getMessage(), e);
                 }
                 abstractArtifact.setArtifact(artifact);
                 resolvedArtifacts.add(abstractArtifact);
             } else {
-                Artifact artifact = new DefaultArtifact(abstractArtifact.getGroupId(), abstractArtifact.getArtifactId(), VersionRange.createFromVersion(abstractArtifact.getVersion()), Artifact.SCOPE_COMPILE, abstractArtifact.getType(), null, new DefaultArtifactHandler("jar"), false);
-                String resourceName = "/com/googlecode/t7mp/repo/" + abstractArtifact.getArtifactId() + "/" + abstractArtifact.getVersion() + "/" + abstractArtifact.getArtifactId() + "-" + abstractArtifact.getVersion() + ".jar";
+                Artifact artifact = new DefaultArtifact(abstractArtifact.getGroupId(),
+                        abstractArtifact.getArtifactId(),
+                        VersionRange.createFromVersion(abstractArtifact.getVersion()), Artifact.SCOPE_COMPILE,
+                        abstractArtifact.getType(), null, new DefaultArtifactHandler("jar"), false);
+                String resourceName = "/com/googlecode/t7mp/repo/" + abstractArtifact.getArtifactId() + "/"
+                        + abstractArtifact.getVersion() + "/" + abstractArtifact.getArtifactId() + "-"
+                        + abstractArtifact.getVersion() + ".jar";
                 BufferedInputStream bis = new BufferedInputStream(getClass().getResourceAsStream(resourceName));
                 File tempFile;
                 try {
@@ -92,14 +100,46 @@ class TomcatArtifactDispatcher {
 
     public void copyTo(String directoryName) {
         for (AbstractArtifact artifact : this.resolvedArtifacts) {
-            try {
-                String targetFileName = createTargetFileName(artifact);
-                File sourceFile = artifact.getArtifact().getFile();
-                File targetFile = new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName);
-                log.debug("Copy artifact from " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
-                this.setupUtil.copy(new FileInputStream(sourceFile), new FileOutputStream(targetFile));
-            } catch (IOException e) {
-                throw new TomcatSetupException(e.getMessage(), e);
+            if ("jar".equals(artifact.getType())) {
+                try {
+                    String targetFileName = createTargetFileName(artifact);
+                    File sourceFile = artifact.getArtifact().getFile();
+                    File targetFile = new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName);
+                    log.debug("Copy artifact from " + sourceFile.getAbsolutePath() + " to "
+                            + targetFile.getAbsolutePath());
+                    this.setupUtil.copy(new FileInputStream(sourceFile), new FileOutputStream(targetFile));
+                } catch (IOException e) {
+                    throw new TomcatSetupException(e.getMessage(), e);
+                }
+            }
+            if ("war".equals(artifact.getType())) {
+                final WebappArtifact webappArtifact = (WebappArtifact) artifact;
+                if (webappArtifact.isUnpack() || webappArtifact.getTestContextFile() != null) {
+                    unzipWebappArtifact(webappArtifact);
+                    if (webappArtifact.getTestContextFile() != null) {
+                        File metaInfDirectory = new File(createTargetFileName(webappArtifact) + "/META-INF");
+                        metaInfDirectory.mkdirs();
+                        try {
+                            IOUtils.copy(new FileInputStream(webappArtifact.getTestContextFile()), new FileOutputStream(
+                                    new File(metaInfDirectory, "context.xml")));
+                        } catch (FileNotFoundException e) {
+                            throw new TomcatSetupException(e.getMessage(), e);
+                        } catch (IOException e) {
+                            throw new TomcatSetupException(e.getMessage(), e);
+                        }
+                    }
+                } else {
+                    try {
+                        String targetFileName = createTargetFileName(artifact);
+                        File sourceFile = artifact.getArtifact().getFile();
+                        File targetFile = new File(catalinaBaseDir, "/" + directoryName + "/" + targetFileName);
+                        log.debug("Copy artifact from " + sourceFile.getAbsolutePath() + " to "
+                                + targetFile.getAbsolutePath());
+                        this.setupUtil.copy(new FileInputStream(sourceFile), new FileOutputStream(targetFile));
+                    } catch (IOException e) {
+                        throw new TomcatSetupException(e.getMessage(), e);
+                    }
+                }
             }
         }
     }
@@ -108,7 +148,12 @@ class TomcatArtifactDispatcher {
         if (abstractArtifact.getClass().isAssignableFrom(WebappArtifact.class)) {
             return ((WebappArtifact) abstractArtifact).getContextPath() + "." + abstractArtifact.getType();
         }
-        return abstractArtifact.getArtifactId() + "-" + abstractArtifact.getVersion() + "." + abstractArtifact.getType();
+        return abstractArtifact.getArtifactId() + "-" + abstractArtifact.getVersion() + "."
+                + abstractArtifact.getType();
+    }
+
+    protected void unzipWebappArtifact(WebappArtifact webappArtifact) {
+        WarUnzipper.unzip(webappArtifact.getArtifact().getFile(), new File(createTargetFileName(webappArtifact)));
     }
 
     void clear() {

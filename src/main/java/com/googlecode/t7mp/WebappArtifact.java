@@ -16,6 +16,8 @@
 
 package com.googlecode.t7mp;
 
+import java.io.File;
+
 import org.apache.maven.artifact.Artifact;
 
 /**
@@ -24,6 +26,10 @@ import org.apache.maven.artifact.Artifact;
 public class WebappArtifact extends AbstractArtifact {
 
     private String contextPath;
+
+    private File testContextFile;
+
+    private boolean unpack;
 
     public WebappArtifact() {
         super();
@@ -50,6 +56,22 @@ public class WebappArtifact extends AbstractArtifact {
 
     public void setContextPath(String contextPath) {
         this.contextPath = contextPath;
+    }
+
+    public File getTestContextFile() {
+        return testContextFile;
+    }
+
+    public void setTestContextFile(File testContextFile) {
+        this.testContextFile = testContextFile;
+    }
+
+    public boolean isUnpack() {
+        return unpack;
+    }
+
+    public void setUnpack(boolean unpack) {
+        this.unpack = unpack;
     }
 
     @Override

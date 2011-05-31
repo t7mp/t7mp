@@ -16,8 +16,6 @@
 
 package com.googlecode.t7mp;
 
-import java.io.File;
-
 import org.apache.catalina.startup.Bootstrap;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -47,22 +45,7 @@ public class RunMojo extends AbstractT7Mojo {
         try {
             bootstrap.init();
             final TomcatShutdownHook shutdownHook = new TomcatShutdownHook(bootstrap);
-            for (ScannerConfiguration scannerConfiguration : getScanners()) {
-                scannerConfiguration.setRootDirectory(webappSourceDirectory);
-                scannerConfiguration.setWebappDirectory(new File(catalinaBase, "webapps/" + buildFinalName));
-                Scanner scanner = new Scanner(scannerConfiguration, getLog());
-                scanner.start();
-                shutdownHook.addScanner(scanner);
-            }
-            if (scanClasses) {
-                ScannerConfiguration scannerConfiguration = new ScannerConfiguration();
-                scannerConfiguration.setRootDirectory(webappClassDirectory);
-                scannerConfiguration.setWebappDirectory(new File(catalinaBase, "webapps/" + buildFinalName + "/WEB-INF/classes"));
-                scannerConfiguration.setEndings("%"); // it's all or nothing
-                Scanner scanner = new Scanner(scannerConfiguration, getLog());
-                scanner.start();
-                shutdownHook.addScanner(scanner);
-            }
+            ScannerSetup.configureScanners(shutdownHook, this);
             if (tomcatSetAwait) {
                 Runtime.getRuntime().addShutdownHook(shutdownHook);
                 bootstrap.setAwait(tomcatSetAwait);

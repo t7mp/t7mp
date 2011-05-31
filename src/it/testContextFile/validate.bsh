@@ -1,0 +1,46 @@
+import java.io.*;
+
+File libDir = new File( basedir, "target/tomcat/lib" );
+File webappDir = new File(basedir, "target/tomcat/webapps/test");
+
+String[] expectedFiles = {
+    "tomcat-catalina-7.0.14.jar",
+    "tomcat-catalina-ha-7.0.14.jar",
+    "tomcat-annotations-api-7.0.14.jar",
+    "tomcat-coyote-7.0.14.jar",
+    "tomcat-dbcp-7.0.14.jar",
+    "tomcat-el-api-7.0.14.jar",
+    "tomcat-jasper-7.0.14.jar",
+    "tomcat-jasper-el-7.0.14.jar",
+    "tomcat-jsp-api-7.0.14.jar",
+    "tomcat-juli-7.0.14.jar",
+    "tomcat-servlet-api-7.0.14.jar",
+    "tomcat-tribes-7.0.14.jar",
+    "tomcat-util-7.0.14.jar"
+};
+
+String[] expectedFiles2 = {
+	"META-INF/context.xml"
+};
+
+for ( String expectedFile : expectedFiles )
+{
+    File file = new File( libDir, expectedFile );
+    System.out.println( "Checking for existence of " + file );
+    if ( !file.isFile() )
+    {
+        throw new Exception( "Missing file " + file );
+    }
+}
+
+for ( String expectedFile : expectedFiles2 )
+{
+    File file = new File( webappDir, expectedFile );
+    System.out.println( "Checking for existence of " + file );
+    if ( !file.isFile() )
+    {
+        throw new Exception( "Missing file " + file );
+    }
+}
+
+return true;

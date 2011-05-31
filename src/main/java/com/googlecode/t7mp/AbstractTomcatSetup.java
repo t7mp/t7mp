@@ -138,7 +138,16 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
             return;
         }
         try {
-            setupUtil.copyDirectory(this.t7Mojo.webappOutputDirectory, new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName()));
+            setupUtil.copyDirectory(this.t7Mojo.webappOutputDirectory, new File(this.t7Mojo.catalinaBase, "/webapps/"
+                    + this.t7Mojo.webappOutputDirectory.getName()));
+            if (this.t7Mojo.testContextFile != null) {
+                if (this.t7Mojo.testContextFile.exists()) {
+                    final File metaInfDirectory = new File(this.t7Mojo.catalinaBase, "/webapps/"
+                            + this.t7Mojo.webappOutputDirectory.getName() + "/META-INF");
+                    metaInfDirectory.mkdirs();
+                    setupUtil.copyFile(this.t7Mojo.testContextFile, new File(metaInfDirectory, "context.xml"));
+                }
+            }
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }
@@ -149,7 +158,8 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
             return;
         }
         try {
-            setupUtil.copyFile(this.t7Mojo.overwriteWebXML, new File(this.t7Mojo.catalinaBase, "/webapps/" + this.t7Mojo.webappOutputDirectory.getName() + "/WEB-INF/web.xml"));
+            setupUtil.copyFile(this.t7Mojo.overwriteWebXML, new File(this.t7Mojo.catalinaBase, "/webapps/"
+                    + this.t7Mojo.webappOutputDirectory.getName() + "/WEB-INF/web.xml"));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }
@@ -163,7 +173,8 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         for (SystemProperty property : this.t7Mojo.systemProperties) {
             String value = replaceCatalinas(property.getValue());
             System.setProperty(property.getKey(), value);
-            log.debug("set systemproperty key: " + property.getKey() + " to value: " + System.getProperty(property.getKey()));
+            log.debug("set systemproperty key: " + property.getKey() + " to value: "
+                    + System.getProperty(property.getKey()));
         }
     }
 
