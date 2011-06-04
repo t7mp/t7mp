@@ -140,12 +140,12 @@ public abstract class AbstractTomcatSetup implements TomcatSetup {
         try {
             setupUtil.copyDirectory(this.t7Mojo.webappOutputDirectory, new File(this.t7Mojo.catalinaBase, "/webapps/"
                     + this.t7Mojo.webappOutputDirectory.getName()));
-            if (this.t7Mojo.testContextFile != null) {
-                if (this.t7Mojo.testContextFile.exists()) {
+            if (this.t7Mojo.contextFile != null) {
+                if (this.t7Mojo.contextFile.exists()) {
                     final File metaInfDirectory = new File(this.t7Mojo.catalinaBase, "/webapps/"
                             + this.t7Mojo.webappOutputDirectory.getName() + "/META-INF");
                     metaInfDirectory.mkdirs();
-                    setupUtil.copyFile(this.t7Mojo.testContextFile, new File(metaInfDirectory, "context.xml"));
+                    setupUtil.copyFile(this.t7Mojo.contextFile, new File(metaInfDirectory, "context.xml"));
                 }
             }
         } catch (IOException e) {

@@ -25,7 +25,7 @@
                     <tomcatVersion>7.0.14</tomcatVersion>
                     <tomcatSetAwait>false</tomcatSetAwait>
                     <lookInside>true</lookInside>
-                    <testContextFile>${basedir}/src/main/config/context.xml</testContextFile>
+                    <contextFile>${basedir}/src/main/config/context.xml</contextFile>
                     <systemProperties>
                         <systemProperty>
                             <key>XXXXX</key>

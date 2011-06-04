@@ -209,7 +209,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter
      * @optional
      */
-    protected File testContextFile = null;
+    protected File contextFile = null;
     
     /**
      * 
@@ -329,12 +329,12 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
         this.overwriteWebXML = overwriteWebXML;
     }
     
-    public File getTestContextFile() {
-        return testContextFile;
+    public File getContextFile() {
+        return contextFile;
     }
 
-    public void setTestContextFile(File testContextFile) {
-        this.testContextFile = testContextFile;
+    public void setContextFile(File contextFile) {
+        this.contextFile = contextFile;
     }
 
     public ArrayList<ScannerConfiguration> getScanners() {
