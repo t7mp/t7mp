@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.apache.catalina.startup.Bootstrap;
 
+import com.googlecode.t7mp.scanner.Scanner;
+
 /**
  * TODO Comment.
  * @author jbellmann

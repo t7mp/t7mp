@@ -23,11 +23,15 @@ import java.util.Properties;
 import org.apache.maven.plugin.logging.Log;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import com.googlecode.t7mp.artifact.JarArtifact;
+
+@Ignore
 public class DefaultTomcatArtifactDescriptorReaderTest {
 
     private Log mockLog = Mockito.mock(Log.class);

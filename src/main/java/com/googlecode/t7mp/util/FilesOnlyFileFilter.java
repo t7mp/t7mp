@@ -14,28 +14,21 @@
  * limitations under the License.
  */
 
-package com.googlecode.t7mp;
+package com.googlecode.t7mp.util;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileFilter;
 
-import org.apache.catalina.startup.Bootstrap;
-
-public class SubRunMojo extends RunMojo {
-
-    private Map<Object, Object> testPluginContext = new HashMap<Object, Object>();
-
-    public SubRunMojo(Bootstrap bootstrap) {
-        this.bootstrap = bootstrap;
-    }
+/**
+ * Removes directories.
+ * 
+ *
+ */
+public class FilesOnlyFileFilter implements FileFilter {
 
     @Override
-    protected Bootstrap getBootstrap() {
-        return bootstrap;
+    public boolean accept(File file) {
+        return file.isFile();
     }
 
-    @Override
-    public Map<Object, Object> getPluginContext() {
-        return testPluginContext;
-    }
 }

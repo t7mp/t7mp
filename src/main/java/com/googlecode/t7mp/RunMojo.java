@@ -20,6 +20,11 @@ import org.apache.catalina.startup.Bootstrap;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import com.googlecode.t7mp.scanner.ScannerSetup;
+import com.googlecode.t7mp.steps.DefaultContext;
+import com.googlecode.t7mp.steps.StepSequence;
+import com.googlecode.t7mp.steps.tomcat.TomcatSetupSequence;
+
 /**
  * 
  * @goal run
@@ -31,14 +36,11 @@ public class RunMojo extends AbstractT7Mojo {
 
     protected Bootstrap bootstrap;
 
-    protected TomcatSetup tomcatSetup;
-
     @SuppressWarnings("unchecked")
     public void execute() throws MojoExecutionException, MojoFailureException {
         PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 
-        this.tomcatSetup = getTomcatSetup();
-        this.tomcatSetup.buildTomcat();
+        getSetupStepSequence().execute(new DefaultContext(this));
 
         bootstrap = getBootstrap();
         getLog().info("Starting Tomcat ...");
@@ -61,8 +63,8 @@ public class RunMojo extends AbstractT7Mojo {
         }
     }
 
-    protected TomcatSetup getTomcatSetup() {
-        return new DefaultTomcatSetup((AbstractT7Mojo) this);
+    protected StepSequence getSetupStepSequence() {
+        return new TomcatSetupSequence();
     }
 
     protected Bootstrap getBootstrap() {

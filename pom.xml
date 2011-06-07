@@ -345,6 +345,13 @@
     </profiles>
 
     <repositories>
+		<repository>
+			<id>com.springsource.repository.maven.milestone</id>
+			<url>http://maven.springframework.org/milestone/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
         <repository>
             <id>apache-snapshots</id>
             <url>http://people.apache.org/repo/m2-snapshot-repository</url>

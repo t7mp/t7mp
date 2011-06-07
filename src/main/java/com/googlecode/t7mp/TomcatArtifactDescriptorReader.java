@@ -18,6 +18,8 @@ package com.googlecode.t7mp;
 
 import java.util.List;
 
+import com.googlecode.t7mp.artifact.JarArtifact;
+
 /**
  * TODO Comment.
  * @author jbellmann

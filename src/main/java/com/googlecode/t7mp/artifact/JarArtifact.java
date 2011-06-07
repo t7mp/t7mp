@@ -14,28 +14,30 @@
  * limitations under the License.
  */
 
-package com.googlecode.t7mp;
+package com.googlecode.t7mp.artifact;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.maven.artifact.Artifact;
 
-import org.apache.catalina.startup.Bootstrap;
+/**
+ * TODO Comment.
+ */
+public class JarArtifact extends AbstractArtifact {
 
-public class SubRunMojo extends RunMojo {
+    public JarArtifact() {
+        super();
+    }
 
-    private Map<Object, Object> testPluginContext = new HashMap<Object, Object>();
-
-    public SubRunMojo(Bootstrap bootstrap) {
-        this.bootstrap = bootstrap;
+    public JarArtifact(Artifact artifact) {
+        super(artifact);
     }
 
     @Override
-    protected Bootstrap getBootstrap() {
-        return bootstrap;
+    public String getType() {
+        return "jar";
     }
 
     @Override
-    public Map<Object, Object> getPluginContext() {
-        return testPluginContext;
+    public String toString() {
+        return "JarArtifact[" + super.toString() + "]";
     }
 }

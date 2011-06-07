@@ -24,6 +24,8 @@ import java.util.Properties;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.googlecode.t7mp.artifact.JarArtifact;
+
 /**
  * TODO Comment.
  * @author jbellmann
@@ -34,6 +36,7 @@ public class DefaultTomcatArtifactDescriptorReader implements TomcatArtifactDesc
     public static final int GAV_LENGTH = 3;
 
     private final Log log;
+
     private PropertiesLoader propertiesLoader = new DefaultPropertiesLoader();
 
     public DefaultTomcatArtifactDescriptorReader(Log log) {
@@ -55,7 +58,8 @@ public class DefaultTomcatArtifactDescriptorReader implements TomcatArtifactDesc
             log.debug("Try to load " + artifactsPropertiesFile + " as resource from classpath.");
             tomcatLibs = propertiesLoader.load(getClass(), artifactsPropertiesFile);
         } catch (IOException e) {
-            throw new TomcatSetupException("Could not load " + artifactsPropertiesFile + " to resolve Tomcat-Artifacts", e);
+            throw new TomcatSetupException(
+                    "Could not load " + artifactsPropertiesFile + " to resolve Tomcat-Artifacts", e);
         }
         List<JarArtifact> tomcatArtifactList = new ArrayList<JarArtifact>();
         for (Map.Entry<Object, Object> entry : tomcatLibs.entrySet()) {

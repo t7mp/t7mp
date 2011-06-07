@@ -27,6 +27,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 
+import com.googlecode.t7mp.artifact.JarArtifact;
+import com.googlecode.t7mp.artifact.WebappArtifact;
+import com.googlecode.t7mp.scanner.ScannerConfiguration;
+
 /**
  * Maven components.
  * Maybe used in subclasses.
@@ -237,7 +241,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     private Log log;
 
-    protected boolean isWebProject() {
+    public boolean isWebProject() {
         return this.packaging.equals("war");
     }
 
@@ -337,8 +341,140 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
         this.contextFile = contextFile;
     }
 
+    public File getCatalinaBase() {
+        return catalinaBase;
+    }
+
+    public void setCatalinaBase(File catalinaBase) {
+        this.catalinaBase = catalinaBase;
+    }
+
     public ArrayList<ScannerConfiguration> getScanners() {
         return scanners;
+    }
+
+    public String getBuildFinalName() {
+        return buildFinalName;
+    }
+
+    public void setBuildFinalName(String buildFinalName) {
+        this.buildFinalName = buildFinalName;
+    }
+
+    public String getPackaging() {
+        return packaging;
+    }
+
+    public void setPackaging(String packaging) {
+        this.packaging = packaging;
+    }
+
+    public ArrayList<JarArtifact> getLibs() {
+        return libs;
+    }
+
+    public void setLibs(ArrayList<JarArtifact> libs) {
+        this.libs = libs;
+    }
+
+    public File getTomcatConfigDirectory() {
+        return tomcatConfigDirectory;
+    }
+
+    public void setTomcatConfigDirectory(File tomcatConfigDirectory) {
+        this.tomcatConfigDirectory = tomcatConfigDirectory;
+    }
+
+    public File getWebappSourceDirectory() {
+        return webappSourceDirectory;
+    }
+
+    public void setWebappSourceDirectory(File webappSourceDirectory) {
+        this.webappSourceDirectory = webappSourceDirectory;
+    }
+
+    public File getWebappClassDirectory() {
+        return webappClassDirectory;
+    }
+
+    public void setWebappClassDirectory(File webappClassDirectory) {
+        this.webappClassDirectory = webappClassDirectory;
+    }
+
+    public ArrayList<WebappArtifact> getWebapps() {
+        return webapps;
+    }
+
+    public void setWebapps(ArrayList<WebappArtifact> webapps) {
+        this.webapps = webapps;
+    }
+
+    public ArrayList<SystemProperty> getSystemProperties() {
+        return systemProperties;
+    }
+
+    public void setSystemProperties(ArrayList<SystemProperty> systemProperties) {
+        this.systemProperties = systemProperties;
+    }
+
+    public ArtifactFactory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(ArtifactFactory factory) {
+        this.factory = factory;
+    }
+
+    public ArtifactResolver getResolver() {
+        return resolver;
+    }
+
+    public void setResolver(ArtifactResolver resolver) {
+        this.resolver = resolver;
+    }
+
+    public ArtifactCollector getArtifactCollector() {
+        return artifactCollector;
+    }
+
+    public void setArtifactCollector(ArtifactCollector artifactCollector) {
+        this.artifactCollector = artifactCollector;
+    }
+
+    public ArtifactRepository getLocal() {
+        return local;
+    }
+
+    public void setLocal(ArtifactRepository local) {
+        this.local = local;
+    }
+
+    public java.util.List<ArtifactRepository> getRemoteRepos() {
+        return remoteRepos;
+    }
+
+    public void setRemoteRepos(java.util.List<ArtifactRepository> remoteRepos) {
+        this.remoteRepos = remoteRepos;
+    }
+
+    public ArchiverManager getArchiverManager() {
+        return archiverManager;
+    }
+
+    public void setArchiverManager(ArchiverManager archiverManager) {
+        this.archiverManager = archiverManager;
+    }
+
+    public boolean isResolverUpdateSnapshotsAllways() {
+        return resolverUpdateSnapshotsAllways;
+    }
+
+    public void setResolverUpdateSnapshotsAllways(boolean resolverUpdateSnapshotsAllways) {
+        this.resolverUpdateSnapshotsAllways = resolverUpdateSnapshotsAllways;
+    }
+
+    public void setScanners(ArrayList<ScannerConfiguration> scanners) {
+        this.scanners = scanners;
     }
 
     @Override
