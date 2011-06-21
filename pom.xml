@@ -11,7 +11,7 @@
     <packaging>maven-plugin</packaging>
     <name>maven-t7-plugin</name>
     <description>Tomcat 7 Maven Plugin</description>
-    <url>http://code.google.com/p/t7mp</url>
+    <url>https://github.com/t7mp</url>
 
 
     <licenses>
@@ -135,7 +135,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.5.1</version>
                 <configuration>
                     <check>
                         <haltOnFailure>false</haltOnFailure>
