@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 Joerg Bellmann <joerg.bellmann@googlemail.com>
+ * Copyright (C) 2010-2011 Joerg Bellmann <joerg.bellmann@googlemail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.googlecode.t7mp;
 
 import java.io.File;
@@ -43,7 +42,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public static final int DEFAULT_TOMCAT_SHUTDOWN_PORT = 8005;
 
-    public static final String DEFAULT_TOMCAT_VERSION = "7.0.14";
+    public static final String DEFAULT_TOMCAT_VERSION = "7.0.16";
 
     /**
      * Used to look up Artifacts in the remote repository.
@@ -118,7 +117,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     /**
      * 
-     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.14"
+     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.16"
      */
     protected String tomcatVersion = DEFAULT_TOMCAT_VERSION;
 

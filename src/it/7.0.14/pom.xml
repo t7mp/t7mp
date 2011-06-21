@@ -30,21 +30,23 @@
                         </systemProperty>
                     </systemProperties>
                 </configuration>
+                <!-- 
                 <executions>
                     <execution>
                         <id>test-run</id>
                         <goals>
                             <goal>run</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
+                    <!-- 
                     <execution>
                         <id>test-stop-server</id>
                         <goals>
                             <goal>stop-server</goal>
                         </goals>
                         <phase>post-integration-test</phase>
-                    </execution>
-                </executions>
+                    </execution> 
+                </executions>-->
             </plugin>
         </plugins>
     </build>
