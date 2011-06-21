@@ -42,7 +42,7 @@ the `tomcatShutdownPort` configuration element.
 		  <tomcatShutdownPort>54321</tomcatShutdownPort>
 		</configuration>
 
-Change version of tomcat (default is 7.0.6). 
+Change version of tomcat (default is 7.0.16). 
 Use the `tomcatVersion` configuration element.
 
 		<configuration>
