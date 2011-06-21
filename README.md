@@ -8,6 +8,11 @@ It supports multiple webapps deployed on tomcat.
 
 ## News & Features ##
 
+ * license header updated (21.06.2011)
+ * new default version is 7.0.16 (21.06.2011)
+ * complete refactoring (smallsteps-api) and rewrite for setup process (21.06.2011)
+ 
+ 
  * alexcojocaru supported an update to react on changed class-files, thanks to alex (17.05.2011)
  * integration tests added to test that local artifacts are resolved (17.05.2011)
  * default version for tomcat is now 7.0.14 (17.05.2011)
