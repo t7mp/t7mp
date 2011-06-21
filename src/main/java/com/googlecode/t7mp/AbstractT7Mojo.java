@@ -24,6 +24,7 @@ import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 
 import com.googlecode.t7mp.scanner.ScannerConfiguration;
@@ -41,7 +42,15 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     public static final int DEFAULT_TOMCAT_SHUTDOWN_PORT = 8005;
 
     public static final String DEFAULT_TOMCAT_VERSION = "7.0.16";
-
+    
+    /**
+     * @parameter expression="${project}"
+     * @required
+     * @readonly
+     * 
+     */
+    protected MavenProject mavenProject;
+    
     /**
      * Used to look up Artifacts in the remote repository.
      *
