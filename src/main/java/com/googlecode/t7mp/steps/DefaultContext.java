@@ -56,4 +56,9 @@ public class DefaultContext implements Context {
         return this.context.get(key);
     }
 
+    @Override
+    public void clear() {
+        this.context.clear();
+    }
+
 }

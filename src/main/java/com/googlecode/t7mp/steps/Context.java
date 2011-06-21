@@ -33,5 +33,7 @@ public interface Context {
     void put(String key, Object value);
     
     Object get(String key);
+    
+    void clear();
 
 }
