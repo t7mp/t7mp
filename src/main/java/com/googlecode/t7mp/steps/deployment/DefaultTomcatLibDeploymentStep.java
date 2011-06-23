@@ -18,10 +18,10 @@ package com.googlecode.t7mp.steps.deployment;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.googlecode.t7mp.AbstractArtifact;
 import com.googlecode.t7mp.DefaultTomcatArtifactDescriptorReader;
+import com.googlecode.t7mp.JarArtifact;
 import com.googlecode.t7mp.TomcatArtifactDescriptorReader;
-import com.googlecode.t7mp.artifact.AbstractArtifact;
-import com.googlecode.t7mp.artifact.JarArtifact;
 import com.googlecode.t7mp.steps.Context;
 
 /**

@@ -28,7 +28,6 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.googlecode.t7mp.artifact.JarArtifact;
 
 @Ignore
 public class DefaultTomcatArtifactDescriptorReaderTest {

@@ -25,9 +25,9 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 import com.google.common.collect.Lists;
+import com.googlecode.t7mp.AbstractArtifact;
 import com.googlecode.t7mp.TomcatSetupException;
-import com.googlecode.t7mp.artifact.AbstractArtifact;
-import com.googlecode.t7mp.artifact.WebappArtifact;
+import com.googlecode.t7mp.WebappArtifact;
 import com.googlecode.t7mp.util.WarUnzipper;
 
 public class WebappsDeploymentStep extends AbstractDeploymentStep {

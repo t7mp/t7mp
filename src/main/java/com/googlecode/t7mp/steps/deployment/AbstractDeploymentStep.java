@@ -31,9 +31,9 @@ import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import com.google.common.collect.Lists;
+import com.googlecode.t7mp.AbstractArtifact;
 import com.googlecode.t7mp.SetupUtil;
 import com.googlecode.t7mp.TomcatSetupException;
-import com.googlecode.t7mp.artifact.AbstractArtifact;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
 import com.googlecode.t7mp.util.CommonsSetupUtil;

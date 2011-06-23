@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.googlecode.t7mp.ArtifactConstants;
-import com.googlecode.t7mp.artifact.JarArtifact;
+import com.googlecode.t7mp.JarArtifact;
 
 public class JarArtifactTest {
 

@@ -23,7 +23,6 @@ import java.util.Properties;
 
 import org.apache.maven.plugin.logging.Log;
 
-import com.googlecode.t7mp.artifact.JarArtifact;
 
 /**
  * TODO Comment.

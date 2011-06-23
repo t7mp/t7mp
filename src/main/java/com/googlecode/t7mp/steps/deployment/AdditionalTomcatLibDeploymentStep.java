@@ -18,7 +18,7 @@ package com.googlecode.t7mp.steps.deployment;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.googlecode.t7mp.artifact.AbstractArtifact;
+import com.googlecode.t7mp.AbstractArtifact;
 
 public class AdditionalTomcatLibDeploymentStep extends AbstractDeploymentStep {
 
