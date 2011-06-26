@@ -17,6 +17,7 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
@@ -225,7 +226,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      * @parameter
      */
-    protected ArrayList<WebappArtifact> webapps = new ArrayList<WebappArtifact>();
+    protected ArrayList<AbstractArtifact> webapps = new ArrayList<AbstractArtifact>();
 
     /**
      * 
@@ -237,7 +238,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      * @parameter
      */
-    protected ArrayList<JarArtifact> libs = new ArrayList<JarArtifact>();
+    protected List<AbstractArtifact> libs = new ArrayList<AbstractArtifact>();
 
     /**
      * 
@@ -375,11 +376,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
         this.packaging = packaging;
     }
 
-    public ArrayList<JarArtifact> getLibs() {
+    public List<AbstractArtifact> getLibs() {
         return libs;
     }
 
-    public void setLibs(ArrayList<JarArtifact> libs) {
+    public void setLibs(ArrayList<AbstractArtifact> libs) {
         this.libs = libs;
     }
 
@@ -407,11 +408,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
         this.webappClassDirectory = webappClassDirectory;
     }
 
-    public ArrayList<WebappArtifact> getWebapps() {
+    public List<AbstractArtifact> getWebapps() {
         return webapps;
     }
 
-    public void setWebapps(ArrayList<WebappArtifact> webapps) {
+    public void setWebapps(ArrayList<AbstractArtifact> webapps) {
         this.webapps = webapps;
     }
 
@@ -481,6 +482,16 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public void setScanners(ArrayList<ScannerConfiguration> scanners) {
         this.scanners = scanners;
+    }
+    
+    
+
+    public MavenProject getMavenProject() {
+        return mavenProject;
+    }
+
+    public void setMavenProject(MavenProject mavenProject) {
+        this.mavenProject = mavenProject;
     }
 
     @Override

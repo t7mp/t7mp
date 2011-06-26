@@ -27,7 +27,7 @@ import com.googlecode.t7mp.steps.tomcat.TomcatSetupSequence;
 /**
  * 
  * @goal run
- * @requiresDependencyResolution runtime
+ * @requiresDependencyResolution test
  * 
  *
  */
