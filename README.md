@@ -8,6 +8,9 @@ It supports multiple webapps deployed on tomcat.
 
 ## News & Features ##
 
+ * libs and webapps configured to load and run don't have to define a version
+   if their version is declared in the pom.xml (27.06.2011)
+
  * license header updated (21.06.2011)
  * new default version is 7.0.16 (21.06.2011)
  * complete refactoring (smallsteps-api) and rewrite for setup process (21.06.2011)
