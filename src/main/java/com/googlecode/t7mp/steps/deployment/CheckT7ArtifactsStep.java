@@ -23,6 +23,7 @@ public class CheckT7ArtifactsStep implements Step {
     private Log log;
     private Collection<AbstractArtifact> noVersionArtifacts = Lists.newArrayList();
 
+    @SuppressWarnings("unchecked")
     @Override
     public void execute(Context context) {
         mojo = context.getMojo();
