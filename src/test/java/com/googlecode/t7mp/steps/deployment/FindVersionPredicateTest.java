@@ -32,6 +32,7 @@ public class FindVersionPredicateTest {
         dep.setGroupId("commons-logging");
         dep.setArtifactId("commons-logging");
         dep.setVersion("1.1.1");
+        dep.setClassifier( "sources" );
         result.add(dep);
         return result;
     }
@@ -41,6 +42,7 @@ public class FindVersionPredicateTest {
         JarArtifact jar = new JarArtifact();
         jar.setArtifactId("commons-logging");
         jar.setGroupId("commons-logging");
+        jar.setClassifier( "sources" );
         jar.setType("jar");
         result.add(jar);
         return result;
