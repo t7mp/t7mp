@@ -87,6 +87,7 @@ public abstract class AbstractDeploymentStep implements Step {
                 try {
                     artifact = myArtifactResolver.resolve(abstractArtifact.getGroupId(),
                             abstractArtifact.getArtifactId(), abstractArtifact.getVersion(),
+                            abstractArtifact.getClassifier(),
                             abstractArtifact.getType(), Artifact.SCOPE_COMPILE);
                 } catch (MojoExecutionException e) {
                     throw new TomcatSetupException(e.getMessage(), e);

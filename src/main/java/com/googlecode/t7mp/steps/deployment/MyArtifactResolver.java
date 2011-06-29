@@ -52,14 +52,26 @@ public class MyArtifactResolver {
         this.resolveAllways = t7Mojo.isResolverUpdateSnapshotsAllways();
     }
 
-    public Artifact resolve(String groupId, String artifactId, String version, String type, String scope)
+    /**
+     * resolves an Artifact from the repositorys.
+     * 
+     * @param groupId - Artifact GroupId
+     * @param artifactId - Artifact Id
+     * @param version - Artifact Version
+     * @param classifier - Artifact Version
+     * @param type - Artifact Type
+     * @param scope - Artifact Scope
+     * @return
+     * @throws MojoExecutionException
+     */
+    public Artifact resolve(String groupId, String artifactId, String version, String classifier, String type, String scope)
             throws MojoExecutionException {
         if (version.endsWith("SNAPSHOT")) {
             this.remoteRepositories.add(createStagingRepository());
             this.remoteRepositories.add(createSnapshotsRepository());
         }
         Artifact artifact = factory.createDependencyArtifact(groupId, artifactId,
-                VersionRange.createFromVersion(version), type, null, Artifact.SCOPE_COMPILE);
+                VersionRange.createFromVersion(version), type, classifier, Artifact.SCOPE_COMPILE);
         try {
             resolver.resolve(artifact, remoteRepositories, local);
         } catch (ArtifactResolutionException e) {
@@ -97,11 +109,11 @@ public class MyArtifactResolver {
                 ArtifactRepositoryPolicy.CHECKSUM_POLICY_WARN);
     }
 
-    public Artifact resolveJar(String groupId, String artifactId, String version) throws MojoExecutionException {
-        return resolve(groupId, artifactId, version, "jar", Artifact.SCOPE_COMPILE);
+    public Artifact resolveJar(String groupId, String artifactId, String version, String classifier) throws MojoExecutionException {
+        return resolve(groupId, artifactId, version, classifier, "jar", Artifact.SCOPE_COMPILE);
     }
 
-    public Artifact resolveWar(String groupId, String artifactId, String version) throws MojoExecutionException {
-        return resolve(groupId, artifactId, version, "war", Artifact.SCOPE_COMPILE);
+    public Artifact resolveWar(String groupId, String artifactId, String version, String classifier) throws MojoExecutionException {
+        return resolve(groupId, artifactId, version, classifier, "war", Artifact.SCOPE_COMPILE);
     }
 }
