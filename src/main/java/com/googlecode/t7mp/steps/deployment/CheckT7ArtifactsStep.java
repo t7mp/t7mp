@@ -35,16 +35,20 @@ public class CheckT7ArtifactsStep implements Step {
         noVersionArtifacts.addAll(Collections2.filter(mojo.getLibs(), noVersionPredicate));
         if (noVersionArtifacts.size() > 0) {
             log.debug("artifacts without version found ");
-            List<Dependency> projectArtifacts = mojo.getMavenProject().getDependencies();
-            log.debug("Project-Artifacts : " + projectArtifacts.size());
-            for (Dependency dependency : projectArtifacts) {
-                log.debug("found dependency : " + dependency.toString() + " groupId:" + dependency.getGroupId()
-                        + " artifactId:" + dependency.getArtifactId() + " version:" + dependency.getVersion()
-                        + " packaging:" + dependency.getType());
+            List<Dependency> projectDependencies = mojo.getMavenProject().getDependencies();
+            List<Dependency> managedDependencies = mojo.getMavenProject().getDependencyManagement().getDependencies();
+            if (log.isDebugEnabled()) {
+                log.debug("Project-Dependencies : " + projectDependencies.size());
+                logDependencies(projectDependencies);
+                log.debug("Managed-Dependencies : " + managedDependencies.size());
+                logDependencies(managedDependencies);
             }
             Predicate<Dependency> depsfilter = new FindVersionPredicate(noVersionArtifacts, log);
             log.debug("Filter projectArtifacts");
-            Collection<Dependency> depsApplied = Collections2.filter(projectArtifacts, depsfilter);
+            // first managed dependencies
+            Collection<Dependency> depsApplied = Collections2.filter(managedDependencies, depsfilter);
+            // project dependencies can overwrite filtering results
+            depsApplied.addAll(Collections2.filter(projectDependencies, depsfilter));
             log.debug(depsApplied.size() + " dependenciey applied");
             log.debug("check for noversion-artifacts again ...");
             Collection<AbstractArtifact> noVersionsFound = Collections2.filter(noVersionArtifacts, noVersionPredicate);
@@ -54,6 +58,14 @@ public class CheckT7ArtifactsStep implements Step {
                 }
                 throw new TomcatSetupException("ConfigurationException");
             }
+        }
+    }
+
+    protected void logDependencies(List<Dependency> dependencies) {
+        for (Dependency dependency : dependencies) {
+            log.debug("found dependency : " + dependency.toString() + " groupId:" + dependency.getGroupId()
+                    + " artifactId:" + dependency.getArtifactId() + " version:" + dependency.getVersion()
+                    + " packaging:" + dependency.getType());
         }
     }
 

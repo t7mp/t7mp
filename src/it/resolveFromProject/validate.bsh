@@ -17,7 +17,8 @@ String[] expectedFiles = {
     "tomcat-tribes-7.0.16.jar",
     "tomcat-util-7.0.16.jar",
     "ecj362-1.0.0.jar",
-    "commons-logging-1.1.1.jar"
+    "commons-logging-1.1.1.jar",
+    "log4j-1.2.16.jar"
 };
 
 for ( String expectedFile : expectedFiles )
