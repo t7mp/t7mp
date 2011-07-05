@@ -27,11 +27,12 @@ import org.apache.commons.io.FileUtils;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.googlecode.t7mp.util.FileUtil;
+import org.apache.commons.io.FilenameUtils;
 
 public final class ModifiedFileTimerTask extends TimerTask {
 
-    private static final String DEF_STATIC = "src/main/webapp/";
-    private static final String DEF_CLASSES = "target/classes/";
+    private static final String DEF_STATIC = FilenameUtils.separatorsToSystem("src/main/webapp/");
+    private static final String DEF_CLASSES = FilenameUtils.separatorsToSystem("target/classes/");
     private long lastrun = System.currentTimeMillis();
     private final File rootDirectory;
     private final File webappDirectory;
