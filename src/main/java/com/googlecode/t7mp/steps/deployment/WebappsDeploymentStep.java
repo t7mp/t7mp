@@ -28,7 +28,7 @@ import com.google.common.collect.Lists;
 import com.googlecode.t7mp.AbstractArtifact;
 import com.googlecode.t7mp.TomcatSetupException;
 import com.googlecode.t7mp.WebappArtifact;
-import com.googlecode.t7mp.util.WarUnzipper;
+import com.googlecode.t7mp.util.ZipUtil;
 
 public class WebappsDeploymentStep extends AbstractDeploymentStep {
 
@@ -79,6 +79,6 @@ public class WebappsDeploymentStep extends AbstractDeploymentStep {
     }
 
     protected void unzipWebappArtifact(WebappArtifact webappArtifact) {
-        WarUnzipper.unzip(webappArtifact.getArtifact().getFile(), new File(createTargetFileName(webappArtifact)));
+        ZipUtil.unzip(webappArtifact.getArtifact().getFile(), new File(createTargetFileName(webappArtifact)));
     }
 }

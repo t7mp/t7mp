@@ -29,9 +29,9 @@ import org.apache.commons.compress.utils.IOUtils;
 
 import com.googlecode.t7mp.TomcatSetupException;
 
-public final class WarUnzipper {
+public final class ZipUtil {
 
-    private WarUnzipper() {
+    private ZipUtil() {
         //hide constructor
     }
 
