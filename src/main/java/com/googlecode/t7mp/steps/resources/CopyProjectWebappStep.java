@@ -38,11 +38,11 @@ public class CopyProjectWebappStep implements Step {
         }
         try {
             this.setupUtil.copyDirectory(context.getMojo().getWebappOutputDirectory(), new File(context.getMojo().getCatalinaBase(), "/webapps/"
-                    + context.getMojo().getWebappOutputDirectory().getName()));
+                    + context.getMojo().getContextPath()));
             if (context.getMojo().getContextFile() != null) {
                 if (context.getMojo().getContextFile().exists()) {
                     final File metaInfDirectory = new File(context.getMojo().getCatalinaBase(), "/webapps/"
-                            + context.getMojo().getWebappOutputDirectory().getName() + "/META-INF");
+                            + context.getMojo().getContextPath() + "/META-INF");
                     metaInfDirectory.mkdirs();
                     this.setupUtil.copyFile(context.getMojo().getContextFile(), new File(metaInfDirectory, "context.xml"));
                 }
