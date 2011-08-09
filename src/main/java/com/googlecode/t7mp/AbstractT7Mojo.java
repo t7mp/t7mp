@@ -29,6 +29,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 
 import com.googlecode.t7mp.scanner.ScannerConfiguration;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Maven components.
@@ -43,6 +44,8 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     public static final int DEFAULT_TOMCAT_SHUTDOWN_PORT = 8005;
 
     public static final String DEFAULT_TOMCAT_VERSION = "7.0.19";
+
+    public static final String CONTEXT_PATH_ROOT = "ROOT";
     
     /**
      * @parameter expression="${project}"
@@ -183,6 +186,15 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      */
     protected File webappOutputDirectory;
+
+
+    /**
+     *
+     * @parameter expression="${t7.contextPath}" default-value="${project.build.finalName}"
+     * @optional
+     *
+     */
+    protected String contextPath;
 
     /**
      * @parameter default-value="${project.build.finalName}"
@@ -330,6 +342,20 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public void setWebappOutputDirectory(File webappOutputDirectory) {
         this.webappOutputDirectory = webappOutputDirectory;
+    }
+
+    public String getContextPath() {
+        if (StringUtils.isEmpty(contextPath) || "/".equals(contextPath)) {
+            return CONTEXT_PATH_ROOT;
+        }
+        if (contextPath.startsWith("/")) {
+            return contextPath.substring(1);
+        }
+        return contextPath;        
+    }
+
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
     }
 
     public File getOverwriteWebXML() {

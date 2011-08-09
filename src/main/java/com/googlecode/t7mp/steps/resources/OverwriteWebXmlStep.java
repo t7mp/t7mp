@@ -35,7 +35,7 @@ public class OverwriteWebXmlStep implements Step {
         }
         try {
             setupUtil.copyFile(context.getMojo().getOverwriteWebXML(), new File(context.getMojo().getCatalinaBase(), "/webapps/"
-                    + context.getMojo().getWebappOutputDirectory().getName() + "/WEB-INF/web.xml"));
+                    + context.getMojo().getContextPath() + "/WEB-INF/web.xml"));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }
