@@ -34,7 +34,7 @@ public final class ScannerSetup {
         }
         for (ScannerConfiguration scannerConfiguration : t7Mojo.getScanners()) {
             scannerConfiguration.setRootDirectory(t7Mojo.getWebappSourceDirectory());
-            scannerConfiguration.setWebappDirectory(new File(t7Mojo.getCatalinaBase(), "webapps/" + t7Mojo.getBuildFinalName()));
+            scannerConfiguration.setWebappDirectory(new File(t7Mojo.getCatalinaBase(), "webapps/" + t7Mojo.getContextPath()));
             Scanner scanner = new Scanner(scannerConfiguration, t7Mojo.getLog());
             scanner.start();
             shutdownHook.addScanner(scanner);
@@ -42,7 +42,7 @@ public final class ScannerSetup {
         if (t7Mojo.isScanClasses()) {
             ScannerConfiguration scannerConfiguration = new ScannerConfiguration();
             scannerConfiguration.setRootDirectory(t7Mojo.getWebappClassDirectory());
-            scannerConfiguration.setWebappDirectory(new File(t7Mojo.getCatalinaBase(), "webapps/" + t7Mojo.getBuildFinalName()
+            scannerConfiguration.setWebappDirectory(new File(t7Mojo.getCatalinaBase(), "webapps/" + t7Mojo.getContextPath()
                     + "/WEB-INF/classes"));
             scannerConfiguration.setEndings("%"); // it's all or nothing
             Scanner scanner = new Scanner(scannerConfiguration, t7Mojo.getLog());
