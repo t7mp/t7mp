@@ -23,7 +23,7 @@ import com.google.common.collect.Lists;
 
 public class ScannerConfiguration {
 
-    private static final String DEFAULT_ENDINGS = ".html,.xhtml,.css,.js,.jsp,.jspx,.properties";
+    private static final String DEFAULT_ENDINGS = ".html,.xhtml,.css,.js,.jsp,.jspx,.properties,.txt,.jpg,.gif,.png";
     private static final int DEFAULT_INTERVAL = 10;
 
     private int interval = DEFAULT_INTERVAL;
