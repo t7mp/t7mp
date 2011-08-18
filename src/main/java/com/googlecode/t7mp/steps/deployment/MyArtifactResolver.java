@@ -67,8 +67,8 @@ public class MyArtifactResolver {
     public Artifact resolve(String groupId, String artifactId, String version, String classifier, String type, String scope)
             throws MojoExecutionException {
         if (version.endsWith("SNAPSHOT")) {
-            this.remoteRepositories.add(createStagingRepository());
-            this.remoteRepositories.add(createSnapshotsRepository());
+//            this.remoteRepositories.add(createStagingRepository());
+//            this.remoteRepositories.add(createSnapshotsRepository());
         }
         Artifact artifact = factory.createDependencyArtifact(groupId, artifactId,
                 VersionRange.createFromVersion(version), type, classifier, Artifact.SCOPE_COMPILE);
@@ -82,6 +82,7 @@ public class MyArtifactResolver {
         return artifact;
     }
 
+    @Deprecated
     private ArtifactRepository createSnapshotsRepository() {
         ArtifactRepository repository = new DefaultArtifactRepository("t7mp.apache.tomcat.snapshots",
                 "http://people.apache.org/repo/m2-snapshot-repository", new DefaultRepositoryLayout(),
@@ -89,6 +90,7 @@ public class MyArtifactResolver {
         return repository;
     }
 
+    @Deprecated
     private ArtifactRepository createStagingRepository() {
         ArtifactRepository repository = new DefaultArtifactRepository("t7mp.apache.tomcat.dev",
                 "http://tomcat.apache.org/dev/dist/m2-repository", new DefaultRepositoryLayout(),
