@@ -4,19 +4,24 @@ File libDir = new File( basedir, "target/tomcat/lib" );
 File webappDir = new File(basedir, "target/tomcat/webapps/test");
 
 String[] expectedFiles = {
-    "tomcat-catalina-7.0.14.jar",
-    "tomcat-catalina-ha-7.0.14.jar",
-    "tomcat-annotations-api-7.0.14.jar",
-    "tomcat-coyote-7.0.14.jar",
-    "tomcat-dbcp-7.0.14.jar",
-    "tomcat-el-api-7.0.14.jar",
-    "tomcat-jasper-7.0.14.jar",
-    "tomcat-jasper-el-7.0.14.jar",
-    "tomcat-jsp-api-7.0.14.jar",
-    "tomcat-juli-7.0.14.jar",
-    "tomcat-servlet-api-7.0.14.jar",
-    "tomcat-tribes-7.0.14.jar",
-    "tomcat-util-7.0.14.jar"
+	"annotations-api.jar",
+    "catalina-ant.jar",
+    "catalina-ha.jar",
+    "catalina-tribes.jar",
+    "catalina.jar",
+    "ecj-3.6.2.jar",
+    "el-api.jar",
+    "jasper-el.jar",
+    "jasper.jar",
+    "jsp-api.jar",
+    "servlet-api.jar",
+    "tomcat-api.jar",
+    "tomcat-coyote.jar",
+    "tomcat-dbcp.jar",
+    "tomcat-i18n-es.jar",
+    "tomcat-i18n-fr.jar",
+    "tomcat-i18n-ja.jar",
+    "tomcat-util.jar"
 };
 
 String[] expectedFiles2 = {
