@@ -16,6 +16,10 @@ public final class TomcatUtil {
 		return new File(catalinaBase, "/temp/");
 	}
 	
+	public static File getLibDirectory(File catalinaBase){
+		return new File(catalinaBase, "/lib/");
+	}
+	
 	public static String getStopScriptName(){
 		return SystemUtil.isWindowsSystem() ? "shutdown.bat" : "./shutdown.sh";
 	}

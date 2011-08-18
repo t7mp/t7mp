@@ -22,6 +22,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.googlecode.t7mp.scanner.ScannerSetup;
 import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.StepSequence;
+import com.googlecode.t7mp.steps.deployment.CopyJuliJarStep;
 import com.googlecode.t7mp.steps.tomcat.TomcatSetupSequence;
 
 /**
@@ -63,7 +64,9 @@ public class RunMojo extends AbstractT7Mojo {
     }
 
     protected StepSequence getSetupStepSequence() {
-        return new TomcatSetupSequence();
+    	StepSequence seq = new TomcatSetupSequence();
+    	seq.add(new CopyJuliJarStep());
+        return seq;
     }
 
     protected Bootstrap getBootstrap() {
