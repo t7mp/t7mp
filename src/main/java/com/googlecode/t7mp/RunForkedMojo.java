@@ -13,6 +13,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.StepSequence;
 import com.googlecode.t7mp.steps.external.ForkedSetupSequence;
+import com.googlecode.t7mp.steps.resources.CopySetenvScriptStep;
 import com.googlecode.t7mp.util.SystemUtil;
 import com.googlecode.t7mp.util.TomcatUtil;
 
@@ -106,7 +107,9 @@ public class RunForkedMojo extends AbstractT7Mojo {
 	}
 
 	protected StepSequence getSetupStepSequence() {
-		return new ForkedSetupSequence();
+		StepSequence seq = new ForkedSetupSequence();
+		seq.add(new CopySetenvScriptStep());
+		return seq;
 	}
 
 	protected Bootstrap getBootstrap() {
