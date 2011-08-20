@@ -37,7 +37,7 @@ import com.googlecode.t7mp.steps.Step;
 import com.googlecode.t7mp.steps.directory.CreateTomcatDirectoriesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
 
-@Ignore
+//@Ignore
 public class CopyConfigResourcesFromClasspathSequenceTest {
 
     
