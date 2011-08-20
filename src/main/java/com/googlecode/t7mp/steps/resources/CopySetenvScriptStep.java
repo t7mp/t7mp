@@ -20,7 +20,7 @@ public class CopySetenvScriptStep implements Step {
 	public void execute(Context context) {
 		AbstractT7Mojo mojo = context.getMojo();
 		File tomcatConfigDirectory = mojo.getTomcatConfigDirectory();
-		if(!tomcatConfigDirectory.exists()){
+		if(tomcatConfigDirectory == null || !tomcatConfigDirectory.exists()){
 			return;
 		}
 		File tomcatDirectory = tomcatConfigDirectory.getParentFile();
