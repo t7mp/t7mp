@@ -43,7 +43,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public static final int DEFAULT_TOMCAT_SHUTDOWN_PORT = 8005;
 
-    public static final String DEFAULT_TOMCAT_VERSION = "7.0.19";
+    public static final String DEFAULT_TOMCAT_VERSION = "7.0.20";
 
     public static final String CONTEXT_PATH_ROOT = "ROOT";
     
@@ -128,7 +128,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     /**
      * 
-     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.19"
+     * @parameter expression="${t7.tomcatVersion}" default-value="7.0.20"
      */
     protected String tomcatVersion = DEFAULT_TOMCAT_VERSION;
 
