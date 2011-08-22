@@ -16,6 +16,7 @@
 package com.googlecode.t7mp.steps.tomcat;
 
 import com.googlecode.t7mp.steps.DefaultStepSequence;
+import com.googlecode.t7mp.steps.deployment.AddRemoteRepositoryStep;
 import com.googlecode.t7mp.steps.deployment.ArtifactDeploymentSequence;
 import com.googlecode.t7mp.steps.deployment.CheckT7ArtifactsStep;
 import com.googlecode.t7mp.steps.external.ResolveTomcatStep;
@@ -25,12 +26,19 @@ import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
 import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
 import com.googlecode.t7mp.steps.resources.SetSystemPropertiesStep;
 
+/**
+ * TODO Comment.
+ * 
+ * @author jbellmann
+ *
+ */
 public class TomcatSetupSequence extends DefaultStepSequence {
 
     public TomcatSetupSequence() {
+        this.add(new AddRemoteRepositoryStep());
         this.add(new CheckT7ArtifactsStep());
         this.add(new ResolveTomcatStep());
-//        this.add(new CreateTomcatDirectoriesSequence());
+        //        this.add(new CreateTomcatDirectoriesSequence());
         this.add(new CopyConfigResourcesFromClasspathSequence());
         this.add(new ConfigFilesSequence());
         this.add(new ArtifactDeploymentSequence());
