@@ -23,7 +23,7 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/t7mp/t7mp.git</url>
+        <url>https://github.com/t7mp/t7mp</url>
         <connection>scm:git:git@github.com:t7mp/t7mp.git</connection>
         <developerConnection>scm:git:git@github.com:t7mp/t7mp.git</developerConnection>
     </scm>
