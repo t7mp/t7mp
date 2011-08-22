@@ -27,7 +27,7 @@ public class AddRemoteRepositoryStep implements Step {
     }
 
     private ArtifactRepository createTomcatRepository() {
-        ArtifactRepository repository = new DefaultArtifactRepository("t7mp.maven.repo", REPO_URL,
+        ArtifactRepository repository = new DefaultArtifactRepository("t7mp.maven.repo.releases", REPO_URL,
                 new DefaultRepositoryLayout(), createSnapshotPolicy(), createRelasesPolicy());
         return repository;
     }

@@ -38,11 +38,4 @@
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>sonatype.oss</id>
-			<name>Sonatype OSS Repository</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</repository>
-	</repositories>
 </project>
