@@ -37,14 +37,15 @@ public class RunForkedMojo extends AbstractT7Mojo {
 		setStartScriptPermissions(TomcatUtil.getBinDirectory(this.getCatalinaBase()));
 		getLog().info("Starting Tomcat ...");
 		try {
-			Runtime.getRuntime().addShutdownHook(new ForkedTomcatProcessShutdownHook(this.p, getLog()));
-			//
+		    
 			if(this.tomcatSetAwait){
 				startTomcat();
 			} else {
 				new Runner().start();
 				Thread.sleep(5000);
 			}
+			
+			
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
@@ -57,12 +58,15 @@ public class RunForkedMojo extends AbstractT7Mojo {
 		int exitValue = -1;
 		try{
 			this.p = processBuilder.start();
+			Runtime.getRuntime().addShutdownHook(new ForkedTomcatProcessShutdownHook(this.p, getLog()));
+			
 			InputStream is = this.p.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			String line;
-			while((line = br.readLine()) != null){
-				System.out.println(line);
-			}
+			do {
+			    line = getNextLine( br );
+            } while( line != null );
+			
 			exitValue = this.p.waitFor();
 		}catch(InterruptedException e){
 			getLog().error(e.getMessage(), e);
@@ -71,6 +75,17 @@ public class RunForkedMojo extends AbstractT7Mojo {
 		}
 		getLog().info("Exit-Value " + exitValue);
 	}
+
+    private String getNextLine( BufferedReader br ) {
+        String line;
+        try {
+            line = br.readLine();
+            System.out.println(line);
+        } catch ( IOException e ) {
+            line = null;
+        }
+        return line;
+    }
 
 	private void setStartScriptPermissions(File binDirectory) {
 		if(SystemUtil.isWindowsSystem()){
