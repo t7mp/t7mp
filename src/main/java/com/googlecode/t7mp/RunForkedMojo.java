@@ -10,6 +10,7 @@ import org.apache.catalina.startup.Bootstrap;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import com.googlecode.t7mp.scanner.ScannerSetup;
 import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.StepSequence;
 import com.googlecode.t7mp.steps.external.ForkedSetupSequence;
@@ -26,7 +27,6 @@ import com.googlecode.t7mp.util.TomcatUtil;
  *
  */
 public class RunForkedMojo extends AbstractT7Mojo {
-//	protected Bootstrap bootstrap;
 	
 	private Process p;
 	
@@ -44,8 +44,6 @@ public class RunForkedMojo extends AbstractT7Mojo {
 				new Runner().start();
 				Thread.sleep(5000);
 			}
-			
-			
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
@@ -58,7 +56,9 @@ public class RunForkedMojo extends AbstractT7Mojo {
 		int exitValue = -1;
 		try{
 			this.p = processBuilder.start();
-			Runtime.getRuntime().addShutdownHook(new ForkedTomcatProcessShutdownHook(this.p, getLog()));
+			final ForkedTomcatProcessShutdownHook shutdownHook = new ForkedTomcatProcessShutdownHook(this.p, getLog());
+			ScannerSetup.configureScanners(shutdownHook, this);
+			Runtime.getRuntime().addShutdownHook(shutdownHook);
 			
 			InputStream is = this.p.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -66,7 +66,7 @@ public class RunForkedMojo extends AbstractT7Mojo {
 			do {
 			    line = getNextLine( br );
             } while( line != null );
-			
+			//
 			exitValue = this.p.waitFor();
 		}catch(InterruptedException e){
 			getLog().error(e.getMessage(), e);
