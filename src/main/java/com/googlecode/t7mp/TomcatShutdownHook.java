@@ -27,7 +27,7 @@ import com.googlecode.t7mp.scanner.Scanner;
  * @author jbellmann
  *
  */
-public final class TomcatShutdownHook extends Thread {
+public final class TomcatShutdownHook extends Thread implements ShutdownHook {
 
     private Bootstrap bootstrap;
     private List<Scanner> scanners = new ArrayList<Scanner>();
@@ -42,9 +42,7 @@ public final class TomcatShutdownHook extends Thread {
 
     @Override
     public void run() {
-        for (Scanner scanner : scanners) {
-            scanner.stop();
-        }
+        stopScanners();
         if (bootstrap != null) {
             try {
                 bootstrap.stop();
@@ -52,6 +50,13 @@ public final class TomcatShutdownHook extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void stopScanners() {
+        for (Scanner scanner : scanners) {
+            scanner.stop();
         }
     }
 }
