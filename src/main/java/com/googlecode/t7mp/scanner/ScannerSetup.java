@@ -18,15 +18,21 @@ package com.googlecode.t7mp.scanner;
 import java.io.File;
 
 import com.googlecode.t7mp.AbstractT7Mojo;
-import com.googlecode.t7mp.TomcatShutdownHook;
+import com.googlecode.t7mp.ShutdownHook;
 
+/**
+ * Takes configuration, creates scanners and add them to the shutdownhook.
+ * 
+ * @author jbellmann
+ *
+ */
 public final class ScannerSetup {
 
     private ScannerSetup() {
         //hide constructor
     }
 
-    public static void configureScanners(TomcatShutdownHook shutdownHook, AbstractT7Mojo t7Mojo) {
+    public static void configureScanners(ShutdownHook shutdownHook, AbstractT7Mojo t7Mojo) {
         if (!t7Mojo.isWebProject()) {
             t7Mojo.getLog()
                     .info("Project seems not to be an web-project (packaging 'war'), skip scanner configuration");
