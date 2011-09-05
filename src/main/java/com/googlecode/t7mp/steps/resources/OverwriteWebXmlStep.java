@@ -25,19 +25,24 @@ import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
 import com.googlecode.t7mp.util.CommonsSetupUtil;
 
+/**
+ * 
+ * @author jbellmann
+ *
+ */
 public class OverwriteWebXmlStep implements Step {
-    
+
     private final SetupUtil setupUtil = new CommonsSetupUtil();
 
     @Override
     public void execute(Context context) {
-    	final AbstractT7Mojo mojo = context.getMojo();
+        final AbstractT7Mojo mojo = context.getMojo();
         if ((mojo.getOverwriteWebXML() == null) || (!mojo.getOverwriteWebXML().exists())) {
             return;
         }
         try {
-            setupUtil.copyFile(mojo.getOverwriteWebXML(), new File(mojo.getCatalinaBase(), "/webapps/"
-                    + mojo.getContextPath() + "/WEB-INF/web.xml"));
+            setupUtil.copyFile(mojo.getOverwriteWebXML(),
+                    new File(mojo.getCatalinaBase(), "/webapps/" + mojo.getContextPath() + "/WEB-INF/web.xml"));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }

@@ -13,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.t7mp;
-
-import com.googlecode.t7mp.scanner.Scanner;
-
 /**
+ * Sollen hier die Infos rein?
  * 
- * @author jbellmann
- *
  */
-public interface ShutdownHook {
-    
-    void addScanner(Scanner scanner);
-    
-    void stopScanners();
+package com.googlecode.t7mp.steps.external;
 
-}

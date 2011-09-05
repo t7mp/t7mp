@@ -64,8 +64,8 @@ public class RunMojo extends AbstractT7Mojo {
     }
 
     protected StepSequence getSetupStepSequence() {
-    	StepSequence seq = new TomcatSetupSequence();
-    	seq.add(new CopyJuliJarStep());
+        StepSequence seq = new TomcatSetupSequence();
+        seq.add(new CopyJuliJarStep());
         return seq;
     }
 
