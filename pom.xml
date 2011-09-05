@@ -164,7 +164,6 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-            <!--
             <plugin>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-component-metadata</artifactId>
@@ -172,12 +171,12 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>generate-metadata</goal>-->
+                            <goal>generate-metadata</goal>
                             <!--goal>generate-test-metadata</goal -->
-                        <!-- </goals>
+                        </goals>
                     </execution>
                 </executions>
-            </plugin> -->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
@@ -266,6 +265,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
@@ -273,7 +273,7 @@
                 <configuration>
                     <goalPrefix>t7</goalPrefix>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
