@@ -32,7 +32,6 @@ import com.googlecode.t7mp.AbstractT7Mojo;
 import com.googlecode.t7mp.SysoutLog;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
-import com.googlecode.t7mp.steps.directory.CreateTomcatDirectoriesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourceFromClasspath;
 
 //@Ignore

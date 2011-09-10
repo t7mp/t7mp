@@ -13,9 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Sollen hier die Infos rein?
- * 
- */
-package com.googlecode.t7mp.steps.directory;
+package com.googlecode.t7mp.steps.resources;
 
+import com.googlecode.t7mp.steps.DefaultStepSequence;
+
+/**
+ * 
+ * @author jbellmann
+ *
+ */
+public class CreateTomcatDirectoriesSequence extends DefaultStepSequence {
+
+    public CreateTomcatDirectoriesSequence() {
+        this.add(new CreateTomcatDirectoryStep("conf"));
+        this.add(new CreateTomcatDirectoryStep("webapps"));
+        this.add(new CreateTomcatDirectoryStep("lib"));
+        this.add(new CreateTomcatDirectoryStep("temp"));
+        this.add(new CreateTomcatDirectoryStep("work"));
+        this.add(new CreateTomcatDirectoryStep("logs"));
+    }
+
+}
