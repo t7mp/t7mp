@@ -29,7 +29,6 @@ public class ForkedSetupSequence extends DefaultStepSequence {
 
     public ForkedSetupSequence() {
         add(new AddRemoteRepositoryStep());
-        add(new AddRemoteRepositoryStep());
         add(new CheckT7ArtifactsStep());
         add(new ResolveTomcatStep());
         add(new ConfigFilesSequence());
