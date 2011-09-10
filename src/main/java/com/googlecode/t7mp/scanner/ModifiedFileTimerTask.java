@@ -23,11 +23,12 @@ import java.util.Set;
 import java.util.TimerTask;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.maven.plugin.logging.Log;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.googlecode.t7mp.util.FileUtil;
-import org.apache.commons.io.FilenameUtils;
 
 public final class ModifiedFileTimerTask extends TimerTask {
 
@@ -37,11 +38,13 @@ public final class ModifiedFileTimerTask extends TimerTask {
     private final File rootDirectory;
     private final File webappDirectory;
     private final List<String> suffixe;
+    private final Log log;
 
-    public ModifiedFileTimerTask(File rootDirectory, File webappDirectory, List<String> suffixe) {
+    public ModifiedFileTimerTask(File rootDirectory, File webappDirectory, List<String> suffixe, Log log) {
         this.rootDirectory = rootDirectory;
         this.webappDirectory = webappDirectory;
         this.suffixe = suffixe;
+        this.log = log;
     }
 
     @Override
@@ -51,7 +54,6 @@ public final class ModifiedFileTimerTask extends TimerTask {
         Set<File> fileSet = FileUtil.getAllFiles(rootDirectory);
         Collection<File> changedFiles = Collections2.filter(fileSet,
                 Predicates.and(new ModifiedFilePredicate(timeStamp), new FileSuffixPredicate(suffixe)));
-        //        Collection<File> changedFiles = Lists.newArrayList();
         for (File file : changedFiles) {
             String absolutePath = file.getAbsolutePath();
             String def = getResourceDef(absolutePath);
@@ -59,8 +61,8 @@ public final class ModifiedFileTimerTask extends TimerTask {
             int endIndex = absolutePath.lastIndexOf(def);
             String copyFragment = absolutePath.substring(endIndex + def.length());
             File copyToFile = new File(webappDirectory, copyFragment);
-            System.out.println("CHANGED: " + absolutePath);
-            System.out.println("GOES TO : " + copyToFile.getAbsolutePath());
+            log.debug("CHANGED: " + absolutePath);
+            log.debug("COPY TO : " + copyToFile.getAbsolutePath());
             try {
                 FileUtils.copyFile(file, copyToFile);
                 FileUtils.touch(copyToFile);
@@ -68,7 +70,7 @@ public final class ModifiedFileTimerTask extends TimerTask {
                 e.printStackTrace();
             }
         }
-        System.out.println("-----------END SCAN-------------");
+        log.debug("-----------END SCAN-------------");
     }
 
     private String getResourceDef(String absolutePath) {

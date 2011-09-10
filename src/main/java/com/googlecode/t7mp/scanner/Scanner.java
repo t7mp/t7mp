@@ -42,7 +42,7 @@ public final class Scanner {
     public void start() {
         log.info("Starting Scanner ....");
         this.timer = new Timer();
-        this.timer.scheduleAtFixedRate(new ModifiedFileTimerTask(scannerConfiguration.getRootDirectory(), scannerConfiguration.getWebappDirectory(), scannerConfiguration.getEndingsAsList()), DEFAULT_DELAY, scannerConfiguration.getInterval() * MILLIS);
+        this.timer.scheduleAtFixedRate(new ModifiedFileTimerTask(scannerConfiguration.getRootDirectory(), scannerConfiguration.getWebappDirectory(), scannerConfiguration.getEndingsAsList(), log), DEFAULT_DELAY, scannerConfiguration.getInterval() * MILLIS);
         log.info("Scanner started");
     }
 
