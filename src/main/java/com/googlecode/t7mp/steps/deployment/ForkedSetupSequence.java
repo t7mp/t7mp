@@ -17,8 +17,10 @@ package com.googlecode.t7mp.steps.deployment;
 
 import com.googlecode.t7mp.steps.DefaultStepSequence;
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
+import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
 import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
 import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
+import com.googlecode.t7mp.steps.resources.SetSystemPropertiesStep;
 
 /**
  * 
@@ -31,10 +33,13 @@ public class ForkedSetupSequence extends DefaultStepSequence {
         add(new AddRemoteRepositoryStep());
         add(new CheckT7ArtifactsStep());
         add(new ResolveTomcatStep());
+        add(new CopyConfigResourcesFromClasspathSequence());
         add(new ConfigFilesSequence());
-        add(new AdditionalTomcatLibDeploymentStep());
-        add(new WebappsDeploymentStep());
+        add(new ArtifactDeploymentSequence());
+//        add(new AdditionalTomcatLibDeploymentStep());
+//        add(new WebappsDeploymentStep());
         add(new CopyProjectWebappStep());
+        add(new SetSystemPropertiesStep());
         add(new OverwriteWebXmlStep());
     }
 

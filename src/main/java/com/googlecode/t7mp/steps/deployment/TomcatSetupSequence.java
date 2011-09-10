@@ -34,7 +34,6 @@ public class TomcatSetupSequence extends DefaultStepSequence {
         this.add(new AddRemoteRepositoryStep());
         this.add(new CheckT7ArtifactsStep());
         this.add(new ResolveTomcatStep());
-        //        this.add(new CreateTomcatDirectoriesSequence());
         this.add(new CopyConfigResourcesFromClasspathSequence());
         this.add(new ConfigFilesSequence());
         this.add(new ArtifactDeploymentSequence());
