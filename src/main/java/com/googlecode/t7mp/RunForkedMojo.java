@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.apache.catalina.startup.Bootstrap;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -140,9 +139,5 @@ public class RunForkedMojo extends AbstractT7Mojo {
         StepSequence seq = new ForkedSetupSequence();
         seq.add(new CopySetenvScriptStep());
         return seq;
-    }
-
-    protected Bootstrap getBootstrap() {
-        return new Bootstrap();
     }
 }
