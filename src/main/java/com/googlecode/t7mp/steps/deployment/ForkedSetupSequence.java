@@ -36,8 +36,6 @@ public class ForkedSetupSequence extends DefaultStepSequence {
         add(new CopyConfigResourcesFromClasspathSequence());
         add(new ConfigFilesSequence());
         add(new ArtifactDeploymentSequence());
-//        add(new AdditionalTomcatLibDeploymentStep());
-//        add(new WebappsDeploymentStep());
         add(new CopyProjectWebappStep());
         add(new SetSystemPropertiesStep());
         add(new OverwriteWebXmlStep());
