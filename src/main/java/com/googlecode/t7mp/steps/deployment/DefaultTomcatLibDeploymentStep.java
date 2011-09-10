@@ -31,6 +31,7 @@ import com.googlecode.t7mp.steps.Context;
  * @author jbellmann
  *
  */
+@Deprecated
 public class DefaultTomcatLibDeploymentStep extends AbstractDeploymentStep {
 
     private TomcatArtifactDescriptorReader tomcatArtifactDescriptorReader;
