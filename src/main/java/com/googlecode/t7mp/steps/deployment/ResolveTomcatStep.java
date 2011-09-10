@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.t7mp.steps.external;
+package com.googlecode.t7mp.steps.deployment;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -29,7 +29,6 @@ import com.googlecode.t7mp.AbstractT7Mojo;
 import com.googlecode.t7mp.TomcatSetupException;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
-import com.googlecode.t7mp.steps.deployment.MyArtifactResolver;
 import com.googlecode.t7mp.util.ZipUtil;
 
 /**

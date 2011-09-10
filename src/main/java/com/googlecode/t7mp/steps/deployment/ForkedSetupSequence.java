@@ -13,24 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.t7mp.steps.resources;
+package com.googlecode.t7mp.steps.deployment;
 
 import com.googlecode.t7mp.steps.DefaultStepSequence;
+import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
+import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
+import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
 
 /**
  * 
  * @author jbellmann
  *
  */
-public class CreateTomcatDirectoriesSequence extends DefaultStepSequence {
+public class ForkedSetupSequence extends DefaultStepSequence {
 
-    public CreateTomcatDirectoriesSequence() {
-        this.add(new CreateTomcatDirectoryStep("conf"));
-        this.add(new CreateTomcatDirectoryStep("webapps"));
-        this.add(new CreateTomcatDirectoryStep("lib"));
-        this.add(new CreateTomcatDirectoryStep("temp"));
-        this.add(new CreateTomcatDirectoryStep("work"));
-        this.add(new CreateTomcatDirectoryStep("logs"));
+    public ForkedSetupSequence() {
+        add(new AddRemoteRepositoryStep());
+        add(new AddRemoteRepositoryStep());
+        add(new CheckT7ArtifactsStep());
+        add(new ResolveTomcatStep());
+        add(new ConfigFilesSequence());
+        add(new AdditionalTomcatLibDeploymentStep());
+        add(new WebappsDeploymentStep());
+        add(new CopyProjectWebappStep());
+        add(new OverwriteWebXmlStep());
     }
 
 }

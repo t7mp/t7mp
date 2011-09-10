@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.t7mp.steps.directory;
+package com.googlecode.t7mp.steps.resources;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +24,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -31,8 +32,9 @@ import com.googlecode.t7mp.AbstractT7Mojo;
 import com.googlecode.t7mp.SysoutLog;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
-import com.googlecode.t7mp.steps.resources.CreateTomcatDirectoriesSequence;
 
+@Deprecated
+@Ignore
 public class CreateTomcatDirectoriesSequenceTest {
     
     private File catalinaBaseDir;

@@ -33,7 +33,7 @@ import org.mockito.Mockito;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.StepSequence;
-import com.googlecode.t7mp.steps.tomcat.TomcatSetupSequence;
+import com.googlecode.t7mp.steps.deployment.TomcatSetupSequence;
 
 @Ignore
 public class TomcatSetupSequenceTest {

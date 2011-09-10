@@ -13,13 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.t7mp.steps.tomcat;
+package com.googlecode.t7mp.steps.deployment;
 
 import com.googlecode.t7mp.steps.DefaultStepSequence;
-import com.googlecode.t7mp.steps.deployment.AddRemoteRepositoryStep;
-import com.googlecode.t7mp.steps.deployment.ArtifactDeploymentSequence;
-import com.googlecode.t7mp.steps.deployment.CheckT7ArtifactsStep;
-import com.googlecode.t7mp.steps.external.ResolveTomcatStep;
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
 import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
