@@ -40,7 +40,7 @@
                     <execution>
                         <id>test-stop-server</id>
                         <goals>
-                            <goal>stop-server</goal>
+                            <goal>stop</goal>
                         </goals>
                         <phase>post-integration-test</phase>
                     </execution>

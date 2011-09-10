@@ -41,7 +41,7 @@
                     <execution>
                         <id>test-stop-server</id>
                         <goals>
-                            <goal>stop-server</goal>
+                            <goal>stop</goal>
                         </goals>
                         <phase>post-integration-test</phase>
                     </execution>
@@ -49,12 +49,4 @@
             </plugin>
         </plugins>
     </build>
-    
-    <repositories>
-    	<repository>
-    		<id>sonatype.oss</id>
-    		<name>Sonatype OSS Repository</name>
-    		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    	</repository>
-    </repositories>
 </project>

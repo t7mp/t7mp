@@ -3,18 +3,23 @@ import java.io.*;
 File libDir = new File( basedir, "target/tomcat/lib" );
 
 String[] expectedFiles = {
-    "catalina-6.0.32.jar",
-    "catalina-ha-6.0.32.jar",
-    "annotations-api-6.0.32.jar",
-    "coyote-6.0.32.jar",
-    "dbcp-6.0.32.jar",
-    "el-api-6.0.32.jar",
-    "jasper-6.0.32.jar",
-    "jasper-el-6.0.32.jar",
-    "jsp-api-6.0.32.jar",
-    "juli-6.0.32.jar",
-    "servlet-api-6.0.32.jar",
-    "tribes-6.0.32.jar"
+	"annotations-api.jar",
+    "catalina-ant.jar",
+    "catalina-ha.jar",
+    "catalina-tribes.jar",
+    "catalina.jar",
+    "el-api.jar",
+    "jasper-el.jar",
+    "jasper-jdt.jar",
+    "jasper.jar",
+    "jsp-api.jar",
+    "servlet-api.jar",
+    "tomcat-coyote.jar",
+    "tomcat-dbcp.jar",
+    "tomcat-i18n-es.jar",
+    "tomcat-i18n-fr.jar",
+    "tomcat-i18n-ja.jar",
+    "tomcat-juli.jar"
 };
 
 for ( String expectedFile : expectedFiles )

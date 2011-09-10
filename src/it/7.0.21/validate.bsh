@@ -8,18 +8,19 @@ String[] expectedFiles = {
     "catalina-ha.jar",
     "catalina-tribes.jar",
     "catalina.jar",
-    "ecj-3.3.1.jar",
+    "ecj-3.7.jar",
     "el-api.jar",
     "jasper-el.jar",
     "jasper.jar",
     "jsp-api.jar",
     "servlet-api.jar",
+    "tomcat-api.jar",
     "tomcat-coyote.jar",
     "tomcat-dbcp.jar",
     "tomcat-i18n-es.jar",
     "tomcat-i18n-fr.jar",
     "tomcat-i18n-ja.jar",
-    "tomcat-juli.jar"
+    "tomcat-util.jar"
 };
 
 for ( String expectedFile : expectedFiles )
