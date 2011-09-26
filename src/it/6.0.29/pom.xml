@@ -23,6 +23,7 @@
                     <tomcatVersion>6.0.29</tomcatVersion>
                     <tomcatSetAwait>false</tomcatSetAwait>
                     <lookInside>true</lookInside>
+                    <addGithubRepository>true</addGithubRepository>
                     <systemProperties>
                         <systemProperty>
                             <key>XXXXX</key>
