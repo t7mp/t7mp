@@ -63,7 +63,7 @@ public class LookInsideLog implements Log {
 
     @Override
     public void error(CharSequence arg0) {
-        realLog.error(arg0);
+        realLog.error(formatMessage(arg0));
 
     }
 
@@ -74,13 +74,13 @@ public class LookInsideLog implements Log {
 
     @Override
     public void error(CharSequence arg0, Throwable arg1) {
-        realLog.error(arg0, arg1);
+        realLog.error(formatMessage(arg0), arg1);
 
     }
 
     @Override
     public void info(CharSequence arg0) {
-        realLog.info(arg0);
+        realLog.info(formatMessage(arg0));
     }
 
     @Override
@@ -91,7 +91,7 @@ public class LookInsideLog implements Log {
 
     @Override
     public void info(CharSequence arg0, Throwable arg1) {
-        realLog.info(arg0, arg1);
+        realLog.info(formatMessage(arg0), arg1);
 
     }
 
@@ -117,7 +117,7 @@ public class LookInsideLog implements Log {
 
     @Override
     public void warn(CharSequence arg0) {
-        realLog.warn(arg0);
+        realLog.warn(formatMessage(arg0));
     }
 
     @Override
@@ -127,7 +127,7 @@ public class LookInsideLog implements Log {
 
     @Override
     public void warn(CharSequence arg0, Throwable arg1) {
-        realLog.warn(arg0, arg1);
+        realLog.warn(formatMessage(arg0), arg1);
     }
 
 }
