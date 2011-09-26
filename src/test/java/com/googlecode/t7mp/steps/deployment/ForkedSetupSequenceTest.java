@@ -18,24 +18,24 @@ public class ForkedSetupSequenceTest {
     @Test
     public void testForkedSetupSequence(){
         TestForkedSetupSequence sequence = new TestForkedSetupSequence();
-        Assert.assertEquals("9 Steps expected", 9, sequence.getSteps().size());
-        Step one = sequence.getSteps().get(0);
-        Assert.assertTrue(one instanceof AddRemoteRepositoryStep);
-        Step two = sequence.getSteps().get(1);
+        Assert.assertEquals("7 Steps expected", 7, sequence.getSteps().size());
+//        Step one = sequence.getSteps().get(0);
+//        Assert.assertTrue(one instanceof AddRemoteRepositoryStep);
+        Step two = sequence.getSteps().get(0);
         Assert.assertTrue(two instanceof CheckT7ArtifactsStep);
-        Step three = sequence.getSteps().get(2);
+        Step three = sequence.getSteps().get(1);
         Assert.assertTrue(three instanceof ResolveTomcatStep);
-        Step four = sequence.getSteps().get(3);
+        Step four = sequence.getSteps().get(2);
         Assert.assertTrue(four instanceof CopyConfigResourcesFromClasspathSequence);
-        Step five = sequence.getSteps().get(4);
+        Step five = sequence.getSteps().get(3);
         Assert.assertTrue(five instanceof ConfigFilesSequence);
-        Step six = sequence.getSteps().get(5);
+        Step six = sequence.getSteps().get(4);
         Assert.assertTrue(six instanceof ArtifactDeploymentSequence);
-        Step seven = sequence.getSteps().get(6);
+        Step seven = sequence.getSteps().get(5);
         Assert.assertTrue(seven instanceof CopyProjectWebappStep);
-        Step eight = sequence.getSteps().get(7);
-        Assert.assertTrue(eight instanceof SetSystemPropertiesStep);
-        Step nine = sequence.getSteps().get(8);
+//        Step eight = sequence.getSteps().get(7);
+//        Assert.assertTrue(eight instanceof SetSystemPropertiesStep);
+        Step nine = sequence.getSteps().get(6);
         Assert.assertTrue(nine instanceof OverwriteWebXmlStep);
     }
     

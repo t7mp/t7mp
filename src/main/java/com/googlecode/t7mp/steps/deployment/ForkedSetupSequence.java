@@ -15,29 +15,28 @@
  */
 package com.googlecode.t7mp.steps.deployment;
 
-import com.googlecode.t7mp.steps.DefaultStepSequence;
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
 import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
 import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
-import com.googlecode.t7mp.steps.resources.SetSystemPropertiesStep;
 
 /**
  * 
  * @author jbellmann
  *
  */
-public class ForkedSetupSequence extends DefaultStepSequence {
+public class ForkedSetupSequence extends SetupStepSequence {
 
     public ForkedSetupSequence() {
-        add(new AddRemoteRepositoryStep());
+//        add(new AddRemoteRepositoryStep());
         add(new CheckT7ArtifactsStep());
         add(new ResolveTomcatStep());
         add(new CopyConfigResourcesFromClasspathSequence());
         add(new ConfigFilesSequence());
         add(new ArtifactDeploymentSequence());
         add(new CopyProjectWebappStep());
-        add(new SetSystemPropertiesStep());
+        // this should be in the ProcessBuilder
+        //add(new SetSystemPropertiesStep());
         add(new OverwriteWebXmlStep());
     }
 

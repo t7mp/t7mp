@@ -220,6 +220,12 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter expression="${t7.scanClasses}" default-value="false"
      */
     protected boolean scanClasses = false;
+    
+    /**
+     * 
+     * @parameter expression="${t7.addGithubRepository}" default-value="false"
+     */
+    protected boolean addGithubRepository = false;
 
     /**
      * @parameter default-value="${basedir}/target/classes"
@@ -286,6 +292,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public void setScanClasses(boolean scanClasses) {
         this.scanClasses = scanClasses;
+    }
+
+    public boolean isAddGithubRepository() {
+        return addGithubRepository;
+    }
+
+    public void setAddGithubRepository(boolean addGithubRepository) {
+        this.addGithubRepository = addGithubRepository;
     }
 
     public String getTomcatVersion() {

@@ -15,7 +15,6 @@
  */
 package com.googlecode.t7mp.steps.deployment;
 
-import com.googlecode.t7mp.steps.DefaultStepSequence;
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
 import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
@@ -28,10 +27,10 @@ import com.googlecode.t7mp.steps.resources.SetSystemPropertiesStep;
  * @author jbellmann
  *
  */
-public class TomcatSetupSequence extends DefaultStepSequence {
+public class TomcatSetupSequence extends SetupStepSequence {
 
     public TomcatSetupSequence() {
-        this.add(new AddRemoteRepositoryStep());
+//        this.add(new AddRemoteRepositoryStep());
         this.add(new CheckT7ArtifactsStep());
         this.add(new ResolveTomcatStep());
         this.add(new CopyConfigResourcesFromClasspathSequence());
