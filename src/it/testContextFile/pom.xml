@@ -27,10 +27,7 @@
                     <lookInside>true</lookInside>
                     <contextFile>${basedir}/src/main/config/context.xml</contextFile>
                     <systemProperties>
-                        <systemProperty>
-                            <key>XXXXX</key>
-                            <value>${basedir}</value>
-                        </systemProperty>
+                       <XXXX>${basedir}</XXXX>
                     </systemProperties>
                 </configuration>
                 <executions>
