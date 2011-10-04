@@ -17,7 +17,6 @@ package com.googlecode.t7mp.steps.resources;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.logging.Log;
@@ -28,6 +27,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.google.common.io.Files;
 import com.googlecode.t7mp.AbstractT7Mojo;
 import com.googlecode.t7mp.SysoutLog;
 import com.googlecode.t7mp.steps.Context;
@@ -45,8 +45,7 @@ public class CreateTomcatDirectoriesSequenceTest {
     
     @Before
     public void setUp(){
-        File tempDir = new File(System.getProperty("java.io.tmpdir"));
-        catalinaBaseDir = new File(tempDir, UUID.randomUUID().toString());
+	catalinaBaseDir = Files.createTempDir();
         Mockito.when(context.getMojo()).thenReturn(mojo);
         Mockito.when(context.getLog()).thenReturn(log);
         Mockito.when(mojo.getCatalinaBase()).thenReturn(catalinaBaseDir);
