@@ -47,8 +47,10 @@ public class CopyConfigResourceFromClasspath implements Step {
     public void execute(Context context) {
         final File tomcatConfDirectory = new File(context.getMojo().getCatalinaBase(), "/conf/");
         try {
-            this.setupUtil.copy(getClass().getResourceAsStream(RESOURCEPATH + resource), new FileOutputStream(new File(
-                    tomcatConfDirectory, resource)));
+            FileOutputStream out = new FileOutputStream(new File(
+                    tomcatConfDirectory, resource));
+	    this.setupUtil.copy(getClass().getResourceAsStream(RESOURCEPATH + resource), out);
+	    out.close();
         } catch (FileNotFoundException e) {
             throw new TomcatSetupException(
                     "Could not copy classpathresource " + resource + " to tomcat-conf directory", e);
