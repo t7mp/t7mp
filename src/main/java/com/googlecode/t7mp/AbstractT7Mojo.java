@@ -17,8 +17,11 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
@@ -29,7 +32,6 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 
 import com.googlecode.t7mp.scanner.ScannerConfiguration;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Maven components.
@@ -250,7 +252,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      * @parameter
      */
-    protected ArrayList<SystemProperty> systemProperties = new ArrayList<SystemProperty>();
+    protected Map<String, String> systemProperties = new HashMap<String, String>();
 
     /**
      * 
@@ -456,11 +458,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
         this.webapps = webapps;
     }
 
-    public ArrayList<SystemProperty> getSystemProperties() {
+    public Map<String, String> getSystemProperties() {
         return systemProperties;
     }
 
-    public void setSystemProperties(ArrayList<SystemProperty> systemProperties) {
+    public void setSystemProperties(Map<String, String> systemProperties) {
         this.systemProperties = systemProperties;
     }
 
