@@ -33,12 +33,11 @@ public class SetSystemPropertiesStep implements Step {
         System.setProperty("catalina.base", catalinaBasPath);
         log.debug("set systemproperty key: catalina.base to value " + catalinaBasPath);
         Map<String, String> properties = context.getMojo().getSystemProperties();
-	for (String key : properties.keySet()) {
-	    String value = replaceCatalinas(properties.get(key));
-	    System.setProperty(key, value);
-            log.debug("set systemproperty key: " + key + " to value: "
-                    + System.getProperty(key));
-	}
+        for (String key : properties.keySet()) {
+            String value = replaceCatalinas(properties.get(key));
+            System.setProperty(key, value);
+            log.debug("set systemproperty key: " + key + " to value: " + System.getProperty(key));
+        }
     }
 
     protected String replaceCatalinas(String value) {
