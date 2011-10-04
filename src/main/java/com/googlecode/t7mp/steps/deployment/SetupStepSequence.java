@@ -14,7 +14,7 @@ public class SetupStepSequence extends DefaultStepSequence {
     @Override
     public void execute(Context context) {
         AbstractT7Mojo mojo = context.getMojo();
-        if(mojo.isAddGithubRepository()){
+        if (mojo.isAddGithubRepository()) {
             sequence.add(0, new AddRemoteRepositoryStep());
         }
         super.execute(context);

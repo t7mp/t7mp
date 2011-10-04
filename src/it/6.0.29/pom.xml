@@ -25,10 +25,7 @@
                     <lookInside>true</lookInside>
                     <addGithubRepository>true</addGithubRepository>
                     <systemProperties>
-                        <systemProperty>
-                            <key>XXXXX</key>
-                            <value>${basedir}</value>
-                        </systemProperty>
+                       <XXXX>${basedir}</XXXX>
                     </systemProperties>
                 </configuration>
                 <executions>

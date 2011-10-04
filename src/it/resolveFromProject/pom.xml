@@ -24,10 +24,7 @@
                     <tomcatSetAwait>false</tomcatSetAwait>
                     <lookInside>true</lookInside>
                     <systemProperties>
-                        <systemProperty>
-                            <key>XXXXX</key>
-                            <value>${basedir}</value>
-                        </systemProperty>
+                       <XXXX>${basedir}</XXXX>
                     </systemProperties>
                     <libs>
                     	<jarArtifact>
