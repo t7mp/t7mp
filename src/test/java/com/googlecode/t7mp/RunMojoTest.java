@@ -17,7 +17,6 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.apache.catalina.startup.Bootstrap;
 import org.apache.commons.io.FileUtils;
@@ -33,6 +32,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.google.common.io.Files;
+
 @Ignore
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ SubRunMojo.class, Bootstrap.class })
@@ -43,8 +44,7 @@ public class RunMojoTest {
 
     @Before
     public void setUp() {
-        File tempDir = new File(System.getProperty("java.io.tmpdir"));
-        catalinaBaseDir = new File(tempDir, "tomcat_TEST_" + UUID.randomUUID().toString());
+	catalinaBaseDir = Files.createTempDir();
         Assert.assertTrue(catalinaBaseDir.mkdirs());
         bootstrap = PowerMockito.mock(Bootstrap.class);
     }

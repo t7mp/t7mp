@@ -29,14 +29,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.io.Files;
 import com.googlecode.t7mp.SetupUtil;
-import com.googlecode.t7mp.util.CommonsSetupUtil;
-import com.googlecode.t7mp.util.FilesOnlyFileFilter;
 
 public class CommonsSetupUtilTest {
 
     private File catalinaBaseDir;
-    private static int counter = 1;
 
     private final static String MESSAGE = "TEST";
     private File source;
@@ -44,8 +42,7 @@ public class CommonsSetupUtilTest {
 
     @Before
     public void setUp() throws IOException {
-        catalinaBaseDir = new File(new File(System.getProperty("java.io.tmpdir")), "catalinaBase_" + (++counter));
-        catalinaBaseDir.mkdirs();
+        catalinaBaseDir = Files.createTempDir();
 
         source = File.createTempFile("source", ".tmp");
         source.deleteOnExit();
@@ -93,10 +90,10 @@ public class CommonsSetupUtilTest {
     public void testCopyDirectory() throws IOException {
         File rootDirectory = new File(catalinaBaseDir, "root");
         Assert.assertTrue(rootDirectory.mkdir());
-        File firstFile = File.createTempFile("first_", ".tmp", rootDirectory);
+        File.createTempFile("first_", ".tmp", rootDirectory);
         File childDirectory = new File(rootDirectory, "child");
         Assert.assertTrue(childDirectory.mkdir());
-        File secondFile = File.createTempFile("second_", ".tmp", childDirectory);
+        File.createTempFile("second_", ".tmp", childDirectory);
         File webappsDirectory = new File(catalinaBaseDir, "/webapps/");
         webappsDirectory.mkdirs();
         File targetDirectory = new File(webappsDirectory, rootDirectory.getName());

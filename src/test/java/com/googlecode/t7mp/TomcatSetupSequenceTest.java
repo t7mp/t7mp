@@ -17,7 +17,6 @@ package com.googlecode.t7mp;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.factory.ArtifactFactory;
@@ -30,6 +29,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.google.common.io.Files;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.StepSequence;
@@ -52,8 +52,7 @@ public class TomcatSetupSequenceTest {
     
     @Before
     public void setUp(){
-        File tempDir = new File(System.getProperty("java.io.tmpdir"));
-        catalinaBaseDir = new File(tempDir, UUID.randomUUID().toString());
+	catalinaBaseDir = Files.createTempDir();
         Mockito.when(mojo.getLog()).thenReturn(log);
         Mockito.when(mojo.getCatalinaBase()).thenReturn(catalinaBaseDir);
         Mockito.when(mojo.getTomcatVersion()).thenReturn(TOMCAT_VERSION);

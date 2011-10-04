@@ -33,6 +33,9 @@ import com.googlecode.t7mp.util.CommonsSetupUtil;
  */
 public class CopyConfigResourceFromClasspath implements Step {
 
+    private static final String MSG_PREFIX = "Could not copy classpathresource ";
+    private static final String MSG_SUFFIX = " to tomcat-conf directory";
+
     private static final String RESOURCEPATH = "/com/googlecode/t7mp/conf/";
 
     private SetupUtil setupUtil = new CommonsSetupUtil();
@@ -47,14 +50,13 @@ public class CopyConfigResourceFromClasspath implements Step {
     public void execute(Context context) {
         final File tomcatConfDirectory = new File(context.getMojo().getCatalinaBase(), "/conf/");
         try {
-            this.setupUtil.copy(getClass().getResourceAsStream(RESOURCEPATH + resource), new FileOutputStream(new File(
-                    tomcatConfDirectory, resource)));
+            FileOutputStream out = new FileOutputStream(new File(tomcatConfDirectory, resource));
+            this.setupUtil.copy(getClass().getResourceAsStream(RESOURCEPATH + resource), out);
+            out.close();
         } catch (FileNotFoundException e) {
-            throw new TomcatSetupException(
-                    "Could not copy classpathresource " + resource + " to tomcat-conf directory", e);
+            throw new TomcatSetupException(MSG_PREFIX + resource + MSG_SUFFIX, e);
         } catch (IOException e) {
-            throw new TomcatSetupException(
-                    "Could not copy classpathresource " + resource + " to tomcat-conf directory", e);
+            throw new TomcatSetupException(MSG_PREFIX + resource + MSG_SUFFIX, e);
         }
     }
 }
