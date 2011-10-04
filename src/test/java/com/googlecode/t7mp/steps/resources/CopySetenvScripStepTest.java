@@ -17,7 +17,6 @@ package com.googlecode.t7mp.steps.resources;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import junit.framework.Assert;
 
@@ -28,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.google.common.io.Files;
 import com.googlecode.t7mp.AbstractT7Mojo;
 import com.googlecode.t7mp.SysoutLog;
 import com.googlecode.t7mp.steps.Context;
@@ -43,10 +43,8 @@ public class CopySetenvScripStepTest {
     
     @Before
     public void setUp(){
-    	File tempDir = new File(System.getProperty("java.io.tmpdir"));
-    	catalinaBaseDir = new File(tempDir, UUID.randomUUID().toString());
-    	boolean created = catalinaBaseDir.mkdirs();
-    	Assert.assertTrue(created);
+	catalinaBaseDir = Files.createTempDir();
+    	Assert.assertTrue(catalinaBaseDir.exists());
     	Assert.assertNotNull(catalinaBaseDir);
     	Assert.assertTrue(catalinaBaseDir.exists());
     	

@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import com.googlecode.t7mp.steps.Step;
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
-import com.googlecode.t7mp.steps.resources.CopyConfigResourceFromClasspath;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
 import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
 import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
