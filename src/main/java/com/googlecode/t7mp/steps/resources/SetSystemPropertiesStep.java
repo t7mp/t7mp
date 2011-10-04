@@ -15,9 +15,10 @@
  */
 package com.googlecode.t7mp.steps.resources;
 
+import java.util.Map;
+
 import org.apache.maven.plugin.logging.Log;
 
-import com.googlecode.t7mp.SystemProperty;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
 
@@ -31,12 +32,13 @@ public class SetSystemPropertiesStep implements Step {
         log.debug("set systemproperty key: catalina.home to value " + catalinaBasPath);
         System.setProperty("catalina.base", catalinaBasPath);
         log.debug("set systemproperty key: catalina.base to value " + catalinaBasPath);
-        for (SystemProperty property : context.getMojo().getSystemProperties()) {
-            String value = replaceCatalinas(property.getValue());
-            System.setProperty(property.getKey(), value);
-            log.debug("set systemproperty key: " + property.getKey() + " to value: "
-                    + System.getProperty(property.getKey()));
-        }
+        Map<String, String> properties = context.getMojo().getSystemProperties();
+	for (String key : properties.keySet()) {
+	    String value = replaceCatalinas(properties.get(key));
+	    System.setProperty(key, value);
+            log.debug("set systemproperty key: " + key + " to value: "
+                    + System.getProperty(key));
+	}
     }
 
     protected String replaceCatalinas(String value) {
