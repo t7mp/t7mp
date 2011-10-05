@@ -21,6 +21,8 @@ import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
 import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
 
 /**
+ * Combines all steps needed for setting up a forked-tomcat with all configured
+ * elements.
  * 
  * @author jbellmann
  *
@@ -28,15 +30,12 @@ import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
 public class ForkedSetupSequence extends SetupStepSequence {
 
     public ForkedSetupSequence() {
-//        add(new AddRemoteRepositoryStep());
         add(new CheckT7ArtifactsStep());
         add(new ResolveTomcatStep());
         add(new CopyConfigResourcesFromClasspathSequence());
         add(new ConfigFilesSequence());
         add(new ArtifactDeploymentSequence());
         add(new CopyProjectWebappStep());
-        // this should be in the ProcessBuilder
-        //add(new SetSystemPropertiesStep());
         add(new OverwriteWebXmlStep());
     }
 

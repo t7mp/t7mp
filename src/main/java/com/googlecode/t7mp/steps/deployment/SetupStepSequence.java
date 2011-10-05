@@ -5,6 +5,7 @@ import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultStepSequence;
 
 /**
+ * Base sequence that handles optional github repository configuration.
  * 
  * @author jbellmann
  *

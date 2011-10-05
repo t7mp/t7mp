@@ -22,7 +22,8 @@ import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
 import com.googlecode.t7mp.steps.resources.SetSystemPropertiesStep;
 
 /**
- * TODO Comment.
+ * Combines all steps needed to setting up an in-process-tomcat with all configured
+ * elements.
  * 
  * @author jbellmann
  *
@@ -30,7 +31,6 @@ import com.googlecode.t7mp.steps.resources.SetSystemPropertiesStep;
 public class TomcatSetupSequence extends SetupStepSequence {
 
     public TomcatSetupSequence() {
-//        this.add(new AddRemoteRepositoryStep());
         this.add(new CheckT7ArtifactsStep());
         this.add(new ResolveTomcatStep());
         this.add(new CopyConfigResourcesFromClasspathSequence());
