@@ -18,35 +18,35 @@ package com.googlecode.t7mp.steps.resources;
 import java.io.File;
 import java.io.IOException;
 
+import com.googlecode.t7mp.AbstractT7Mojo;
 import com.googlecode.t7mp.SetupUtil;
 import com.googlecode.t7mp.TomcatSetupException;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
 import com.googlecode.t7mp.util.CommonsSetupUtil;
 
+/**
+ * Copies the final 'webapp' to tomcats 'webapps' directory.
+ * 
+ * @author jbellmann
+ *
+ */
 public class CopyProjectWebappStep implements Step {
 
     private SetupUtil setupUtil = new CommonsSetupUtil();
     
     @Override
     public void execute(Context context) {
-        if (!context.getMojo().isWebProject()) {
+        final AbstractT7Mojo mojo = context.getMojo();
+        final File webappOutputDirectory = mojo.getWebappOutputDirectory();
+        if (!mojo.isWebProject()) {
             return;
         }
-        if ((context.getMojo().getWebappOutputDirectory() == null) || (!context.getMojo().getWebappOutputDirectory().exists())) {
+        if ((webappOutputDirectory == null) || (!webappOutputDirectory.exists())) {
             return;
         }
         try {
-            this.setupUtil.copyDirectory(context.getMojo().getWebappOutputDirectory(), new File(context.getMojo().getCatalinaBase(), "/webapps/"
-                    + context.getMojo().getContextPath()));
-            if (context.getMojo().getContextFile() != null) {
-                if (context.getMojo().getContextFile().exists()) {
-                    final File metaInfDirectory = new File(context.getMojo().getCatalinaBase(), "/webapps/"
-                            + context.getMojo().getContextPath() + "/META-INF");
-                    metaInfDirectory.mkdirs();
-                    this.setupUtil.copyFile(context.getMojo().getContextFile(), new File(metaInfDirectory, "context.xml"));
-                }
-            }
+            this.setupUtil.copyDirectory(webappOutputDirectory, new File(mojo.getCatalinaBase(), "/webapps/" + mojo.getContextPath()));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }

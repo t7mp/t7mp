@@ -26,6 +26,7 @@ import com.googlecode.t7mp.steps.Step;
 import com.googlecode.t7mp.util.CommonsSetupUtil;
 
 /**
+ * Replaces the 'web.xml' with the configured 'web.xml' maybe with special values for tests.
  * 
  * @author jbellmann
  *
@@ -37,15 +38,15 @@ public class OverwriteWebXmlStep implements Step {
     @Override
     public void execute(Context context) {
         final AbstractT7Mojo mojo = context.getMojo();
-        if ((mojo.getOverwriteWebXML() == null) || (!mojo.getOverwriteWebXML().exists())) {
+        final File overwriteWebXml = mojo.getOverwriteWebXML();
+        if ((overwriteWebXml == null) || (!overwriteWebXml.exists())) {
             return;
         }
         try {
-            setupUtil.copyFile(mojo.getOverwriteWebXML(),
+            setupUtil.copyFile(overwriteWebXml,
                     new File(mojo.getCatalinaBase(), "/webapps/" + mojo.getContextPath() + "/WEB-INF/web.xml"));
         } catch (IOException e) {
             throw new TomcatSetupException(e.getMessage(), e);
         }
     }
-
 }

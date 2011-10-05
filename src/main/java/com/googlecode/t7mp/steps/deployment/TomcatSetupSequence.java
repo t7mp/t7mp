@@ -17,9 +17,8 @@ package com.googlecode.t7mp.steps.deployment;
 
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
-import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
-import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
 import com.googlecode.t7mp.steps.resources.SetSystemPropertiesStep;
+import com.googlecode.t7mp.steps.resources.WebappSequence;
 
 /**
  * Combines all steps needed to setting up an in-process-tomcat with all configured
@@ -36,9 +35,7 @@ public class TomcatSetupSequence extends SetupStepSequence {
         this.add(new CopyConfigResourcesFromClasspathSequence());
         this.add(new ConfigFilesSequence());
         this.add(new ArtifactDeploymentSequence());
-        this.add(new CopyProjectWebappStep());
+        this.add(new WebappSequence());
         this.add(new SetSystemPropertiesStep());
-        this.add(new OverwriteWebXmlStep());
     }
-
 }

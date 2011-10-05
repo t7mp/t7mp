@@ -15,17 +15,14 @@ import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.Step;
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
-import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
-import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
+import com.googlecode.t7mp.steps.resources.WebappSequence;
 
 public class ForkedSetupSequenceTest {
 
     @Test
     public void testForkedSetupSequence(){
         TestForkedSetupSequence sequence = new TestForkedSetupSequence();
-        Assert.assertEquals("7 Steps expected", 7, sequence.getSteps().size());
-//        Step one = sequence.getSteps().get(0);
-//        Assert.assertTrue(one instanceof AddRemoteRepositoryStep);
+        Assert.assertEquals("6 Steps expected", 6, sequence.getSteps().size());
         Step two = sequence.getSteps().get(0);
         Assert.assertTrue(two instanceof CheckT7ArtifactsStep);
         Step three = sequence.getSteps().get(1);
@@ -37,12 +34,8 @@ public class ForkedSetupSequenceTest {
         Step six = sequence.getSteps().get(4);
         Assert.assertTrue(six instanceof ArtifactDeploymentSequence);
         Step seven = sequence.getSteps().get(5);
-        Assert.assertTrue(seven instanceof CopyProjectWebappStep);
-//        Step eight = sequence.getSteps().get(7);
-//        Assert.assertTrue(eight instanceof SetSystemPropertiesStep);
-        Step nine = sequence.getSteps().get(6);
-        Assert.assertTrue(nine instanceof OverwriteWebXmlStep);
-        
+        Assert.assertTrue(seven instanceof WebappSequence);
+
         AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
         List<ArtifactRepository> repositoryList = Lists.newArrayList();
         Mockito.when(mojo.getRemoteRepos()).thenReturn(repositoryList);

@@ -17,8 +17,7 @@ package com.googlecode.t7mp.steps.deployment;
 
 import com.googlecode.t7mp.steps.resources.ConfigFilesSequence;
 import com.googlecode.t7mp.steps.resources.CopyConfigResourcesFromClasspathSequence;
-import com.googlecode.t7mp.steps.resources.CopyProjectWebappStep;
-import com.googlecode.t7mp.steps.resources.OverwriteWebXmlStep;
+import com.googlecode.t7mp.steps.resources.WebappSequence;
 
 /**
  * Combines all steps needed for setting up a forked-tomcat with all configured
@@ -35,8 +34,9 @@ public class ForkedSetupSequence extends SetupStepSequence {
         add(new CopyConfigResourcesFromClasspathSequence());
         add(new ConfigFilesSequence());
         add(new ArtifactDeploymentSequence());
-        add(new CopyProjectWebappStep());
-        add(new OverwriteWebXmlStep());
+        add(new WebappSequence());
+//        add(new CopyProjectWebappStep());
+//        add(new OverwriteWebXmlStep());
     }
 
 }
