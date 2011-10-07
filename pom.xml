@@ -24,8 +24,8 @@
 
     <scm>
         <url>https://github.com/t7mp/t7mp</url>
-        <connection>scm:git:git@github.com:t7mp/t7mp.git</connection>
-        <developerConnection>scm:git:git@github.com:t7mp/t7mp.git</developerConnection>
+        <connection>scm:git:https://github.com/t7mp/t7mp.git</connection>
+        <developerConnection>scm:git:https://github.com/t7mp/t7mp.git</developerConnection>
     </scm>
 
     <issueManagement>
@@ -183,7 +183,7 @@
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>1.5</version>
                 <configuration>
-                    <username>t7mp</username>
+                    <username>jbellmann</username>
                     <connectionType>developerConnection</connectionType>
                 </configuration>
             </plugin>
