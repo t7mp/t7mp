@@ -66,6 +66,9 @@ public class RunForkedMojo extends AbstractT7Mojo {
         ProcessBuilder processBuilder = new ProcessBuilder(TomcatUtil.getStartScriptName(), "run");
         processBuilder.directory(TomcatUtil.getBinDirectory(getCatalinaBase()));
         processBuilder.redirectErrorStream(true);
+
+        processBuilder.environment().putAll(this.systemProperties);
+
         int exitValue = -1;
         try {
             this.p = processBuilder.start();
