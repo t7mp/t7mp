@@ -48,7 +48,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     public static final String DEFAULT_TOMCAT_VERSION = "7.0.22";
 
     public static final String CONTEXT_PATH_ROOT = "ROOT";
-    
+
     /**
      * @parameter expression="${project}"
      * @required
@@ -56,7 +56,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * 
      */
     protected MavenProject mavenProject;
-    
+
     /**
      * Used to look up Artifacts in the remote repository.
      *
@@ -189,7 +189,6 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      */
     protected File webappOutputDirectory;
 
-
     /**
      *
      * @parameter expression="${t7.contextPath}" default-value="${project.build.finalName}"
@@ -222,7 +221,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter expression="${t7.scanClasses}" default-value="false"
      */
     protected boolean scanClasses = false;
-    
+
     /**
      * 
      * @parameter expression="${t7.addGithubRepository}" default-value="false"
@@ -235,13 +234,12 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      */
     protected File webappClassDirectory;
 
-    
     /**
      * @parameter
      * @optional
      */
     protected File contextFile = null;
-    
+
     /**
      * 
      * @parameter
@@ -265,6 +263,12 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter
      */
     protected ArrayList<ScannerConfiguration> scanners = new ArrayList<ScannerConfiguration>();
+
+    /**
+     * 
+     * @parameter default-value="false"
+     */
+    protected boolean downloadTomcatExamples = false;
 
     private Log log;
 
@@ -367,7 +371,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
         if (contextPath.startsWith("/")) {
             return contextPath.substring(1);
         }
-        return contextPath;        
+        return contextPath;
     }
 
     public void setContextPath(String contextPath) {
@@ -381,7 +385,7 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     public void setOverwriteWebXML(File overwriteWebXML) {
         this.overwriteWebXML = overwriteWebXML;
     }
-    
+
     public File getContextFile() {
         return contextFile;
     }
@@ -525,8 +529,6 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
     public void setScanners(ArrayList<ScannerConfiguration> scanners) {
         this.scanners = scanners;
     }
-    
-    
 
     public MavenProject getMavenProject() {
         return mavenProject;
@@ -546,6 +548,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
             }
         }
         return this.log;
+    }
+
+    public boolean isDownloadTomcatExamples() {
+        return downloadTomcatExamples;
+    }
+
+    public void setDownloadTomcatExamples(boolean downloadTomcatExamples) {
+        this.downloadTomcatExamples = downloadTomcatExamples;
     }
 
 }

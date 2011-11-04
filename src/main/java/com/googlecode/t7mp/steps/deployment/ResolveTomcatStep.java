@@ -24,6 +24,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.sonatype.aether.util.StringUtils;
 
 import com.googlecode.t7mp.AbstractT7Mojo;
 import com.googlecode.t7mp.TomcatSetupException;
@@ -52,7 +53,19 @@ public class ResolveTomcatStep implements Step {
         this.mojo = context.getMojo();
         this.myArtifactResolver = new MyArtifactResolver(context.getMojo());
         this.logger = context.getMojo().getLog();
-        String version = context.getMojo().getTomcatVersion();
+        String version = null;
+        String configuredVersion = context.getMojo().getTomcatVersion();
+        if (context.getMojo().isDownloadTomcatExamples()) {
+            logger.info("Resolve Tomcat with 'docs' and 'examples'");
+            version = configuredVersion;
+        } else {
+            logger.info("Resolve Tomcat without 'docs' and 'examples'.");
+            version = configuredVersion + ".A";
+        }
+        if (StringUtils.isEmpty(version)) {
+            throw new TomcatSetupException("Version should not be null or empty.");
+        }
+
         File unpackDirectory = null;
         try {
             Artifact artifact = resolveTomcatArtifact(version);
