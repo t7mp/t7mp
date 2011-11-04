@@ -41,6 +41,7 @@ public class RunMojo extends AbstractT7Mojo {
 
     protected Bootstrap bootstrap;
 
+    @Override
     @SuppressWarnings("unchecked")
     public void execute() throws MojoExecutionException, MojoFailureException {
         PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
@@ -54,7 +55,7 @@ public class RunMojo extends AbstractT7Mojo {
         try {
             File catalinaout = new File(this.getCatalinaBase(), "/logs/catalina.out");
             CatalinaOutPrintStream catalinaOutputStream = new CatalinaOutPrintStream(originalSystemErr,
-                    new FileOutputStream(catalinaout));
+                    new FileOutputStream(catalinaout), isSuspendConsoleOutput());
             System.setErr(catalinaOutputStream);
             bootstrap.init();
             final TomcatShutdownHook shutdownHook = new TomcatShutdownHook(bootstrap, catalinaOutputStream);

@@ -11,11 +11,14 @@ import java.io.PrintStream;
  */
 public final class CatalinaOutPrintStream extends PrintStream {
 
-    private PrintStream originalSystemErr;
+    private final PrintStream originalSystemErr;
+    private final boolean suspendConsoleOutput;
 
-    public CatalinaOutPrintStream(PrintStream originalSystemErr, OutputStream outputStream) throws IOException {
+    public CatalinaOutPrintStream(PrintStream originalSystemErr, OutputStream outputStream, boolean suspendConsoleOutput)
+            throws IOException {
         super(outputStream, true);
         this.originalSystemErr = originalSystemErr;
+        this.suspendConsoleOutput = suspendConsoleOutput;
     }
 
     public PrintStream getOriginalSystemErr() {
@@ -29,13 +32,17 @@ public final class CatalinaOutPrintStream extends PrintStream {
 
     @Override
     public void write(int x) {
-        originalSystemErr.write(x);
+        if (!suspendConsoleOutput) {
+            originalSystemErr.write(x);
+        }
         super.write(x);
     }
 
     @Override
     public void write(byte[] x, int o, int l) {
-        originalSystemErr.write(x, o, l);
+        if (!suspendConsoleOutput) {
+            originalSystemErr.write(x, o, l);
+        }
         super.write(x, o, l);
     }
 

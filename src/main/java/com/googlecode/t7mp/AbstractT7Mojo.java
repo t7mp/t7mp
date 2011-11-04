@@ -270,6 +270,12 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      */
     protected boolean downloadTomcatExamples = false;
 
+    /**
+     * 
+     * @parameter default-value="false"
+     */
+    protected boolean suspendConsoleOutput = false;
+
     private Log log;
 
     public boolean isWebProject() {
@@ -556,6 +562,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public void setDownloadTomcatExamples(boolean downloadTomcatExamples) {
         this.downloadTomcatExamples = downloadTomcatExamples;
+    }
+
+    public boolean isSuspendConsoleOutput() {
+        return suspendConsoleOutput;
+    }
+
+    public void setSuspendConsoleOutput(boolean suspendConsoleOutput) {
+        this.suspendConsoleOutput = suspendConsoleOutput;
     }
 
 }
