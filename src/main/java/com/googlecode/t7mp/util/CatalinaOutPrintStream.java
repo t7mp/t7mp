@@ -4,38 +4,42 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-
+/**
+ * 
+ * @author jbellmann
+ * 
+ */
 public final class CatalinaOutPrintStream extends PrintStream {
-	
-	private PrintStream originalSystemErr;
 
-	public CatalinaOutPrintStream(PrintStream originalSystemErr, OutputStream outputStream) throws IOException {
-		super(outputStream, true);
-		this.originalSystemErr = originalSystemErr;
-	}
-	
-	public PrintStream getOriginalSystemErr(){
-		return this.originalSystemErr;
-	}
-	
-	@Override
+    private PrintStream originalSystemErr;
+
+    public CatalinaOutPrintStream(PrintStream originalSystemErr, OutputStream outputStream) throws IOException {
+        super(outputStream, true);
+        this.originalSystemErr = originalSystemErr;
+    }
+
+    public PrintStream getOriginalSystemErr() {
+        return this.originalSystemErr;
+    }
+
+    @Override
     public boolean checkError() {
         return originalSystemErr.checkError() || super.checkError();
     }
 
-	@Override
+    @Override
     public void write(int x) {
-        originalSystemErr.write(x); // "write once;
-        super.write(x); // write somewhere else."
+        originalSystemErr.write(x);
+        super.write(x);
     }
 
-	@Override
+    @Override
     public void write(byte[] x, int o, int l) {
-        originalSystemErr.write(x, o, l); // "write once;
-        super.write(x, o, l); // write somewhere else."
+        originalSystemErr.write(x, o, l);
+        super.write(x, o, l);
     }
 
-	@Override
+    @Override
     public void close() {
         super.close();
     }

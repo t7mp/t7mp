@@ -25,8 +25,9 @@ import com.googlecode.t7mp.util.CatalinaOutPrintStream;
 
 /**
  * TODO Comment.
+ * 
  * @author jbellmann
- *
+ * 
  */
 public final class TomcatShutdownHook extends Thread implements ShutdownHook {
 
@@ -54,10 +55,10 @@ public final class TomcatShutdownHook extends Thread implements ShutdownHook {
                 e.printStackTrace();
             }
         }
-        if(catalinaOutPrintStream != null){
-        	catalinaOutPrintStream.flush();
-        	catalinaOutPrintStream.close();
-        	System.setErr(catalinaOutPrintStream.getOriginalSystemErr());
+        if (catalinaOutPrintStream != null) {
+            catalinaOutPrintStream.flush();
+            catalinaOutPrintStream.close();
+            System.setErr(catalinaOutPrintStream.getOriginalSystemErr());
         }
     }
 
