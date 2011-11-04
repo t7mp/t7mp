@@ -64,6 +64,7 @@ public class ConfigFilesSequenceTest {
     public void testConfigFilesSequence() throws IOException{
     	Mockito.when(mojo.getCatalinaBase()).thenReturn(catalinaBaseDir);
     	Mockito.when(mojo.getLog()).thenReturn(log);
+    	Mockito.when(mojo.getTomcatShutdownCommand()).thenReturn("SHUTDOWN");
     	Context context = new DefaultContext(mojo);
     	ConfigFilesSequence sequence = new ConfigFilesSequence();
     	sequence.execute(context);

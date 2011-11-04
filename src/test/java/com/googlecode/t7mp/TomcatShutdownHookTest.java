@@ -37,21 +37,21 @@ public class TomcatShutdownHookTest {
 
     @Test
     public void testRun() throws Exception {
-        TomcatShutdownHook hook = new TomcatShutdownHook(bootstrap);
+        TomcatShutdownHook hook = new TomcatShutdownHook(bootstrap, null);
         hook.run();
         Mockito.verify(bootstrap, Mockito.atLeast(1)).stop();
     }
 
     @Test
     public void testRunWithNullArgument() {
-        TomcatShutdownHook hook = new TomcatShutdownHook(null);
+        TomcatShutdownHook hook = new TomcatShutdownHook(null, null);
         hook.run();
     }
 
     @Test
     public void testRunWithException() throws Exception {
         Mockito.doThrow(new Exception("TESTEXCEPTION")).when(bootstrap).stop();
-        TomcatShutdownHook hook = new TomcatShutdownHook(bootstrap);
+        TomcatShutdownHook hook = new TomcatShutdownHook(bootstrap, null);
         hook.run();
     }
 

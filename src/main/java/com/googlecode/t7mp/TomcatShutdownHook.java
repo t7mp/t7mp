@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.catalina.startup.Bootstrap;
 
 import com.googlecode.t7mp.scanner.Scanner;
+import com.googlecode.t7mp.util.CatalinaOutPrintStream;
 
 /**
  * TODO Comment.
@@ -31,9 +32,11 @@ public final class TomcatShutdownHook extends Thread implements ShutdownHook {
 
     private Bootstrap bootstrap;
     private List<Scanner> scanners = new ArrayList<Scanner>();
+    private CatalinaOutPrintStream catalinaOutPrintStream;
 
-    public TomcatShutdownHook(Bootstrap bootstrap) {
+    public TomcatShutdownHook(Bootstrap bootstrap, CatalinaOutPrintStream catalinaOutPrintStream) {
         this.bootstrap = bootstrap;
+        this.catalinaOutPrintStream = catalinaOutPrintStream;
     }
 
     public void addScanner(Scanner scanner) {
@@ -50,6 +53,11 @@ public final class TomcatShutdownHook extends Thread implements ShutdownHook {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        if(catalinaOutPrintStream != null){
+        	catalinaOutPrintStream.flush();
+        	catalinaOutPrintStream.close();
+        	System.setErr(catalinaOutPrintStream.getOriginalSystemErr());
         }
     }
 

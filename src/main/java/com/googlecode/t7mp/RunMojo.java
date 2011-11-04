@@ -15,6 +15,10 @@
  */
 package com.googlecode.t7mp;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 import org.apache.catalina.startup.Bootstrap;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -24,6 +28,7 @@ import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.StepSequence;
 import com.googlecode.t7mp.steps.deployment.CopyJuliJarStep;
 import com.googlecode.t7mp.steps.deployment.TomcatSetupSequence;
+import com.googlecode.t7mp.util.CatalinaOutPrintStream;
 
 /**
  * 
@@ -42,11 +47,16 @@ public class RunMojo extends AbstractT7Mojo {
 
         getSetupStepSequence().execute(new DefaultContext(this));
 
+        PrintStream originalSystemErr = System.err;
+        
         bootstrap = getBootstrap();
         getLog().info("Starting Tomcat ...");
         try {
+        	File catalinaout = new File(this.getCatalinaBase(), "/logs/catalina.out");
+        	CatalinaOutPrintStream catalinaOutputStream = new CatalinaOutPrintStream(originalSystemErr, new FileOutputStream(catalinaout));
+            System.setErr(catalinaOutputStream);
             bootstrap.init();
-            final TomcatShutdownHook shutdownHook = new TomcatShutdownHook(bootstrap);
+            final TomcatShutdownHook shutdownHook = new TomcatShutdownHook(bootstrap, catalinaOutputStream);
             ScannerSetup.configureScanners(shutdownHook, this);
             if (tomcatSetAwait) {
                 Runtime.getRuntime().addShutdownHook(shutdownHook);
