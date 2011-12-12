@@ -276,6 +276,11 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      */
     protected boolean suspendConsoleOutput = false;
 
+    /**
+     * @parameter
+     */
+    protected ConfigurationArtifact configArtifact = null;
+
     private Log log;
 
     public boolean isWebProject() {
@@ -570,6 +575,14 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
 
     public void setSuspendConsoleOutput(boolean suspendConsoleOutput) {
         this.suspendConsoleOutput = suspendConsoleOutput;
+    }
+
+    public ConfigurationArtifact getConfigArtifact() {
+        return configArtifact;
+    }
+
+    public void setConfigArtifact(ConfigurationArtifact configurationArtifact) {
+        this.configArtifact = configurationArtifact;
     }
 
 }
