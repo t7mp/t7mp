@@ -16,6 +16,7 @@
 package com.googlecode.t7mp.steps.resources;
 
 import com.googlecode.t7mp.steps.DefaultStepSequence;
+import com.googlecode.t7mp.steps.deployment.ResolveConfigurationArtifactStep;
 
 /**
  * Combines all steps to prepare the webapp before starting the tomcat.
@@ -29,5 +30,6 @@ public class WebappSequence extends DefaultStepSequence {
         add(new CopyProjectWebappStep());
         add(new CopyTestContextXmlStep());
         add(new OverwriteWebXmlStep());
+        add(new ResolveConfigurationArtifactStep());
     }
 }
