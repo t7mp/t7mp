@@ -37,6 +37,6 @@ public class JarArtifact extends AbstractArtifact {
 
     @Override
     public String toString() {
-        return "JarArtifact[" + super.toString() + "]";
+        return "JarArtifact[" + getArtifactCoordinates() + "]";
     }
 }

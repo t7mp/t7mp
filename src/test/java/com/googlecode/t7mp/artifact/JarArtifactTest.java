@@ -19,11 +19,15 @@ import org.apache.maven.artifact.Artifact;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.t7mp.ArtifactConstants;
 import com.googlecode.t7mp.JarArtifact;
 
 public class JarArtifactTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(JarArtifact.class);
 
     @Test
     public void testJarArtifact() {
@@ -41,6 +45,7 @@ public class JarArtifactTest {
         // JarArtifact should return jar as Type, set this property should have no effect
         artifact.setType(ArtifactConstants.WAR_TYPE);
         Assert.assertEquals(ArtifactConstants.JAR_TYPE, artifact.getType());
+        System.out.println(artifact.toString());
     }
 
     @Test

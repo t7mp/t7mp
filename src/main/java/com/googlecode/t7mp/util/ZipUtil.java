@@ -55,7 +55,6 @@ public final class ZipUtil {
                     outfile.getParentFile().mkdirs();
                     if (entry.isDirectory()) {
                         outfile.mkdir();
-                        entry = in.getNextZipEntry();
                         continue;
                     }
                     OutputStream o = new FileOutputStream(outfile);

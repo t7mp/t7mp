@@ -15,6 +15,7 @@
  */
 package com.googlecode.t7mp;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.artifact.Artifact;
 
 /**
@@ -117,15 +118,28 @@ public abstract class AbstractArtifact {
         this.artifact = artifact;
     }
 
-    @Override
-    public String toString() {
+    /**
+     * The {@code <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>} of the artifact.
+     * 
+     */
+    public String getArtifactCoordinates() {
         StringBuilder sb = new StringBuilder();
         sb.append(getGroupId()).append(":");
-        sb.append(getArtifactId()).append(":");
+        sb.append(getArtifactId());
+        if (StringUtils.isNotBlank(getType())) {
+            sb.append(":").append(getType());
+        }
+        if (StringUtils.isNotBlank(getClassifier())) {
+            sb.append(":").append(getClassifier());
+        }
+        sb.append(":");
         sb.append(getVersion()).append(":");
-        sb.append(getClassifier()).append(":");
-        sb.append(getType());
         return sb.toString().trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Artifact[" + getArtifactCoordinates() + "]";
     }
 
 }

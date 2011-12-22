@@ -16,6 +16,7 @@
 package com.googlecode.t7mp.util;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -37,6 +38,11 @@ public final class FileUtil {
         return getAllFiles(rootDirectory, fileSet);
     }
 
+    public static Set<File> getAllFiles(File rootDirectory, FileFilter fileFilter, boolean includeSubdirectories) {
+        Set<File> fileSet = Sets.newHashSet();
+        return getAllFiles(rootDirectory, fileSet, fileFilter, includeSubdirectories);
+    }
+
     private static Set<File> getAllFiles(File rootDirectory, Set<File> fileSet) {
         File[] files = rootDirectory.listFiles();
         for (File file : files) {
@@ -44,6 +50,21 @@ public final class FileUtil {
                 getAllFiles(file, fileSet);
             } else {
                 fileSet.add(file);
+            }
+        }
+        return fileSet;
+    }
+
+    private static Set<File> getAllFiles(File rootDirectory, Set<File> fileSet, FileFilter fileFilter,
+            boolean includeSubdirectories) {
+        File[] files = rootDirectory.listFiles();
+        for (File file : files) {
+            if (file.isDirectory() && includeSubdirectories) {
+                getAllFiles(file, fileSet, fileFilter, includeSubdirectories);
+            } else {
+                if (fileFilter.accept(file)) {
+                    fileSet.add(file);
+                }
             }
         }
         return fileSet;
