@@ -16,6 +16,10 @@ public final class FileFilters {
     public static final String PROPERTIES_SUFFIX = ".properties";
     public static final String JAVA_SUFFIX = ".java";
 
+    private FileFilters() {
+        // hide constructor
+    }
+
     public static FileFilter forAll() {
         return new FileFilter() {
             @Override
