@@ -54,7 +54,7 @@ public final class TomcatUtil {
 
     public static String getStartScriptName() {
         if (SystemUtil.isWindowsSystem()) {
-            return "catalina.bat";
+            return "cmd catalina.bat";
         } else {
             return "./catalina.sh";
         }
