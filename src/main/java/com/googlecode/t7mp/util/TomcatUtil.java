@@ -52,6 +52,7 @@ public final class TomcatUtil {
         }
     }
 
+    @Deprecated
     public static String getStartScriptName() {
         if (SystemUtil.isWindowsSystem()) {
             return "cmd catalina.bat";

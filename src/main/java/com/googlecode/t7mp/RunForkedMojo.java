@@ -44,6 +44,7 @@ public class RunForkedMojo extends AbstractT7Mojo {
     private static final long SLEEPTIME = 5000;
     private Process p;
 
+    @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         PreConditions.checkConfiguredTomcatVersion(getLog(), tomcatVersion);
 
@@ -63,7 +64,7 @@ public class RunForkedMojo extends AbstractT7Mojo {
     }
 
     private void startTomcat() {
-        ProcessBuilder processBuilder = new ProcessBuilder(TomcatUtil.getStartScriptName(), "run");
+        ProcessBuilder processBuilder = new ProcessBuilder(getStartSkriptCommand());
         processBuilder.directory(TomcatUtil.getBinDirectory(getCatalinaBase()));
         processBuilder.redirectErrorStream(true);
 
@@ -132,6 +133,7 @@ public class RunForkedMojo extends AbstractT7Mojo {
             setDaemon(true);
         }
 
+        @Override
         public void run() {
             startTomcat();
         }
@@ -142,5 +144,13 @@ public class RunForkedMojo extends AbstractT7Mojo {
         StepSequence seq = new ForkedSetupSequence();
         seq.add(new CopySetenvScriptStep());
         return seq;
+    }
+
+    protected String[] getStartSkriptCommand() {
+        if (SystemUtil.isWindowsSystem()) {
+            return new String[] { "cmd", "/c", "catalina.bat", "run" };
+        } else {
+            return new String[] { "./catalina.sh", "run" };
+        }
     }
 }

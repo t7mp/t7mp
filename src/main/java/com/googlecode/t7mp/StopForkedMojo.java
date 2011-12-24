@@ -24,7 +24,7 @@ import java.io.InputStreamReader;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import com.googlecode.t7mp.util.TomcatUtil;
+import com.googlecode.t7mp.util.SystemUtil;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class StopForkedMojo extends AbstractT7Mojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        ProcessBuilder processBuilder = new ProcessBuilder(TomcatUtil.getStopScriptName(), "stop");
+        ProcessBuilder processBuilder = new ProcessBuilder(getStopSkriptCommand());
         int exitValue = -1;
         try {
             File binDirectory = new File(getCatalinaBase(), "/bin/");
@@ -62,6 +62,14 @@ public class StopForkedMojo extends AbstractT7Mojo {
             getLog().error(e.getMessage(), e);
         }
         getLog().debug("Exit-Value ForkedTomcatShutdownHook " + exitValue);
+    }
+
+    protected String[] getStopSkriptCommand() {
+        if (SystemUtil.isWindowsSystem()) {
+            return new String[] { "cmd", "/c", "catalina.bat", "stop" };
+        } else {
+            return new String[] { "./catalina.sh", "stop" };
+        }
     }
 
 }
