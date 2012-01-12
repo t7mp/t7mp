@@ -285,6 +285,11 @@
     </build>
 
     <dependencies>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>maven-t7-common</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
         <!-- MAVEN -->
         <dependency>
             <groupId>org.apache.maven</groupId>
