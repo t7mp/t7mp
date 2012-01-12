@@ -40,8 +40,8 @@ public final class StopMojo extends AbstractMojo {
     
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        Bootstrap bootstrap = (Bootstrap) getPluginContext().get(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID);
-        getPluginContext().remove(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID);
+        Bootstrap bootstrap = (Bootstrap) getPluginContext().get(AbstractT7BaseMojo.T7_BOOTSTRAP_CONTEXT_ID);
+        getPluginContext().remove(AbstractT7BaseMojo.T7_BOOTSTRAP_CONTEXT_ID);
         if (bootstrap != null) {
             try {
                 bootstrap.stop();

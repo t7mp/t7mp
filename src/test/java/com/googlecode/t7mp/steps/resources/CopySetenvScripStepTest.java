@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.google.common.io.Files;
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.SysoutLog;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultContext;
@@ -37,7 +37,7 @@ import com.googlecode.t7mp.steps.Step;
 public class CopySetenvScripStepTest {
 	
     private File catalinaBaseDir;
-    private AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
+    private AbstractT7BaseMojo mojo = Mockito.mock(AbstractT7BaseMojo.class);
     private Log log = new SysoutLog();
 	
     

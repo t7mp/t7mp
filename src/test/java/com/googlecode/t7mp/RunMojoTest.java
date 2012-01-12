@@ -61,7 +61,7 @@ public class RunMojoTest {
         mojo.tomcatSetAwait = false;
         mojo.execute();
         Mockito.verify(bootstrap, Mockito.atLeastOnce()).start();
-        Assert.assertEquals(bootstrap, mojo.getPluginContext().get(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID));
+        Assert.assertEquals(bootstrap, mojo.getPluginContext().get(AbstractT7BaseMojo.T7_BOOTSTRAP_CONTEXT_ID));
     }
 
     @Test(expected = MojoExecutionException.class)

@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.apache.maven.plugin.logging.Log;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 
 /**
  * 
@@ -29,15 +29,15 @@ import com.googlecode.t7mp.AbstractT7Mojo;
  */
 public class DefaultContext implements Context {
 
-    protected AbstractT7Mojo t7mojo;
+    protected AbstractT7BaseMojo t7mojo;
     protected Map<String, Object> context = new HashMap<String, Object>();
 
-    public DefaultContext(AbstractT7Mojo t7mojo) {
+    public DefaultContext(AbstractT7BaseMojo t7mojo) {
         this.t7mojo = t7mojo;
     }
 
     @Override
-    public AbstractT7Mojo getMojo() {
+    public AbstractT7BaseMojo getMojo() {
         return this.t7mojo;
     }
 

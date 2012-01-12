@@ -17,7 +17,7 @@ package com.googlecode.t7mp.steps;
 
 import org.apache.maven.plugin.logging.Log;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 
 /**
  * 
@@ -26,7 +26,7 @@ import com.googlecode.t7mp.AbstractT7Mojo;
  */
 public interface Context {
     
-    AbstractT7Mojo getMojo();
+    AbstractT7BaseMojo getMojo();
     
     Log getLog();
     

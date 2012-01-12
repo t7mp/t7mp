@@ -41,7 +41,7 @@ public class StopMojoTest {
     public void setUp() {
         bootstrap = PowerMockito.mock(Bootstrap.class);
         pluginContext = new HashMap<Object, Object>();
-        pluginContext.put(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
+        pluginContext.put(AbstractT7BaseMojo.T7_BOOTSTRAP_CONTEXT_ID, bootstrap);
     }
 
     @Test
@@ -55,10 +55,10 @@ public class StopMojoTest {
     @Test
     public void testExecuteWithEmptyPluginContext() throws Exception {
         StopMojo mojo = new StopMojo();
-        pluginContext.put(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID, null);
+        pluginContext.put(AbstractT7BaseMojo.T7_BOOTSTRAP_CONTEXT_ID, null);
         mojo.setPluginContext(pluginContext);
         mojo.execute();
-        Assert.assertTrue(pluginContext.get(AbstractT7Mojo.T7_BOOTSTRAP_CONTEXT_ID) == null);
+        Assert.assertTrue(pluginContext.get(AbstractT7BaseMojo.T7_BOOTSTRAP_CONTEXT_ID) == null);
     }
 
     @Test(expected = MojoExecutionException.class)

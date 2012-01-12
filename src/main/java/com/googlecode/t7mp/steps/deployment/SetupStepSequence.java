@@ -15,7 +15,7 @@
  */
 package com.googlecode.t7mp.steps.deployment;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultStepSequence;
 
@@ -29,7 +29,7 @@ public class SetupStepSequence extends DefaultStepSequence {
 
     @Override
     public void execute(Context context) {
-        AbstractT7Mojo mojo = context.getMojo();
+        AbstractT7BaseMojo mojo = context.getMojo();
         if (mojo.isAddGithubRepository()) {
             sequence.add(0, new AddRemoteRepositoryStep());
         }

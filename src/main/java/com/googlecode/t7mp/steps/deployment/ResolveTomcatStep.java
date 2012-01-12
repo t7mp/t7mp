@@ -26,7 +26,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.sonatype.aether.util.StringUtils;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7TomcatMojo;
 import com.googlecode.t7mp.TomcatSetupException;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
@@ -44,18 +44,18 @@ public class ResolveTomcatStep implements Step {
     public static final String TOMCAT_ARTIFACTID = "tomcat";
     public static final String TOMCAT_TYPE = "zip";
 
-    protected AbstractT7Mojo mojo;
+    protected AbstractT7TomcatMojo mojo;
     protected MyArtifactResolver myArtifactResolver;
     protected Log logger;
 
     @Override
     public void execute(Context context) {
-        this.mojo = context.getMojo();
+        this.mojo = (AbstractT7TomcatMojo) context.getMojo();
         this.myArtifactResolver = new MyArtifactResolver(context.getMojo());
         this.logger = context.getMojo().getLog();
         String version = null;
         String configuredVersion = context.getMojo().getTomcatVersion();
-        if (context.getMojo().isDownloadTomcatExamples()) {
+        if (mojo.isDownloadTomcatExamples()) {
             logger.info("Resolve Tomcat with 'docs' and 'examples'");
             version = configuredVersion;
         } else {
@@ -102,8 +102,7 @@ public class ResolveTomcatStep implements Step {
     }
 
     protected Artifact resolveTomcatArtifact(String tomcatVersion) throws MojoExecutionException {
-        Artifact artifact = myArtifactResolver.resolve(TOMCAT_GROUPID, TOMCAT_ARTIFACTID, tomcatVersion, null,
-                TOMCAT_TYPE, Artifact.SCOPE_COMPILE);
+        Artifact artifact = myArtifactResolver.resolve(TOMCAT_GROUPID, TOMCAT_ARTIFACTID, tomcatVersion, null, TOMCAT_TYPE, Artifact.SCOPE_COMPILE);
         return artifact;
     }
 

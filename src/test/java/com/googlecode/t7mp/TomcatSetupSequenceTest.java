@@ -42,7 +42,7 @@ public class TomcatSetupSequenceTest {
     
     private File catalinaBaseDir;
     private Context context;
-    private AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
+    private AbstractT7BaseMojo mojo = Mockito.mock(AbstractT7BaseMojo.class);
     private Log log = new SysoutLog();
     
     private ArtifactResolver resolver = Mockito.mock(ArtifactResolver.class);

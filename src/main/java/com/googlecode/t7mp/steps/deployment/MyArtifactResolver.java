@@ -26,7 +26,7 @@ import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.plugin.MojoExecutionException;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 
 /**
  * Uses Maven-API to resolve the Artifacts.
@@ -41,7 +41,7 @@ public class MyArtifactResolver {
     private List<ArtifactRepository> remoteRepositories;
 //    private boolean resolveAllways = false;
 
-    public MyArtifactResolver(AbstractT7Mojo t7Mojo) {
+    public MyArtifactResolver(AbstractT7BaseMojo t7Mojo) {
         this.remoteRepositories = t7Mojo.getRemoteRepos();
         this.local = t7Mojo.getLocal();
         this.resolver = t7Mojo.getResolver();

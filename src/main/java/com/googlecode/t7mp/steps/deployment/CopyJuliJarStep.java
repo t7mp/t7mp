@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.TomcatSetupException;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
@@ -38,7 +38,7 @@ public class CopyJuliJarStep implements Step {
     @Override
     public void execute(Context context) {
         try {
-            AbstractT7Mojo mojo = context.getMojo();
+            AbstractT7BaseMojo mojo = context.getMojo();
             File juliJarFileSource = new File(TomcatUtil.getBinDirectory(mojo.getCatalinaBase()), JAR_NAME);
             File juliJarFileDestination = new File(TomcatUtil.getLibDirectory(mojo.getCatalinaBase()), JAR_NAME);
             FileUtils.copyFile(juliJarFileSource, juliJarFileDestination);

@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.google.common.collect.Lists;
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultContext;
 import com.googlecode.t7mp.steps.Step;
@@ -51,7 +51,7 @@ public class ForkedSetupSequenceTest {
         Step seven = sequence.getSteps().get(5);
         Assert.assertTrue(seven instanceof WebappSequence);
 
-        AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
+        AbstractT7BaseMojo mojo = Mockito.mock(AbstractT7BaseMojo.class);
         List<ArtifactRepository> repositoryList = Lists.newArrayList();
         Mockito.when(mojo.getRemoteRepos()).thenReturn(repositoryList);
         Mockito.when(mojo.isAddGithubRepository()).thenReturn(true);

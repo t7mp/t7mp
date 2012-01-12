@@ -20,7 +20,7 @@ import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
 import org.apache.maven.artifact.repository.DefaultArtifactRepository;
 import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.Step;
 
@@ -36,7 +36,7 @@ public class AddRemoteRepositoryStep implements Step {
 
     @Override
     public void execute(Context context) {
-        final AbstractT7Mojo mojo = context.getMojo();
+        final AbstractT7BaseMojo mojo = context.getMojo();
         mojo.getRemoteRepos().add(createTomcatRepository());
 
     }

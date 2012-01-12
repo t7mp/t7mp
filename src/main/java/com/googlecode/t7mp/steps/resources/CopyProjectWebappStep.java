@@ -18,7 +18,7 @@ package com.googlecode.t7mp.steps.resources;
 import java.io.File;
 import java.io.IOException;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.SetupUtil;
 import com.googlecode.t7mp.TomcatSetupException;
 import com.googlecode.t7mp.steps.Context;
@@ -37,7 +37,7 @@ public class CopyProjectWebappStep implements Step {
     
     @Override
     public void execute(Context context) {
-        final AbstractT7Mojo mojo = context.getMojo();
+        final AbstractT7BaseMojo mojo = context.getMojo();
         final File webappOutputDirectory = mojo.getWebappOutputDirectory();
         if (!mojo.isWebProject()) {
             return;

@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.google.common.collect.Lists;
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultContext;
 
@@ -32,7 +32,7 @@ public class AddRemoteRepositoryStepTest {
     
     @Test
     public void testAddRemoteRepository(){
-        AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
+        AbstractT7BaseMojo mojo = Mockito.mock(AbstractT7BaseMojo.class);
         List<ArtifactRepository> remoteRepos = Lists.newArrayList();
         Mockito.when(mojo.getRemoteRepos()).thenReturn(remoteRepos);
         Context context = new DefaultContext(mojo);

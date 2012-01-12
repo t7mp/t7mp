@@ -10,7 +10,7 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.ConfigurationArtifact;
 import com.googlecode.t7mp.TomcatSetupException;
 import com.googlecode.t7mp.steps.Context;
@@ -27,7 +27,7 @@ import com.googlecode.t7mp.util.ZipUtil;
  */
 public class ResolveConfigurationArtifactStep implements Step {
 
-    protected AbstractT7Mojo mojo;
+    protected AbstractT7BaseMojo mojo;
     protected MyArtifactResolver myArtifactResolver;
     protected Log logger;
 

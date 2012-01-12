@@ -35,9 +35,10 @@ import com.googlecode.t7mp.scanner.ScannerConfiguration;
 
 /**
  * Maven components.
+ * 
  * Maybe used in subclasses.
  */
-public abstract class AbstractT7Mojo extends AbstractMojo {
+public abstract class AbstractT7BaseMojo extends AbstractMojo {
 
     public static final String T7_BOOTSTRAP_CONTEXT_ID = "com.googlecode.t7mp.Bootstrap";
 
@@ -263,12 +264,6 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
      * @parameter
      */
     protected ArrayList<ScannerConfiguration> scanners = new ArrayList<ScannerConfiguration>();
-
-    /**
-     * 
-     * @parameter default-value="false"
-     */
-    protected boolean downloadTomcatExamples = false;
 
     /**
      * 
@@ -559,14 +554,6 @@ public abstract class AbstractT7Mojo extends AbstractMojo {
             }
         }
         return this.log;
-    }
-
-    public boolean isDownloadTomcatExamples() {
-        return downloadTomcatExamples;
-    }
-
-    public void setDownloadTomcatExamples(boolean downloadTomcatExamples) {
-        this.downloadTomcatExamples = downloadTomcatExamples;
     }
 
     public boolean isSuspendConsoleOutput() {

@@ -27,7 +27,7 @@ import org.mockito.Mockito;
 
 import com.google.common.collect.Lists;
 import com.googlecode.t7mp.AbstractArtifact;
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 import com.googlecode.t7mp.JarArtifact;
 import com.googlecode.t7mp.steps.Context;
 import com.googlecode.t7mp.steps.DefaultContext;
@@ -35,7 +35,7 @@ import com.googlecode.t7mp.steps.Step;
 
 public class CheckT7ArtifactsStepTest {
 
-    private AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
+    private AbstractT7BaseMojo mojo = Mockito.mock(AbstractT7BaseMojo.class);
     private Log log = Mockito.mock(Log.class);
     private MavenProject mavenProject = Mockito.mock(MavenProject.class);
     private DependencyManagement dependencyManagement = Mockito.mock(DependencyManagement.class);

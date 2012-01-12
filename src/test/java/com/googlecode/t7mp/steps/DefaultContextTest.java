@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.googlecode.t7mp.AbstractT7Mojo;
+import com.googlecode.t7mp.AbstractT7BaseMojo;
 
 /**
  * 
@@ -30,7 +30,7 @@ import com.googlecode.t7mp.AbstractT7Mojo;
  */
 public class DefaultContextTest {
 
-    private AbstractT7Mojo mojo = Mockito.mock(AbstractT7Mojo.class);
+    private AbstractT7BaseMojo mojo = Mockito.mock(AbstractT7BaseMojo.class);
     private Log log = Mockito.mock(Log.class);
     
     @Before
