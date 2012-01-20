@@ -1,15 +1,12 @@
 T7MP - Maven Plugin
 ====================
 
+You are looking for code?
+
+Most sources moved to [https://github.com/t7mp/maven-t7-common|maven-t7-common].
+
+But if you are looking for the 'maven-t7-plugin' you will find them [https://github.com/t7mp/maven-t7-plugin|here].
+
+Sources for the new 'maven-tomee-plugin' will be found [https://github.com/t7mp/maven-tomee-plugin|here].
 
 
-Beware this repository will be renamed on 20.01.2012
-
-
-
-This Tomcat 7 Maven Plugin supports a full-featured Tomcat for testing 
-(mainly integration-tests) with Maven.
-
-It supports multiple webapps deployed on tomcat.
-
-More in the next days.
